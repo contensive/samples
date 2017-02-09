@@ -107,8 +107,10 @@
                 '
                 ' redirect
                 '
-                page.Response.Redirect(c)
-                page.Response.End()
+                If Not page.Response.IsRequestBeingRedirected Then
+                    page.Response.Redirect(c, False)
+                    page.Response.End()
+                End If
             Else
                 '
                 ' concatinate writestream data to the end of the body
