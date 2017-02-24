@@ -17,7 +17,7 @@ Public Class cpApiClass
         Dim result As String = ""
         Try
             Dim TotalBytes As Integer
-            Dim isBinaryRequest As Boolean
+            Dim isBinaryRequest As Boolean = False
             Dim c As String
             Dim cName As String
             Dim row As String()
@@ -37,97 +37,18 @@ Public Class cpApiClass
             cp.Context.profileUrl = CStr(page.Request.ServerVariables("HTTP_PROFILE"))
             cp.Context.xWapProfile = CStr(page.Request.ServerVariables("HTTP_X_WAP_PROFILE"))
             '
-            ' Create ServerQueryString
-            '
-            isBinaryRequest = False
-            c = ""
-            If True Then
-                Dim requestUrl As String = page.Request.Url.ToString()
-                Dim queryPos As Integer = requestUrl.IndexOf("?")
-                If (queryPos > 0) Then
-                    cp.Context.queryString = requestUrl.Substring(queryPos + 1)
-                End If
-                For Each key As String In page.Request.QueryString
-                    If (Not String.IsNullOrEmpty(key)) Then
-                        isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
-                    End If
-                Next
-                cp.Context.isBinaryRequest = isBinaryRequest
-            Else
-                Dim skipQueryEnumeration As Boolean = False
-                Dim requestUrl As String = page.Request.Url.ToString()
-                Dim queryPos As Integer = requestUrl.IndexOf("?")
-                If (queryPos > 0) Then
-                    Dim query As String = requestUrl.Substring(queryPos + 1)
-                    skipQueryEnumeration = (query.IndexOf("404") = 0)
-                    If skipQueryEnumeration Then
-                        '
-                        ' PNFPrefix = "404;http//www.site.com/aaa"
-                        ' innerQuery = "a=b&etc"
-                        ' a) qs=404;http//www.site.com/aaa
-                        '   -- c = 404;http//www.site.com/aaa
-                        ' b) qs=404;http//www.site.com/aaa?a
-                        '   -- c = 404;http//www.site.com/aaa&a=
-                        ' c) qs=404;http//www.site.com/aaa?a=
-                        '   -- c = 404;http//www.site.com/aaa&a=
-                        ' d) qs=404;http//www.site.com/aaa?a=b
-                        '   -- c = 404;http//www.site.com/aaa&a=b
-                        ' e) qs=404;http//www.site.com/aaa?a=b&etc
-                        '   -- c = (same as d, but use the normal enumeration to add everything else and skip the first value)
-                        Dim innerQueryPos As Integer = query.IndexOf("?")
-                        If innerQueryPos < 0 Then
-                            '
-                            ' -- case a
-                            c = query
-                        Else
-                            Dim PNFPrefix As String = query.Substring(0, innerQueryPos)
-                            Dim innerQuery As String = query.Substring(innerQueryPos + 1)
-                            query = query.Substring(0, innerQueryPos)
-                            Dim innerQueryNVDelimiterPos As Integer = innerQuery.IndexOf("=")
-                            If (innerQueryNVDelimiterPos < 0) Then
-                                '
-                                ' -- case b
-                                c = query & "=&" & innerQuery
-                            Else
-                                Dim innerQueryPairDeliverPos As Integer = innerQuery.IndexOf("&")
-                                If (innerQueryPairDeliverPos < 0) Then
-                                    '
-                                    ' -- case 
-                                Else
-                                End If
-                                '
-                                ' -- 
-
-                            End If
-                            '
-                            '
-                            '
-                        End If
-                    End If
-                    '
-                    ' -- test for requestBinary
-                    For Each key As String In page.Request.QueryString
-                        If (Not String.IsNullOrEmpty(key)) Then
-                            isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
-                        End If
-                    Next
-                End If
-                If Not skipQueryEnumeration Then
-                    '
-                    ' -- handle the non-PNF case
-                    For Each key As String In page.Request.QueryString
-                        If (Not String.IsNullOrEmpty(key)) Then
-                            c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.QueryString(key))
-                            isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
-                        End If
-                    Next
-                    If Len(c) > 0 Then
-                        c = Mid(c, 2)
-                    End If
-                    cp.Context.isBinaryRequest = isBinaryRequest
-                End If
-                cp.Context.queryString = c
+            ' -- Create ServerQueryString
+            Dim requestUrl As String = page.Request.Url.ToString()
+            Dim queryPos As Integer = requestUrl.IndexOf("?")
+            If (queryPos > 0) Then
+                cp.Context.queryString = requestUrl.Substring(queryPos + 1)
             End If
+            For Each key As String In page.Request.QueryString
+                If (Not String.IsNullOrEmpty(key)) Then
+                    isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+                End If
+            Next
+            cp.Context.isBinaryRequest = isBinaryRequest
             '
             ' Create ServerForm
             '
