@@ -1,6 +1,10 @@
-﻿Public Class cpApiClass
-    '
-    Public Const appName = "setContensiveApplicationNameHere"
+﻿
+Option Explicit On
+Option Strict On
+
+Imports System.Web.Configuration
+
+Public Class cpApiClass
     '
     '==============================================================================
     ''' <summary>
@@ -9,8 +13,8 @@
     ''' <param name="cp"></param>
     ''' <param name="isAdmin"></param>
     ''' <returns></returns>
-    Public Shared Function getContensivePage(cp As Contensive.Processor.CPClass, isAdmin As Boolean, page As Page) As String
-        Dim returnPage As String = ""
+    Public Shared Function getContensivePage(cp As Contensive.Processor.CPClass, page As Page, isAdmin As Boolean) As String
+        Dim result As String = ""
         Try
             Dim TotalBytes As Integer
             Dim isBinaryRequest As Boolean
@@ -19,9 +23,8 @@
             Dim row As String()
             Dim rowPtr As Integer
             '
-            ' Setup Contensive
-            '
-            cp.Context.appName = appName
+            ' -- Setup Contensive
+            cp.Context.appName = WebConfigurationManager.AppSettings("applicationName")
             cp.Context.domain = page.Request.ServerVariables("SERVER_NAME")
             cp.Context.pathPage = CStr(page.Request.ServerVariables("SCRIPT_NAME"))
             cp.Context.referrer = CStr(page.Request.ServerVariables("HTTP_REFERER"))
@@ -38,17 +41,93 @@
             '
             isBinaryRequest = False
             c = ""
-            For Each key As String In page.Request.QueryString
-                If (Not String.IsNullOrEmpty(key)) Then
-                    c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.QueryString(key))
-                    isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+            If True Then
+                Dim requestUrl As String = page.Request.Url.ToString()
+                Dim queryPos As Integer = requestUrl.IndexOf("?")
+                If (queryPos > 0) Then
+                    cp.Context.queryString = requestUrl.Substring(queryPos + 1)
                 End If
-            Next
-            If Len(c) > 0 Then
-                c = Mid(c, 2)
+                For Each key As String In page.Request.QueryString
+                    If (Not String.IsNullOrEmpty(key)) Then
+                        isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+                    End If
+                Next
+                cp.Context.isBinaryRequest = isBinaryRequest
+            Else
+                Dim skipQueryEnumeration As Boolean = False
+                Dim requestUrl As String = page.Request.Url.ToString()
+                Dim queryPos As Integer = requestUrl.IndexOf("?")
+                If (queryPos > 0) Then
+                    Dim query As String = requestUrl.Substring(queryPos + 1)
+                    skipQueryEnumeration = (query.IndexOf("404") = 0)
+                    If skipQueryEnumeration Then
+                        '
+                        ' PNFPrefix = "404;http//www.site.com/aaa"
+                        ' innerQuery = "a=b&etc"
+                        ' a) qs=404;http//www.site.com/aaa
+                        '   -- c = 404;http//www.site.com/aaa
+                        ' b) qs=404;http//www.site.com/aaa?a
+                        '   -- c = 404;http//www.site.com/aaa&a=
+                        ' c) qs=404;http//www.site.com/aaa?a=
+                        '   -- c = 404;http//www.site.com/aaa&a=
+                        ' d) qs=404;http//www.site.com/aaa?a=b
+                        '   -- c = 404;http//www.site.com/aaa&a=b
+                        ' e) qs=404;http//www.site.com/aaa?a=b&etc
+                        '   -- c = (same as d, but use the normal enumeration to add everything else and skip the first value)
+                        Dim innerQueryPos As Integer = query.IndexOf("?")
+                        If innerQueryPos < 0 Then
+                            '
+                            ' -- case a
+                            c = query
+                        Else
+                            Dim PNFPrefix As String = query.Substring(0, innerQueryPos)
+                            Dim innerQuery As String = query.Substring(innerQueryPos + 1)
+                            query = query.Substring(0, innerQueryPos)
+                            Dim innerQueryNVDelimiterPos As Integer = innerQuery.IndexOf("=")
+                            If (innerQueryNVDelimiterPos < 0) Then
+                                '
+                                ' -- case b
+                                c = query & "=&" & innerQuery
+                            Else
+                                Dim innerQueryPairDeliverPos As Integer = innerQuery.IndexOf("&")
+                                If (innerQueryPairDeliverPos < 0) Then
+                                    '
+                                    ' -- case 
+                                Else
+                                End If
+                                '
+                                ' -- 
+
+                            End If
+                            '
+                            '
+                            '
+                        End If
+                    End If
+                    '
+                    ' -- test for requestBinary
+                    For Each key As String In page.Request.QueryString
+                        If (Not String.IsNullOrEmpty(key)) Then
+                            isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+                        End If
+                    Next
+                End If
+                If Not skipQueryEnumeration Then
+                    '
+                    ' -- handle the non-PNF case
+                    For Each key As String In page.Request.QueryString
+                        If (Not String.IsNullOrEmpty(key)) Then
+                            c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.QueryString(key))
+                            isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+                        End If
+                    Next
+                    If Len(c) > 0 Then
+                        c = Mid(c, 2)
+                    End If
+                    cp.Context.isBinaryRequest = isBinaryRequest
+                End If
+                cp.Context.queryString = c
             End If
-            cp.Context.isBinaryRequest = isBinaryRequest
-            cp.Context.queryString = c
             '
             ' Create ServerForm
             '
@@ -92,7 +171,7 @@
             '
             ' get doc and process Contensive output
             '
-            returnPage = returnPage & cp.getDoc(isAdmin)
+            result = result & cp.getDoc(isAdmin)
             '
             ' setup IIS Response
             '
@@ -115,7 +194,7 @@
                 '
                 ' concatinate writestream data to the end of the body
                 '
-                returnPage = returnPage & cp.Context.responseBuffer
+                result = result & cp.Context.responseBuffer
                 '
                 ' set content type
                 '
@@ -135,7 +214,7 @@
                             page.Response.Cookies.Add(New HttpCookie(cName, row(rowPtr + 1)))
                             c = row(rowPtr + 2)
                             If c <> "" Then
-                                page.Response.Cookies(cName).Expires = CStr(c)
+                                page.Response.Cookies(cName).Expires = cp.Utils.EncodeDate(c)
                             End If
                             c = row(rowPtr + 3)
                             If c <> "" Then
@@ -147,7 +226,7 @@
                             End If
                             c = row(rowPtr + 5)
                             If c <> "" Then
-                                page.Response.Cookies(cName).Secure = c
+                                page.Response.Cookies(cName).Secure = cp.Utils.EncodeBoolean(c)
                             End If
                         End If
                         rowPtr = rowPtr + 6
@@ -179,7 +258,7 @@
         Catch ex As Exception
             cp.Site.ErrorReport(ex)
         End Try
-        Return returnPage
+        Return result
     End Function
 
 End Class
