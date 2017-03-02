@@ -24,7 +24,7 @@ Public Class cpApiClass
             Dim rowPtr As Integer
             '
             ' -- Setup Contensive
-            cp.Context.appName = WebConfigurationManager.AppSettings("applicationName")
+            cp.Context.appName = WebConfigurationManager.AppSettings("ContensiveAppName")
             cp.Context.domain = page.Request.ServerVariables("SERVER_NAME")
             cp.Context.pathPage = CStr(page.Request.ServerVariables("SCRIPT_NAME"))
             cp.Context.referrer = CStr(page.Request.ServerVariables("HTTP_REFERER"))
