@@ -16,14 +16,12 @@ Public Class cpApiClass
     Public Shared Function getContensivePage(cp As Contensive.Processor.CPClass, page As Page, isAdmin As Boolean) As String
         Dim result As String = ""
         Try
-            Dim TotalBytes As Integer
-            Dim isBinaryRequest As Boolean = False
             Dim c As String
             Dim cName As String
             Dim row As String()
             Dim rowPtr As Integer
             '
-            ' -- Setup Contensive
+            ' -- Setup basic environment
             cp.Context.appName = WebConfigurationManager.AppSettings("ContensiveAppName")
             cp.Context.domain = page.Request.ServerVariables("SERVER_NAME")
             cp.Context.pathPage = CStr(page.Request.ServerVariables("SCRIPT_NAME"))
@@ -43,42 +41,45 @@ Public Class cpApiClass
             If (queryPos > 0) Then
                 cp.Context.queryString = requestUrl.Substring(queryPos + 1)
             End If
-            For Each key As String In page.Request.QueryString
-                If (Not String.IsNullOrEmpty(key)) Then
-                    isBinaryRequest = isBinaryRequest Or (key.ToLower() = "requestbinary")
+            '
+            ' -- handle files
+            Dim formFiles As String = ""
+            Dim filePtr As Integer = 0
+            Dim formNames As String() = page.Request.Files.AllKeys
+            Dim tmpFiles As New List(Of String)
+            For Each formName As String In formNames
+                Dim file As HttpPostedFile = page.Request.Files(formName)
+                If (file IsNot Nothing) Then
+                    If (file.ContentLength > 0) And (Not String.IsNullOrEmpty(file.FileName)) Then
+                        Dim tmpPathFilename As String = IO.Path.Combine(System.IO.Path.GetTempPath, file.FileName)
+                        tmpFiles.Add(tmpPathFilename)
+                        file.SaveAs(tmpPathFilename)
+                        formFiles &= "&" & filePtr.ToString() & "formname=" & formName
+                        formFiles &= "&" & filePtr.ToString() & "filename=" & file.FileName
+                        formFiles &= "&" & filePtr.ToString() & "type=" & file.ContentType
+                        formFiles &= "&" & filePtr.ToString() & "tmpfile=" & tmpPathFilename
+                        formFiles &= "&" & filePtr.ToString() & "error="
+                        formFiles &= "&" & filePtr.ToString() & "size=" & file.ContentLength
+                    End If
                 End If
             Next
-            cp.Context.isBinaryRequest = isBinaryRequest
-            '
-            ' Create ServerForm
-            '
-            If isBinaryRequest Then
-                '
-                ' binary multipart form 
-                '
-                TotalBytes = page.Request.TotalBytes
-                If TotalBytes > 0 Then
-                    page.Server.ScriptTimeout = 1800
-                    cp.Context.binaryRequest = page.Request.BinaryRead(TotalBytes - 1)
-                End If
-            Else
-                '
-                ' non-binary form, create Form String
-                '
-                c = ""
-                For Each key As String In page.Request.Form
-                    If (Not String.IsNullOrEmpty(key)) Then
-                        c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.Form(key))
-                    End If
-                Next
-                If Len(c) > 0 Then
-                    c = Mid(c, 2)
-                End If
-                cp.Context.form = c
+            If (Not String.IsNullOrEmpty(formFiles)) Then
+                cp.Context.formFiles = formFiles.Substring(1)
             End If
             '
-            ' Create ServerCookie string
+            ' -- handle form
+            c = ""
+            For Each key As String In page.Request.Form
+                If (Not String.IsNullOrEmpty(key)) Then
+                    c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.Unvalidated(key))
+                End If
+            Next
+            If Len(c) > 0 Then
+                c = Mid(c, 2)
+            End If
+            cp.Context.form = c
             '
+            ' -- Cookies string
             c = ""
             For Each key As String In page.Request.Cookies
                 If (Not String.IsNullOrEmpty(key)) Then
@@ -90,42 +91,43 @@ Public Class cpApiClass
             End If
             cp.Context.cookies = c
             '
-            ' get doc and process Contensive output
-            '
+            ' -- build doc
             result = result & cp.getDoc(isAdmin)
             '
-            ' setup IIS Response
-            '
+            ' -- setup IIS Response
             page.Response.CacheControl = "no-cache"
             page.Response.Expires = -1
             page.Response.Buffer = True
             '
-            ' post processing
+            ' -- delete temp uploaded files
+            If (tmpFiles.Count > 0) Then
+                For Each tmpFile As String In tmpFiles
+                    If (Not String.IsNullOrEmpty(tmpFile)) Then
+                        cp.File.Delete(tmpFile)
+                    End If
+                Next
+            End If
             '
             c = cp.Context.responseRedirect
             If c <> "" Then
                 '
-                ' redirect
-                '
+                ' -- redirect
                 If Not page.Response.IsRequestBeingRedirected Then
                     page.Response.Redirect(c, False)
                     page.Response.End()
                 End If
             Else
                 '
-                ' concatinate writestream data to the end of the body
-                '
+                ' -- concatinate writestream data to the end of the body
                 result = result & cp.Context.responseBuffer
                 '
-                ' set content type
-                '
+                ' -- set content type
                 c = cp.Context.responseContentType
                 If c <> "" Then
                     page.Response.ContentType = c
                 End If
                 '
-                ' set cookies
-                '
+                ' -- set cookies
                 c = cp.Context.responseCookies
                 If c <> "" Then
                     row = Split(c, vbCrLf)
@@ -154,8 +156,7 @@ Public Class cpApiClass
                     Loop
                 End If
                 '
-                ' set headers
-                '
+                ' -- set headers
                 c = cp.Context.responseHeaders
                 If c <> "" Then
                     row = Split(c, vbCrLf)
@@ -169,8 +170,7 @@ Public Class cpApiClass
                     Loop
                 End If
                 '
-                ' set http status
-                '
+                ' -- set http status
                 c = cp.Context.responseStatus
                 If c <> "" Then
                     page.Response.Status = c
