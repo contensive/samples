@@ -71,7 +71,7 @@ Public Class cpApiClass
             c = ""
             For Each key As String In page.Request.Form
                 If (Not String.IsNullOrEmpty(key)) Then
-                    c = c & "&" & page.Server.UrlEncode(key) & "=" & page.Server.UrlEncode(page.Request.Unvalidated(key))
+                    c = c & "&" & encodeAmpEqual(key) & "=" & encodeAmpEqual(page.Request.Unvalidated(key))
                 End If
             Next
             If Len(c) > 0 Then
@@ -83,7 +83,7 @@ Public Class cpApiClass
             c = ""
             For Each key As String In page.Request.Cookies
                 If (Not String.IsNullOrEmpty(key)) Then
-                    c = c & "&" & key & "=" & page.Server.UrlEncode(page.Request.Cookies.Item(key).Value)
+                    c = c & "&" & encodeAmpEqual(key) & "=" & encodeAmpEqual(page.Request.Cookies.Item(key).Value)
                 End If
             Next
             If Len(c) > 0 Then
@@ -180,6 +180,10 @@ Public Class cpApiClass
             cp.Site.ErrorReport(ex)
         End Try
         Return result
+    End Function
+    '
+    Private Shared Function encodeAmpEqual(source As String) As String
+        Return source.Replace("&", "%3D").Replace("=", "%26")
     End Function
 
 End Class
