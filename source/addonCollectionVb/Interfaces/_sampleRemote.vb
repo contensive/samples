@@ -24,6 +24,16 @@ Namespace AddonCollectionVb
                     ae.packageProfileList.Add(New applicationController.packageProfileClass() With {.name = "applicationControllerConstructor", .time = sw.ElapsedMilliseconds})
                     If ae.packageErrorList.Count = 0 Then
                         '
+                        ' -- get a request variable from either a querystring or a post
+                        Dim integerValueFromUI As Integer = cp.Doc.GetInteger("integerValueFromUI")
+                        '
+                        ' -- get an object from the UI (javascript object stringified)
+                        ' -- first inject the fake data to simpulate UI input, then read it
+                        cp.Doc.SetProperty("objectValueFromUI", fakeData)
+                        Dim json_serializer As New System.Web.Script.Serialization.JavaScriptSerializer
+                        Dim objectValueFromUI As sampleStringifiedObject = json_serializer.Deserialize(Of sampleStringifiedObject)(cp.Doc.GetText("objectValueFromUI"))
+                        Dim test As String = objectValueFromUI.firstname
+                        '
                         ' -- create sample data
                         Dim personList As List(Of Models.personModel) = Models.personModel.createList(cp, "")
                         '
@@ -44,6 +54,13 @@ Namespace AddonCollectionVb
             Return result
         End Function
         '
+        Private Class sampleStringifiedObject
+            Public firstname As String
+            Public id As Integer
+            Public friendList As List(Of String)
+        End Class
+        '
+        Private fakeData As String = "{""firstname"":""nameData"", ""id"":""9"", ""friendList"":[""Tom"",""Dick"",""Harry""]}"
         '
     End Class
     '

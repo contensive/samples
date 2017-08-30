@@ -183,7 +183,7 @@ Public Class cpApiClass
     End Function
     '
     Private Shared Function encodeAmpEqual(source As String) As String
-        Return source.Replace("%", "%25").Replace("&", "%3D").Replace("=", "%26").Replace("+", "%2B")
+        Return source.Replace("%", "%25").Replace("=", "%3D").Replace("&", "%26").Replace("+", "%2B")
     End Function
 
 End Class
