@@ -6,7 +6,7 @@
     ''' </summary>
     Sub Page_Load()
         Dim cp As New Contensive.Processor.CPClass
-        Dim doc As String = cpApiClass.getContensivePage(cp, Page, False)
+        Dim doc As String = ContensiveSite.wwwRoot.cpApiClass.getContensivePage(cp, Page, Context, False)
         If cp.Response.isOpen() Then
             'doc = Replace(doc, "$myCustomTag$", "<div>cp.user.name = " & cp.User.Name & "</div>")
         End If

@@ -13,7 +13,7 @@ Public Class cpApiClass
     ''' <param name="cp"></param>
     ''' <param name="isAdmin"></param>
     ''' <returns></returns>
-    Public Shared Function getContensivePage(cp As Contensive.Processor.CPClass, page As Page, isAdmin As Boolean) As String
+    Public Shared Function getContensivePage(cp As Contensive.Processor.CPClass, page As Page, context As HttpContext, isAdmin As Boolean) As String
         Dim result As String = ""
         Try
             Dim c As String
@@ -108,13 +108,12 @@ Public Class cpApiClass
                 Next
             End If
             '
-            c = cp.Context.responseRedirect
-            If c <> "" Then
+            If cp.Context.responseRedirect <> "" Then
                 '
                 ' -- redirect
                 If Not page.Response.IsRequestBeingRedirected Then
-                    page.Response.Redirect(c, False)
-                    page.Response.End()
+                    page.Response.Redirect(cp.Context.responseRedirect, False)
+                    context.ApplicationInstance.CompleteRequest()
                 End If
             Else
                 '
@@ -122,9 +121,8 @@ Public Class cpApiClass
                 result = result & cp.Context.responseBuffer
                 '
                 ' -- set content type
-                c = cp.Context.responseContentType
-                If c <> "" Then
-                    page.Response.ContentType = c
+                If cp.Context.responseContentType <> "" Then
+                    page.Response.ContentType = cp.Context.responseContentType
                 End If
                 '
                 ' -- set cookies
