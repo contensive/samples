@@ -8,39 +8,55 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
-    Public Class xxxxxmodelNameGoesHerexxxxx        '<------ set set model Name and everywhere that matches this string
+    Public Class ImageModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
         '
         '====================================================================================================
         '-- const
-        Public Const contentName As String = "xxxxxcontentNameGoesHerexxxxx"      '<------ set content name
-        Public Const contentTableName As String = "xxxxxtableNameGoesHerexxxxx"   '<------ set to tablename for the primary content (used for cache names)
+        Public Const contentName As String = "Images"      '<------ set content name
+        Public Const contentTableName As String = "ccImages"   '<------ set to tablename for the primary content (used for cache names)
         Private Shadows Const contentDataSource As String = "default"             '<------ set to datasource if not default
         '
         '====================================================================================================
         ' -- instance properties
-        'instancePropertiesGoHere
-        ' sample instance property -- Public Property DataSourceID As Integer
+
+        Public Property Align As String
+        Public Property Caption As String
+        Public Property Clicks As Integer
+        Public Property ClicksMax As Integer
+        Public Property DateExpires As Date
+        Public Property Height As Integer
+        Public Property ImageFilename As String
+        Public Property LastViewDate As Date
+        Public Property Link As String
+        Public Property NewWindow As Boolean
+        Public Property ThumbnailFilename As String
+        Public Property ThumbnailHeight As Integer
+        Public Property ThumbnailWidth As Integer
+        Public Property Viewings As Integer
+        Public Property ViewingsMax As Integer
+        Public Property Width As Integer
+
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Return add(Of xxxxxmodelNameGoesHerexxxxx)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As ImageModel
+            Return add(Of ImageModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As ImageModel
+            Return create(Of ImageModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As ImageModel
+            Return create(Of ImageModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As xxxxxmodelNameGoesHerexxxxx
-            Return createByName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As ImageModel
+            Return createByName(Of ImageModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -50,48 +66,48 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<-
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            delete(Of ImageModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            delete(Of ImageModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of xxxxxmodelNameGoesHerexxxxx)
-            Return createList(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of ImageModel)
+            Return createList(Of ImageModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            Return baseModel.getRecordName(Of ImageModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordName(Of ImageModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordId(Of ImageModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria)
+            Return baseModel.getCount(Of ImageModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of xxxxxmodelNameGoesHerexxxxx)(fieldName)
+            Return MyBase.getUploadPath(Of ImageModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Dim result As xxxxxmodelNameGoesHerexxxxx = DirectCast(Me.Clone(), xxxxxmodelNameGoesHerexxxxx)
+        Public Function Clone(cp As CPBaseClass) As ImageModel
+            Dim result As ImageModel = DirectCast(Me.Clone(), ImageModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

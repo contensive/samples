@@ -2,7 +2,7 @@
 Option Explicit On
 Option Strict On
 
-Namespace AddonCollectionVb
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
     Public Module constants
         '
         ' -- sample

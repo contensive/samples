@@ -2,10 +2,10 @@
 Option Strict On
 Option Explicit On
 
-Imports AddonCollectionVb.Controllers
+Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
 Imports Contensive.BaseClasses
 
-Namespace AddonCollectionVb
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
     '
     Public Class addonClass
         Inherits AddonBaseClass

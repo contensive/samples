@@ -5,11 +5,11 @@ Option Strict On
 'Imports System.Collections.Generic
 'Imports System.Text
 'Imports Contensive.BaseClasses
-'Imports AddonCollectionVb.Models
+'Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
 'Imports AddonCollectionVb.Views
 'Imports AddonCollectionVb.Controllers
 
-Namespace AddonCollectionVb.Controllers
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
     Public NotInheritable Class genericController
         Private Sub New()
         End Sub

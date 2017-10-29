@@ -7,19 +7,20 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 
-Namespace AddonCollectionVb.Models
-    Public Class personModel
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
+    Public Class PeopleModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
         '
         '====================================================================================================
         '-- const
-        Public Const contentName As String = "people"
-        Public Const contentTableName As String = "ccmembers"
-        Private Shadows Const contentDataSource As String = "default"
+        Public Const contentName As String = "People"      '<------ set content name
+        Public Const contentTableName As String = "ccMembers"   '<------ set to tablename for the primary content (used for cache names)
+        Private Shadows Const contentDataSource As String = "default"             '<------ set to datasource if not default
         '
         '====================================================================================================
         ' -- instance properties
+
         Public Property Address As String
         Public Property Address2 As String
         Public Property Admin As Boolean
@@ -43,7 +44,6 @@ Namespace AddonCollectionVb.Models
         Public Property BirthdayYear As Integer
         Public Property City As String
         Public Property Company As String
-        Public Property ContentCategoryID As Integer
         Public Property Country As String
         Public Property CreatedByVisit As Boolean
         Public Property DateExpires As Date
@@ -78,25 +78,26 @@ Namespace AddonCollectionVb.Models
         Public Property Username As String
         Public Property Visits As Integer
         Public Property Zip As String
+
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As personModel
-            Return add(Of personModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As PeopleModel
+            Return add(Of PeopleModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As personModel
-            Return create(Of personModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As PeopleModel
+            Return create(Of PeopleModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As personModel
-            Return create(Of personModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As PeopleModel
+            Return create(Of PeopleModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As personModel
-            Return createByName(Of personModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As PeopleModel
+            Return createByName(Of PeopleModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -106,48 +107,48 @@ Namespace AddonCollectionVb.Models
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of personModel)(cp, recordId)
+            delete(Of PeopleModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of personModel)(cp, ccGuid)
+            delete(Of PeopleModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of personModel)
-            Return createList(Of personModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of PeopleModel)
+            Return createList(Of PeopleModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of personModel)(cp, recordId)
+            Return baseModel.getRecordName(Of PeopleModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of personModel)(cp, ccGuid)
+            Return baseModel.getRecordName(Of PeopleModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of personModel)(cp, ccGuid)
+            Return baseModel.getRecordId(Of PeopleModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of personModel)(cp, sqlCriteria)
+            Return baseModel.getCount(Of PeopleModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of personModel)(fieldName)
+            Return MyBase.getUploadPath(Of PeopleModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As personModel
-            Dim result As personModel = DirectCast(Me.Clone(), personModel)
+        Public Function Clone(cp As CPBaseClass) As PeopleModel
+            Dim result As PeopleModel = DirectCast(Me.Clone(), PeopleModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

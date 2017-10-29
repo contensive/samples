@@ -8,7 +8,7 @@ Imports System.Text
 Imports Contensive.BaseClasses
 Imports System.Reflection
 
-Namespace AddonCollectionVb.Models
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
     Public MustInherit Class baseModel
         '
         '====================================================================================================

@@ -4,7 +4,7 @@ Option Strict On
 
 Imports Contensive.BaseClasses
 
-Namespace AddonCollectionVb.Controllers
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
     '
     '====================================================================================================
     ''' <summary>

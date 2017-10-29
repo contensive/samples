@@ -2,10 +2,11 @@
 Option Explicit On
 Option Strict On
 
-Imports AddonCollectionVb.Controllers
+Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
+Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
 Imports Contensive.BaseClasses
 '
-Namespace AddonCollectionVb
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
     '
     Public Class getProjectListNoDetailsClass
         Inherits AddonBaseClass
@@ -35,12 +36,12 @@ Namespace AddonCollectionVb
                         Dim test As String = objectValueFromUI.firstname
                         '
                         ' -- create sample data
-                        Dim personList As List(Of Models.personModel) = Models.personModel.createList(cp, "")
+                        Dim personList As List(Of xxxxxCollectionNameSpaceGoesHerexxxxx.Models.PeopleModel) = Models.PeopleModel.createList(cp, "")
                         '
                         ' -- add sample data to a node
                         ae.packageNodeList.Add(New applicationController.packageNodeClass With {
                             .dataFor = "nameOfThisDataForRemoteToRecognize",
-                            .data = personList
+                            .Data = personList
                         })
                     End If
                     '

@@ -8,39 +8,50 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
-    Public Class xxxxxmodelNameGoesHerexxxxx        '<------ set set model Name and everywhere that matches this string
+    Public Class EmailLogModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
         '
         '====================================================================================================
         '-- const
-        Public Const contentName As String = "xxxxxcontentNameGoesHerexxxxx"      '<------ set content name
-        Public Const contentTableName As String = "xxxxxtableNameGoesHerexxxxx"   '<------ set to tablename for the primary content (used for cache names)
+        Public Const contentName As String = "Email Log"      '<------ set content name
+        Public Const contentTableName As String = "ccEmailLog"   '<------ set to tablename for the primary content (used for cache names)
         Private Shadows Const contentDataSource As String = "default"             '<------ set to datasource if not default
         '
         '====================================================================================================
         ' -- instance properties
-        'instancePropertiesGoHere
-        ' sample instance property -- Public Property DataSourceID As Integer
+
+        Public Property DateBlockExpires As Date
+        Public Property EmailDropID As Integer
+        Public Property EmailID As Integer
+        Public Property FromAddress As String
+        Public Property LogType As Integer
+        Public Property MemberID As Integer
+        Public Property SendStatus As String
+        Public Property Subject As String
+        Public Property ToAddress As String
+        Public Property VisitID As Integer
+
+
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Return add(Of xxxxxmodelNameGoesHerexxxxx)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As EmailLogModel
+            Return add(Of EmailLogModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As EmailLogModel
+            Return create(Of EmailLogModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As EmailLogModel
+            Return create(Of EmailLogModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As xxxxxmodelNameGoesHerexxxxx
-            Return createByName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As EmailLogModel
+            Return createByName(Of EmailLogModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -50,48 +61,48 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<-
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            delete(Of EmailLogModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            delete(Of EmailLogModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of xxxxxmodelNameGoesHerexxxxx)
-            Return createList(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of EmailLogModel)
+            Return createList(Of EmailLogModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            Return baseModel.getRecordName(Of EmailLogModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordName(Of EmailLogModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordId(Of EmailLogModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria)
+            Return baseModel.getCount(Of EmailLogModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of xxxxxmodelNameGoesHerexxxxx)(fieldName)
+            Return MyBase.getUploadPath(Of EmailLogModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Dim result As xxxxxmodelNameGoesHerexxxxx = DirectCast(Me.Clone(), xxxxxmodelNameGoesHerexxxxx)
+        Public Function Clone(cp As CPBaseClass) As EmailLogModel
+            Dim result As EmailLogModel = DirectCast(Me.Clone(), EmailLogModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

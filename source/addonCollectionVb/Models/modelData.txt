@@ -3,17 +3,20 @@ script to create vb model data -- model data follows the script
 
 
 function m
-	dim cs,c,n
+	dim cs,c,modelName
 	set cs = cp.csNew()
 	if ( cs.open( "content" )) then
 		do
-			n = replace( cs.getText( "name" ), " ", "")
-			if ( right( n,1 ) = "s" ) then
-				n = left( n, len( n )-1)
+			modelName = replace( cs.getText( "name" ), " ", "")
+			modelName = replace( modelName, "-", "")
+			if ( right( modelName,1 ) = "s" ) then
+				modelName = left( modelName, len( modelName )-1)
 			end if
-			n = n & "Model"
+			modelName = modelName & "Model"
 			c = c & vbcrlf & vbcrlf & "---------------------------------------------"
-			c = c & vbcrlf & n
+			c = c & vbcrlf & "Model Name: " & modelName
+			c = c & vbcrlf & "Content Name: " & cs.getText( "name" )
+			c = c & vbcrlf & "Table Name: " & cp.content.getRecordName( "tables", cs.getInteger( "ContentTableID" ))
 			c = c & vbcrlf & getModelFields( cs.getInteger( "id" ))
 			cs.goNext()
 		loop while cs.ok
@@ -32,7 +35,7 @@ function getModelFields( contentId )
 		select case lcase( fieldName )
 			case "id"
 				p = p & ""
-			case "contentcontrolid","modifiedby","createdby","createkey","editarchive","editsourceid","editblank"
+			case "contentcategoryid","contentcontrolid","modifiedby","createdby","createkey","editarchive","editsourceid","editblank"
 				p = p & ""
 			case "modifieddate","dateadded"
 				p = p & ""
@@ -71,27 +74,29 @@ end function
 
 
 ---------------------------------------------
-DataSourceModel
+Model Name: DataSourceModel
+Content Name: Data Sources
+Table Name: ccDataSources
 
 public property ConnString as String
-public property ContentCategoryID as Integer
-
 
 
 
 
 ---------------------------------------------
-TableModel
+Model Name: TableModel
+Content Name: Tables
+Table Name: ccTables
 
-public property ContentCategoryID as Integer
 public property DataSourceID as Integer
 
 
 
 
-
 ---------------------------------------------
-ContentModel
+Model Name: ContentModel
+Content Name: Content
+Table Name: ccContent
 
 public property AdminOnly as Boolean
 public property AllowAdd as Boolean
@@ -102,7 +107,6 @@ public property AllowMetaContent as Boolean
 public property AllowTopicRules as Boolean
 public property AllowWorkflowAuthoring as Boolean
 public property AuthoringTableID as Integer
-public property ContentCategoryID as Integer
 public property ContentTableID as Integer
 public property DefaultSortMethodID as Integer
 public property DeveloperOnly as Boolean
@@ -119,14 +123,14 @@ public property ParentID as Integer
 
 
 
-
 ---------------------------------------------
-ContentFieldModel
+Model Name: ContentFieldModel
+Content Name: Content Fields
+Table Name: ccFields
 
 public property AdminOnly as Boolean
 public property Authorable as Boolean
 public property Caption as String
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property createResourceFilesOnRoot as Boolean
 public property DefaultValue as String
@@ -166,11 +170,11 @@ public property UniqueName as Boolean
 
 
 
-
 ---------------------------------------------
-ContentFieldHelpModel
+Model Name: ContentFieldHelpModel
+Content Name: Content Field Help
+Table Name: ccFieldHelp
 
-public property ContentCategoryID as Integer
 public property FieldID as Integer
 public property HelpCustom as String
 public property HelpDefault as String
@@ -178,54 +182,54 @@ public property HelpDefault as String
 
 
 
-
 ---------------------------------------------
-ContentFieldTypeModel
+Model Name: ContentFieldTypeModel
+Content Name: Content Field Types
+Table Name: ccFieldTypes
 
-public property ContentCategoryID as Integer
 public property EditorAddonId as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onContentFieldTypeRuleModel
+Model Name: AddonContentFieldTypeRuleModel
+Content Name: Add-on Content Field Type Rules
+Table Name: ccAddonContentFieldTypeRules
 
 public property addonID as Integer
-public property ContentCategoryID as Integer
 public property contentFieldTypeID as Integer
 
 
 
 
-
 ---------------------------------------------
-SortMethodModel
+Model Name: SortMethodModel
+Content Name: Sort Methods
+Table Name: ccSortMethods
 
-public property ContentCategoryID as Integer
 public property OrderByClause as String
 
 
 
 
+---------------------------------------------
+Model Name: ContentCategorieModel
+Content Name: Content Categories
+Table Name: ccContentCategories
+
+
+
+
 
 ---------------------------------------------
-ContentCategorieModel
-
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-VisitSummaryModel
+Model Name: VisitSummaryModel
+Content Name: Visit Summary
+Table Name: ccVisitSummary
 
 public property AuthenticatedVisits as Integer
 public property AveTimeOnSite as Integer
 public property BotVisits as Integer
-public property ContentCategoryID as Integer
 public property DateNumber as Integer
 public property MobileVisits as Integer
 public property NewVisitorVisits as Integer
@@ -239,13 +243,13 @@ public property Visits as Integer
 
 
 
-
 ---------------------------------------------
-PageViewSummaryModel
+Model Name: PageViewSummaryModel
+Content Name: Page View Summary
+Table Name: ccViewingSummary
 
 public property AuthenticatedPageViews as Integer
 public property BotPageViews as Integer
-public property ContentCategoryID as Integer
 public property DateNumber as Integer
 public property MobilePageViews as Integer
 public property NoCookiePageViews as Integer
@@ -258,11 +262,11 @@ public property TimeNumber as Integer
 
 
 
-
 ---------------------------------------------
-VisitorModel
+Model Name: VisitorModel
+Content Name: Visitors
+Table Name: ccVisitors
 
-public property ContentCategoryID as Integer
 public property ForceBrowserMobile as Integer
 public property MemberID as Integer
 public property OrderID as Integer
@@ -270,13 +274,13 @@ public property OrderID as Integer
 
 
 
-
 ---------------------------------------------
-VisitModel
+Model Name: VisitModel
+Content Name: Visits
+Table Name: ccVisits
 
 public property Bot as Boolean
 public property Browser as String
-public property ContentCategoryID as Integer
 public property CookieSupport as Boolean
 public property ExcludeFromAnalytics as Boolean
 public property HTTP_FROM as String
@@ -303,11 +307,11 @@ public property VisitorNew as Boolean
 
 
 
-
 ---------------------------------------------
-ViewingModel
+Model Name: ViewingModel
+Content Name: Viewings
+Table Name: ccViewings
 
-public property ContentCategoryID as Integer
 public property ExcludeFromAnalytics as Boolean
 public property Form as String
 public property Host as String
@@ -326,13 +330,13 @@ public property VisitorID as Integer
 
 
 
-
 ---------------------------------------------
-AdminMenuingModel
+Model Name: AdminMenuingModel
+Content Name: Admin Menuing
+Table Name: ccMenuEntries
 
 public property AddonID as Integer
 public property AdminOnly as Boolean
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property DeveloperOnly as Boolean
 public property HelpAddonID as Integer
@@ -347,9 +351,10 @@ public property ParentID as Integer
 
 
 
-
 ---------------------------------------------
-MenuEntrieModel
+Model Name: MenuEntrieModel
+Content Name: Menu Entries
+Table Name: ccMenuEntries
 
 public property NavIconTitle as String
 public property NavIconType as Integer
@@ -358,31 +363,32 @@ public property ParentID as Integer
 
 
 
-
 ---------------------------------------------
-NavigatorEntrieModel
+Model Name: NavigatorEntrieModel
+Content Name: Navigator Entries
+Table Name: ccMenuEntries
 
 public property ParentID as Integer
 
 
 
 
-
 ---------------------------------------------
-ReportRuleModel
+Model Name: ReportRuleModel
+Content Name: Report Rules
+Table Name: ccReportRules
 
 public property Address as String
 public property Browser as String
-public property ContentCategoryID as Integer
-
 
 
 
 
 ---------------------------------------------
-TrapLogModel
+Model Name: TrapLogModel
+Content Name: Trap Log
+Table Name: ccTrapLog
 
-public property ContentCategoryID as Integer
 public property CopyFilename as String
 public property Host as String
 public property Page as String
@@ -393,61 +399,63 @@ public property Resolved as Boolean
 
 
 
-
 ---------------------------------------------
-SitePropertieModel
+Model Name: SitePropertieModel
+Content Name: Site Properties
+Table Name: ccSetup
 
-public property ContentCategoryID as Integer
 public property FieldValue as String
 
 
 
 
+---------------------------------------------
+Model Name: AdminSitePropertieModel
+Content Name: Admin Site Properties
+Table Name: ccSetup
+
+
+
+
 
 ---------------------------------------------
-AdminSitePropertieModel
-
-
-
-
-
----------------------------------------------
-TopicModel
+Model Name: TopicModel
+Content Name: Topics
+Table Name: ccTopics
 
 public property AllowBulkEmail as Boolean
-public property ContentCategoryID as Integer
 public property PublicJoin as Boolean
 
 
 
 
-
 ---------------------------------------------
-PageContentTopicRuleModel
+Model Name: PageContentTopicRuleModel
+Content Name: Page Content Topic Rules
+Table Name: ccPageContentTopicRules
 
-public property ContentCategoryID as Integer
 public property PageID as Integer
 public property TopicID as Integer
 
 
 
 
-
 ---------------------------------------------
-MemberTopicRuleModel
+Model Name: MemberTopicRuleModel
+Content Name: Member Topic Rules
+Table Name: ccMemberTopicRules
 
-public property ContentCategoryID as Integer
 public property MemberID as Integer
 public property TopicID as Integer
 
 
 
 
-
 ---------------------------------------------
-TopicHabitModel
+Model Name: TopicHabitModel
+Content Name: Topic Habits
+Table Name: ccTopicHabits
 
-public property ContentCategoryID as Integer
 public property ContentRecordKey as String
 public property MemberID as Integer
 public property Score as Integer
@@ -457,19 +465,20 @@ public property VisitID as Integer
 
 
 
-
 ---------------------------------------------
-LanguageModel
+Model Name: LanguageModel
+Content Name: Languages
+Table Name: ccLanguages
 
-public property ContentCategoryID as Integer
 public property HTTP_Accept_Language as String
 
 
 
 
-
 ---------------------------------------------
-PeopleModel
+Model Name: PeopleModel
+Content Name: People
+Table Name: ccMembers
 
 public property Address as String
 public property Address2 as String
@@ -494,7 +503,6 @@ public property BirthdayMonth as Integer
 public property BirthdayYear as Integer
 public property City as String
 public property Company as String
-public property ContentCategoryID as Integer
 public property Country as String
 public property CreatedByVisit as Boolean
 public property DateExpires as Date
@@ -533,44 +541,46 @@ public property Zip as String
 
 
 
+---------------------------------------------
+Model Name: MemberModel
+Content Name: Members
+Table Name: ccMembers
+
+
+
+
 
 ---------------------------------------------
-MemberModel
-
-
-
-
-
----------------------------------------------
-GroupModel
+Model Name: GroupModel
+Content Name: Groups
+Table Name: ccGroups
 
 public property AllowBulkEmail as Boolean
 public property Caption as String
-public property ContentCategoryID as Integer
 public property CopyFilename as String
 public property PublicJoin as Boolean
 
 
 
 
-
 ---------------------------------------------
-GroupRuleModel
+Model Name: GroupRuleModel
+Content Name: Group Rules
+Table Name: ccGroupRules
 
 public property AllowAdd as Boolean
 public property AllowDelete as Boolean
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property GroupID as Integer
 
 
 
 
-
 ---------------------------------------------
-MemberRuleModel
+Model Name: MemberRuleModel
+Content Name: Member Rules
+Table Name: ccMemberRules
 
-public property ContentCategoryID as Integer
 public property DateExpires as Date
 public property GroupID as Integer
 public property MemberID as Integer
@@ -578,9 +588,10 @@ public property MemberID as Integer
 
 
 
-
 ---------------------------------------------
-OrganizationModel
+Model Name: OrganizationModel
+Content Name: Organizations
+Table Name: organizations
 
 public property Address1 as String
 public property Address2 as String
@@ -588,7 +599,6 @@ public property BriefFilename as String
 public property City as String
 public property Clicks as Integer
 public property ContactMemberID as Integer
-public property ContentCategoryID as Integer
 public property CopyFilename as String
 public property Country as String
 public property Email as String
@@ -605,9 +615,10 @@ public property Zip as String
 
 
 
-
 ---------------------------------------------
-PageContentModel
+Model Name: PageContentModel
+Content Name: Page Content
+Table Name: ccPageContent
 
 public property AllowBrief as Boolean
 public property AllowChildListDisplay as Boolean
@@ -636,7 +647,6 @@ public property ChildListSortMethodID as Integer
 public property ChildPagesFound as Boolean
 public property Clicks as Integer
 public property ContactMemberID as Integer
-public property ContentCategoryID as Integer
 public property ContentPadding as Integer
 public property Copyfilename as String
 public property CustomBlockMessage as String
@@ -684,20 +694,21 @@ public property Viewings as Integer
 
 
 
-
 ---------------------------------------------
-PageContentBlockRuleModel
+Model Name: PageContentBlockRuleModel
+Content Name: Page Content Block Rules
+Table Name: ccPageContentBlockRules
 
-public property ContentCategoryID as Integer
 public property GroupID as Integer
 public property RecordID as Integer
 
 
 
 
-
 ---------------------------------------------
-EmailModel
+Model Name: EmailModel
+Content Name: Email
+Table Name: ccEmail
 
 public property AddLinkEID as Boolean
 public property AllowSpamFooter as Boolean
@@ -705,7 +716,6 @@ public property BlockSiteStyles as Boolean
 public property ConditionExpireDate as Date
 public property ConditionID as Integer
 public property ConditionPeriod as Integer
-public property ContentCategoryID as Integer
 public property CopyFilename as String
 public property EmailTemplateID as Integer
 public property EmailWizardID as Integer
@@ -723,20 +733,21 @@ public property ToAll as Boolean
 
 
 
-
 ---------------------------------------------
-EmailStyleRuleModel
+Model Name: EmailStyleRuleModel
+Content Name: Email Style Rules
+Table Name: ccEmailStyleRules
 
-public property ContentCategoryID as Integer
 public property emailId as Integer
 public property sharedStylesId as Integer
 
 
 
 
-
 ---------------------------------------------
-GroupEmailModel
+Model Name: GroupEmailModel
+Content Name: Group Email
+Table Name: ccEmail
 
 public property ConditionExpireDate as Date
 public property ConditionID as Integer
@@ -747,9 +758,10 @@ public property Submitted as Boolean
 
 
 
-
 ---------------------------------------------
-SystemEmailModel
+Model Name: SystemEmailModel
+Content Name: System Email
+Table Name: ccEmail
 
 public property ConditionExpireDate as Date
 public property ConditionID as Integer
@@ -762,9 +774,10 @@ public property ToAll as Boolean
 
 
 
-
 ---------------------------------------------
-ConditionalEmailModel
+Model Name: ConditionalEmailModel
+Content Name: Conditional Email
+Table Name: ccEmail
 
 public property Sent as Boolean
 public property Submitted as Boolean
@@ -773,43 +786,43 @@ public property ToAll as Boolean
 
 
 
-
 ---------------------------------------------
-EmailGroupModel
+Model Name: EmailGroupModel
+Content Name: Email Groups
+Table Name: ccEmailGroups
 
-public property ContentCategoryID as Integer
 public property EmailID as Integer
 public property GroupID as Integer
 
 
 
 
-
 ---------------------------------------------
-EmailTopicModel
+Model Name: EmailTopicModel
+Content Name: Email Topics
+Table Name: ccEmailTopics
 
-public property ContentCategoryID as Integer
 public property EmailID as Integer
 public property TopicID as Integer
 
 
 
 
-
 ---------------------------------------------
-EmailDropModel
+Model Name: EmailDropModel
+Content Name: Email Drops
+Table Name: ccEmailDrops
 
-public property ContentCategoryID as Integer
 public property EmailID as Integer
 
 
 
 
-
 ---------------------------------------------
-EmailLogModel
+Model Name: EmailLogModel
+Content Name: Email Log
+Table Name: ccEmailLog
 
-public property ContentCategoryID as Integer
 public property DateBlockExpires as Date
 public property EmailDropID as Integer
 public property EmailID as Integer
@@ -824,23 +837,23 @@ public property VisitID as Integer
 
 
 
-
 ---------------------------------------------
-EmailTemplateModel
+Model Name: EmailTemplateModel
+Content Name: Email Templates
+Table Name: ccTemplates
 
 public property BodyHTML as String
-public property ContentCategoryID as Integer
 public property Source as String
 
 
 
 
-
 ---------------------------------------------
-EmailWizardModel
+Model Name: EmailWizardModel
+Content Name: Email Wizards
+Table Name: ccEmailWizards
 
 public property AllowSpamFooterDefault as Boolean
-public property ContentCategoryID as Integer
 public property ContentFormInstructions as String
 public property DefaultConditionPeriod as Integer
 public property DefaultContent as String
@@ -860,13 +873,13 @@ public property TemplateFormInstructions as String
 
 
 
-
 ---------------------------------------------
-ContentWatchModel
+Model Name: ContentWatchModel
+Content Name: Content Watch
+Table Name: ccContentWatch
 
 public property AllowWhatsNew as Boolean
 public property Clicks as Integer
-public property ContentCategoryID as Integer
 public property Contentid as Integer
 public property ContentRecordKey as String
 public property Link as String
@@ -877,32 +890,32 @@ public property WhatsNewDateExpires as Date
 
 
 
+---------------------------------------------
+Model Name: ContentWatchListModel
+Content Name: Content Watch Lists
+Table Name: ccContentWatchLists
+
+
+
+
 
 ---------------------------------------------
-ContentWatchListModel
+Model Name: ContentWatchListRuleModel
+Content Name: Content Watch List Rules
+Table Name: ccContentWatchListRules
 
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-ContentWatchListRuleModel
-
-public property ContentCategoryID as Integer
 public property ContentWatchID as Integer
 public property ContentWatchListID as Integer
 
 
 
 
-
 ---------------------------------------------
-SeeAlsoModel
+Model Name: SeeAlsoModel
+Content Name: See Also
+Table Name: ccSeeAlso
 
 public property Brief as String
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property Link as String
 public property RecordID as Integer
@@ -910,32 +923,32 @@ public property RecordID as Integer
 
 
 
+---------------------------------------------
+Model Name: PathModel
+Content Name: Paths
+Table Name: ccPaths
+
+
+
+
 
 ---------------------------------------------
-PathModel
+Model Name: PathRuleModel
+Content Name: Path Rules
+Table Name: ccPathRules
 
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-PathRuleModel
-
-public property ContentCategoryID as Integer
 public property GroupID as Integer
 public property PathID as Integer
 
 
 
 
-
 ---------------------------------------------
-StateModel
+Model Name: StateModel
+Content Name: States
+Table Name: ccStates
 
 public property Abbreviation as String
-public property ContentCategoryID as Integer
 public property CountryID as Integer
 public property FIPSState as String
 public property SalesTax as Double
@@ -944,26 +957,26 @@ public property StateRegionID as Integer
 
 
 
-
 ---------------------------------------------
-CountrieModel
+Model Name: CountrieModel
+Content Name: Countries
+Table Name: ccCountries
 
 public property Abbreviation as String
-public property ContentCategoryID as Integer
 public property DomesticShipping as Boolean
 
 
 
 
-
 ---------------------------------------------
-ImageModel
+Model Name: ImageModel
+Content Name: Images
+Table Name: ccImages
 
 public property Align as String
 public property Caption as String
 public property Clicks as Integer
 public property ClicksMax as Integer
-public property ContentCategoryID as Integer
 public property DateExpires as Date
 public property Height as Integer
 public property ImageFilename as String
@@ -980,11 +993,11 @@ public property Width as Integer
 
 
 
-
 ---------------------------------------------
-PropertieModel
+Model Name: PropertieModel
+Content Name: Properties
+Table Name: ccProperties
 
-public property ContentCategoryID as Integer
 public property FieldValue as String
 public property KeyID as Integer
 public property TypeID as Integer
@@ -992,11 +1005,11 @@ public property TypeID as Integer
 
 
 
-
 ---------------------------------------------
-AuthoringControlModel
+Model Name: AuthoringControlModel
+Content Name: Authoring Controls
+Table Name: ccAuthoringControls
 
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property ContentRecordKey as String
 public property ControlType as Integer
@@ -1006,23 +1019,23 @@ public property RecordID as Integer
 
 
 
-
 ---------------------------------------------
-SharedStylesIncludeRuleModel
+Model Name: SharedStylesIncludeRuleModel
+Content Name: Shared Styles Include Rules
+Table Name: ccSharedStylesIncludeRules
 
-public property ContentCategoryID as Integer
 public property IncludedStyleID as Integer
 public property StyleID as Integer
 
 
 
 
-
 ---------------------------------------------
-SharedStyleModel
+Model Name: SharedStyleModel
+Content Name: Shared Styles
+Table Name: ccSharedStyles
 
 public property AlwaysInclude as Boolean
-public property ContentCategoryID as Integer
 public property Prefix as String
 public property StyleFilename as String
 public property Suffix as String
@@ -1030,103 +1043,104 @@ public property Suffix as String
 
 
 
-
 ---------------------------------------------
-SharedStylesAdd-onRuleModel
+Model Name: SharedStylesAddonRuleModel
+Content Name: Shared Styles Add-on Rules
+Table Name: ccSharedStylesAddonRules
 
 public property AddonID as Integer
-public property ContentCategoryID as Integer
 public property StyleID as Integer
 
 
 
 
-
 ---------------------------------------------
-ScriptingModuleModel
+Model Name: ScriptingModuleModel
+Content Name: Scripting Modules
+Table Name: ccScriptingModules
 
 public property Code as String
-public property ContentCategoryID as Integer
+
+
+
+
+---------------------------------------------
+Model Name: ScriptingLanguageModel
+Content Name: Scripting Languages
+Table Name: ccScriptingLanguages
 
 
 
 
 
 ---------------------------------------------
-ScriptingLanguageModel
-
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-Add-onScriptingModuleRuleModel
+Model Name: AddonScriptingModuleRuleModel
+Content Name: Add-on Scripting Module Rules
+Table Name: ccAddonScriptingModuleRules
 
 public property AddonID as Integer
-public property ContentCategoryID as Integer
 public property ScriptingModuleID as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onIncludeRuleModel
+Model Name: AddonIncludeRuleModel
+Content Name: Add-on Include Rules
+Table Name: ccAddonIncludeRules
 
 public property AddonID as Integer
-public property ContentCategoryID as Integer
 public property IncludedAddonID as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onContentTriggerRuleModel
+Model Name: AddonContentTriggerRuleModel
+Content Name: Add-on Content Trigger Rules
+Table Name: ccAddonContentTriggerRules
 
 public property AddonID as Integer
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 
 
 
 
+---------------------------------------------
+Model Name: AddonEventModel
+Content Name: Add-on Events
+Table Name: ccAddonEvents
+
+
+
+
 
 ---------------------------------------------
-Add-onEventModel
-
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-Add-onEventThrowerModel
+Model Name: AddonEventThrowerModel
+Content Name: Add-on Event Throwers
+Table Name: ccAddonEventThrowers
 
 public property collectionId as Integer
-public property ContentCategoryID as Integer
 public property eventId as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onEventCatcherModel
+Model Name: AddonEventCatcherModel
+Content Name: Add-on Event Catchers
+Table Name: ccAddonEventCatchers
 
 public property addonId as Integer
-public property ContentCategoryID as Integer
 public property eventId as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onModel
+Model Name: AddonModel
+Content Name: Add-ons
+Table Name: ccAggregateFunctions
 
 public property Admin as Boolean
 public property ArgumentList as String
@@ -1135,7 +1149,6 @@ public property BlockDefaultStyles as Boolean
 public property BlockEditTools as Boolean
 public property CollectionID as Integer
 public property Content as Boolean
-public property ContentCategoryID as Integer
 public property Copy as String
 public property CopyText as String
 public property CustomStylesFilename as String
@@ -1184,16 +1197,19 @@ public property Template as Boolean
 
 
 
+---------------------------------------------
+Model Name: AggregateFunctionModel
+Content Name: Aggregate Functions
+Table Name: ccAggregateFunctions
+
+
+stopped here
+
 
 ---------------------------------------------
-AggregateFunctionModel
-
-
-
-
-
----------------------------------------------
-AggregateFunctionScriptModel
+Model Name: AggregateFunctionScriptModel
+Content Name: Aggregate Function Scripts
+Table Name: ccAggregateFunctions
 
 public property Copy as String
 public property ObjectProgramID as String
@@ -1201,9 +1217,10 @@ public property ObjectProgramID as String
 
 
 
-
 ---------------------------------------------
-AggregateFunctionObjectModel
+Model Name: AggregateFunctionObjectModel
+Content Name: Aggregate Function Objects
+Table Name: ccAggregateFunctions
 
 public property Copy as String
 public property Link as String
@@ -1211,9 +1228,10 @@ public property Link as String
 
 
 
-
 ---------------------------------------------
-AggregateFunctionReplacementModel
+Model Name: AggregateFunctionReplacementModel
+Content Name: Aggregate Function Replacements
+Table Name: ccAggregateFunctions
 
 public property Link as String
 public property ObjectProgramID as String
@@ -1221,45 +1239,45 @@ public property ObjectProgramID as String
 
 
 
-
 ---------------------------------------------
-Add-onCollectionParentRuleModel
+Model Name: AddonCollectionParentRuleModel
+Content Name: Add-on Collection Parent Rules
+Table Name: ccAddonCollectionParentRules
 
 public property ChildID as Integer
-public property ContentCategoryID as Integer
 public property ParentID as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onCollectionCDefRuleModel
+Model Name: AddonCollectionCDefRuleModel
+Content Name: Add-on Collection CDef Rules
+Table Name: ccAddonCollectionCDefRules
 
 public property CollectionID as Integer
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onCollectionModuleRuleModel
+Model Name: AddonCollectionModuleRuleModel
+Content Name: Add-on Collection Module Rules
+Table Name: ccAddonCollectionModuleRules
 
 public property CollectionID as Integer
-public property ContentCategoryID as Integer
 public property ScriptingModuleID as Integer
 
 
 
 
-
 ---------------------------------------------
-Add-onCollectionModel
+Model Name: AddonCollectionModel
+Content Name: Add-on Collections
+Table Name: ccAddonCollections
 
 public property blockNavigatorNode as Boolean
-public property ContentCategoryID as Integer
 public property ContentFileList as String
 public property DataRecordList as String
 public property ExecFileList as String
@@ -1275,36 +1293,36 @@ public property wwwFileList as String
 
 
 
-
 ---------------------------------------------
-LibraryFolderModel
+Model Name: LibraryFolderModel
+Content Name: Library Folders
+Table Name: ccLibraryFolders
 
-public property ContentCategoryID as Integer
 public property Description as String
 public property ParentID as Integer
 
 
 
 
-
 ---------------------------------------------
-LibraryFolderRuleModel
+Model Name: LibraryFolderRuleModel
+Content Name: Library Folder Rules
+Table Name: ccLibraryFolderRules
 
-public property ContentCategoryID as Integer
 public property FolderID as Integer
 public property GroupID as Integer
 
 
 
 
-
 ---------------------------------------------
-LibraryFileModel
+Model Name: LibraryFileModel
+Content Name: Library Files
+Table Name: ccLibraryFiles
 
 public property AltSizeList as String
 public property AltText as String
 public property Clicks as Integer
-public property ContentCategoryID as Integer
 public property Description as String
 public property Filename as String
 public property FileSize as Integer
@@ -1316,11 +1334,11 @@ public property Width as String
 
 
 
-
 ---------------------------------------------
-LibraryFileTypeModel
+Model Name: LibraryFileTypeModel
+Content Name: Library File Types
+Table Name: ccLibraryFileTypes
 
-public property ContentCategoryID as Integer
 public property DownloadIconFilename as String
 public property ExtensionList as String
 public property IconFilename as String
@@ -1333,11 +1351,11 @@ public property MediaIconFilename as String
 
 
 
-
 ---------------------------------------------
-LibraryFileLogModel
+Model Name: LibraryFileLogModel
+Content Name: Library File Log
+Table Name: ccLibraryDownloadLog
 
-public property ContentCategoryID as Integer
 public property FileID as Integer
 public property MemberID as Integer
 public property VisitID as Integer
@@ -1345,11 +1363,11 @@ public property VisitID as Integer
 
 
 
-
 ---------------------------------------------
-LinkForwardModel
+Model Name: LinkForwardModel
+Content Name: Link Forwards
+Table Name: ccLinkForwards
 
-public property ContentCategoryID as Integer
 public property DestinationLink as String
 public property GroupID as Integer
 public property SourceLink as String
@@ -1358,11 +1376,11 @@ public property Viewings as Integer
 
 
 
-
 ---------------------------------------------
-LinkAliaseModel
+Model Name: LinkAliaseModel
+Content Name: Link Aliases
+Table Name: ccLinkAliases
 
-public property ContentCategoryID as Integer
 public property Link as String
 public property PageID as Integer
 public property QueryStringSuffix as String
@@ -1370,12 +1388,12 @@ public property QueryStringSuffix as String
 
 
 
-
 ---------------------------------------------
-DomainModel
+Model Name: DomainModel
+Content Name: Domains
+Table Name: ccDomains
 
 public property allowCrossLogin as Boolean
-public property ContentCategoryID as Integer
 public property DefaultTemplateId as Integer
 public property forwardDomainId as Integer
 public property ForwardURL as String
@@ -1388,13 +1406,13 @@ public property Visited as Boolean
 
 
 
-
 ---------------------------------------------
-PageTemplateModel
+Model Name: PageTemplateModel
+Content Name: Page Templates
+Table Name: ccTemplates
 
 public property BodyHTML as String
 public property BodyTag as String
-public property ContentCategoryID as Integer
 public property IsSecure as Boolean
 public property JSEndBody as String
 public property JSFilename as String
@@ -1409,35 +1427,35 @@ public property StylesFilename as String
 
 
 
-
 ---------------------------------------------
-TemplateDomainRuleModel
+Model Name: TemplateDomainRuleModel
+Content Name: Template Domain Rules
+Table Name: ccDomainTemplateRules
 
-public property ContentCategoryID as Integer
 public property domainId as Integer
 public property templateId as Integer
 
 
 
 
-
 ---------------------------------------------
-SharedStylesTemplateRuleModel
+Model Name: SharedStylesTemplateRuleModel
+Content Name: Shared Styles Template Rules
+Table Name: ccSharedStylesTemplateRules
 
-public property ContentCategoryID as Integer
 public property StyleID as Integer
 public property TemplateID as Integer
 
 
 
 
-
 ---------------------------------------------
-SiteSectionModel
+Model Name: SiteSectionModel
+Content Name: Site Sections
+Table Name: ccSections
 
 public property BlockSection as Boolean
 public property Caption as String
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property HideMenu as Boolean
 public property JSEndBody as String
@@ -1454,22 +1472,22 @@ public property TemplateID as Integer
 
 
 
-
 ---------------------------------------------
-SectionBlockRuleModel
+Model Name: SectionBlockRuleModel
+Content Name: Section Block Rules
+Table Name: ccSectionBlockRules
 
-public property ContentCategoryID as Integer
 public property GroupID as Integer
 public property SectionID as Integer
 
 
 
 
-
 ---------------------------------------------
-MetaContentModel
+Model Name: MetaContentModel
+Content Name: Meta Content
+Table Name: ccMetaContent
 
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property MetaDescription as String
 public property MetaKeywordList as String
@@ -1479,63 +1497,63 @@ public property RecordID as Integer
 
 
 
+---------------------------------------------
+Model Name: MetaKeywordModel
+Content Name: Meta Keywords
+Table Name: ccMetaKeywords
+
+
+
+
 
 ---------------------------------------------
-MetaKeywordModel
+Model Name: MetaKeywordRuleModel
+Content Name: Meta Keyword Rules
+Table Name: ccMetaKeywordRules
 
-public property ContentCategoryID as Integer
-
-
-
-
-
----------------------------------------------
-MetaKeywordRuleModel
-
-public property ContentCategoryID as Integer
 public property MetaContentID as Integer
 public property MetaKeywordID as Integer
 
 
 
 
-
 ---------------------------------------------
-AggregateAccesModel
+Model Name: AggregateAccesModel
+Content Name: Aggregate Access
+Table Name: ccAggregateAccess
 
-public property ContentCategoryID as Integer
 public property Link as String
 
 
 
 
-
 ---------------------------------------------
-CopyContentModel
+Model Name: CopyContentModel
+Content Name: Copy Content
+Table Name: ccCopyContent
 
-public property ContentCategoryID as Integer
 public property Copy as String
 
 
 
 
-
 ---------------------------------------------
-UserFormResponseModel
+Model Name: UserFormResponseModel
+Content Name: User Form Response
+Table Name: ccUserFormResponse
 
-public property ContentCategoryID as Integer
 public property Copy as String
 public property VisitID as Integer
 
 
 
 
-
 ---------------------------------------------
-TaskModel
+Model Name: TaskModel
+Content Name: Tasks
+Table Name: ccTasks
 
 public property Command as String
-public property ContentCategoryID as Integer
 public property DataSource as String
 public property DateCompleted as Date
 public property DateStarted as Date
@@ -1548,74 +1566,60 @@ public property SQLQuery as String
 
 
 
-
 ---------------------------------------------
-DynamicMenuModel
+Model Name: DynamicMenuModel
+Content Name: Dynamic Menus
+Table Name: ccDynamicMenus
 
-public property classFlyoutParent as String
-public property classItemActive as String
-public property classItemFirst as String
-public property classItemHover as String
-public property classItemLast as String
-public property classTierItem as String
-public property classTierList as String
-public property classTopItem as String
-public property classTopList as String
-public property classTopWrapper as String
-public property ContentCategoryID as Integer
 public property Delimiter as String
 public property Depth as Integer
 public property FlyoutDirection as Integer
 public property FlyoutOnHover as Boolean
-public property JavaScriptOnLoad as String
-public property JSFilename as String
 public property Layout as Integer
-public property listStylesFilename as String
 public property StylePrefix as String
 public property StylesFilename as String
-public property useJsFlyoutCode as Boolean
-
 
 
 
 
 ---------------------------------------------
-DynamicMenuSectionRuleModel
+Model Name: DynamicMenuSectionRuleModel
+Content Name: Dynamic Menu Section Rules
+Table Name: ccDynamicMenuSectionRules
 
-public property ContentCategoryID as Integer
 public property DynamicMenuID as Integer
 public property SectionID as Integer
 
 
 
 
-
 ---------------------------------------------
-CustomReportModel
+Model Name: CustomReportModel
+Content Name: Custom Reports
+Table Name: ccCustomReports
 
-public property ContentCategoryID as Integer
 public property SQLQuery as String
 
 
 
 
-
 ---------------------------------------------
-FormPageModel
+Model Name: FormPageModel
+Content Name: Form Pages
+Table Name: ccFormPages
 
 public property Body as String
-public property ContentCategoryID as Integer
 public property Instructions as String
 
 
 
 
-
 ---------------------------------------------
-RemoteQuerieModel
+Model Name: RemoteQuerieModel
+Content Name: Remote Queries
+Table Name: ccRemoteQueries
 
 public property AllowInactiveRecords as Boolean
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property Criteria as String
 public property DataSourceID as Integer
@@ -1631,11 +1635,11 @@ public property VisitID as Integer
 
 
 
-
 ---------------------------------------------
-WrapperModel
+Model Name: WrapperModel
+Content Name: Wrappers
+Table Name: ccwrappers
 
-public property ContentCategoryID as Integer
 public property copytext as String
 public property javascriptbodyend as String
 public property javascriptinhead as String
@@ -1648,11 +1652,11 @@ public property targetstring as String
 
 
 
-
 ---------------------------------------------
-ActivityLogModel
+Model Name: ActivityLogModel
+Content Name: Activity Log
+Table Name: ccactivitylog
 
-public property ContentCategoryID as Integer
 public property Link as String
 public property MemberID as Integer
 public property Message as String
@@ -1663,33 +1667,33 @@ public property VisitorID as Integer
 
 
 
-
 ---------------------------------------------
-LayoutModel
+Model Name: LayoutModel
+Content Name: Layouts
+Table Name: ccLayouts
 
-public property ContentCategoryID as Integer
 public property Layout as String
 public property StylesFilename as String
 
 
 
 
-
 ---------------------------------------------
-SharedStylesLayoutRuleModel
+Model Name: SharedStylesLayoutRuleModel
+Content Name: Shared Styles Layout Rules
+Table Name: ccSharedStylesLayoutRules
 
-public property ContentCategoryID as Integer
 public property LayoutID as Integer
 public property StyleID as Integer
 
 
 
 
-
 ---------------------------------------------
-SiteWarningModel
+Model Name: SiteWarningModel
+Content Name: Site Warnings
+Table Name: ccSiteWarnings
 
-public property ContentCategoryID as Integer
 public property count as Integer
 public property DateLastReported as Date
 public property description as String
@@ -1702,16 +1706,16 @@ public property specificKey as String
 
 
 
-
 ---------------------------------------------
-FormModel
+Model Name: FormModel
+Content Name: Forms
+Table Name: ccForms
 
 public property AddBackButton as Boolean
 public property AddCancelButton as Boolean
 public property AddContinueButton as Boolean
 public property BackButtonName as String
 public property CancelButtonName as String
-public property ContentCategoryID as Integer
 public property ContentID as Integer
 public property ContinueButtonName as String
 public property FormSetID as Integer
@@ -1724,11 +1728,25 @@ public property UseAuthOrgContent as Boolean
 
 
 
+---------------------------------------------
+Model Name: RSSAggregatorSourceStorieModel
+Content Name: RSS Aggregator Source Stories
+Table Name: rssAggregatorSourceStories
+
+public property description as String
+public property itemGuid as String
+public property link as String
+public property pubDate as Date
+public property sourceId as Integer
+
+
+
 
 ---------------------------------------------
-ImportWizardTaskModel
+Model Name: ImportWizardTaskModel
+Content Name: Import Wizard Tasks
+Table Name: importWizardTasks
 
-public property ContentCategoryID as Integer
 public property DateCompleted as Date
 public property DateStarted as Date
 public property ImportMapFilename as String
@@ -1739,11 +1757,73 @@ public property uploadFilename as String
 
 
 
+---------------------------------------------
+Model Name: PortalLinkModel
+Content Name: Portal Links
+Table Name: ccPortalLinks
+
+public property fromPortalId as Integer
+public property toPortalId as Integer
+
+
+
 
 ---------------------------------------------
-FormSetModel
+Model Name: AdminFrameworkReportModel
+Content Name: Admin Framework Reports
+Table Name: adminFrameworkReports
 
-public property ContentCategoryID as Integer
+public property description as String
+public property title as String
+
+
+
+
+---------------------------------------------
+Model Name: AdminFrameworkReportColumnModel
+Content Name: Admin Framework Report Columns
+Table Name: adminFrameworkReportColumns
+
+public property caption as String
+public property captionClass as String
+public property cellClass as String
+public property reportId as Integer
+public property visible as Boolean
+
+
+
+
+---------------------------------------------
+Model Name: PortalFeatureModel
+Content Name: Portal Features
+Table Name: ccPortalFeatures
+
+public property addonId as Integer
+public property addPadding as Boolean
+public property dataContentId as Integer
+public property Heading as String
+public property parentFeatureId as Integer
+public property portalId as Integer
+
+
+
+
+---------------------------------------------
+Model Name: PortalModel
+Content Name: Portals
+Table Name: ccPortals
+
+public property defaultConfigJson as String
+public property defaultFeatureId as Integer
+
+
+
+
+---------------------------------------------
+Model Name: FormSetModel
+Content Name: Form Sets
+Table Name: ccFormSets
+
 public property JoinGroupID as Integer
 public property NotificationEmailID as Integer
 public property ResponseEmailID as Integer
@@ -1752,13 +1832,13 @@ public property ThankYouCopy as String
 
 
 
-
 ---------------------------------------------
-FormFieldModel
+Model Name: FormFieldModel
+Content Name: Form Fields
+Table Name: ccFormFields
 
 public property ButtonActionID as Integer
 public property Caption as String
-public property ContentCategoryID as Integer
 public property ContentFieldID as Integer
 public property FormID as Integer
 public property InputType as String
@@ -1768,45 +1848,63 @@ public property Required as Boolean
 
 
 
+---------------------------------------------
+Model Name: MenuModel
+Content Name: Menus
+Table Name: ccMenus
+
+public property addRootToTier as Boolean
+public property classFlyoutParent as String
+public property classItemActive as String
+public property classItemFirst as String
+public property classItemHover as String
+public property classItemLast as String
+public property classTierItem as String
+public property classTierList as String
+public property classTopItem as String
+public property classTopList as String
+public property classTopWrapper as String
+public property Depth as Integer
+
+
+
 
 ---------------------------------------------
-RSSAggregatorModel
+Model Name: MenuPageRuleModel
+Content Name: Menu Page Rules
+Table Name: ccMenuPageRules
 
-public property ContentCategoryID as Integer
+public property menuId as Integer
+public property pageId as Integer
+
+
+
+
+---------------------------------------------
+Model Name: RSSAggregatorModel
+Content Name: RSS Aggregators
+Table Name: aoRSSAggregators
 
 
 
 
 
 ---------------------------------------------
-RSSAggregatorSourceModel
+Model Name: RSSAggregatorSourceModel
+Content Name: RSS Aggregator Sources
+Table Name: aoRSSAggregatorSources
 
-public property ContentCategoryID as Integer
 public property Link as String
 
 
 
 
-
 ---------------------------------------------
-RSSAggregatorSourceRuleModel
+Model Name: RSSAggregatorSourceRuleModel
+Content Name: RSS Aggregator Source Rules
+Table Name: aoRSSAggregatorSourceRules
 
 public property AggregatorID as Integer
-public property ContentCategoryID as Integer
 public property SourceID as Integer
-
-
-
-
-
----------------------------------------------
-RSSAggregatorSourceStorieModel
-
-public property ContentCategoryID as Integer
-public property description as String
-public property itemGuid as String
-public property link as String
-public property pubDate as Date
-public property sourceId as Integer
 
 

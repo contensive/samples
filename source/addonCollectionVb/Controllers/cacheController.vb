@@ -5,8 +5,9 @@ Option Strict On
 Imports System.Text.RegularExpressions
 Imports Contensive.BaseClasses
 Imports System.Linq
+Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
 
-Namespace AddonCollectionVb.Controllers
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
     ''' <summary>
     ''' Ignore this class for now.
     ''' Best Practices
@@ -548,7 +549,7 @@ Namespace AddonCollectionVb.Controllers
         ''' <remarks></remarks>
         Public Sub clearObjectCache_Person(ByVal CP As Contensive.BaseClasses.CPBaseClass, userID As Integer, clearQualifications As Boolean, clearDegrees As Boolean, clearCourses As Boolean)
             Try
-                clear(CP, getObjectCacheName(CP, Models.personModel.contentName, userID))
+                clear(CP, getObjectCacheName(CP, Models.PeopleModel.contentName, userID))
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)
             End Try
