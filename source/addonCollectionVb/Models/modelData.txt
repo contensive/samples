@@ -1203,8 +1203,6 @@ Content Name: Aggregate Functions
 Table Name: ccAggregateFunctions
 
 
-stopped here
-
 
 ---------------------------------------------
 Model Name: AggregateFunctionScriptModel
@@ -1291,7 +1289,7 @@ public property Updatable as Boolean
 public property wwwFileList as String
 
 
-
+working here
 
 ---------------------------------------------
 Model Name: LibraryFolderModel

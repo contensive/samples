@@ -157,6 +157,13 @@
     <Compile Include="Models\AddonEventCatcherModel.vb" />
     <Compile Include="Models\addonModel.vb" />
     <Compile Include="Models\AggregateFunctionModel.vb" />
+    <Compile Include="Models\AggregateFunctionScriptModel.vb" />
+    <Compile Include="Models\AggregateFunctionObjectModel.vb" />
+    <Compile Include="Models\AggregateFunctionReplacementModel.vb" />
+    <Compile Include="Models\AddonCollectionParentRuleModel.vb" />
+    <Compile Include="Models\AddonCollectionCDefRuleModel.vb" />
+    <Compile Include="Models\AddonCollectionModuleRuleModel.vb" />
+    <Compile Include="Models\AddonCollectionModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
