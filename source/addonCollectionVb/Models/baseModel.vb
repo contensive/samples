@@ -241,7 +241,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
                             id = cs.GetInteger("id")
                         Case "ccguid"
                             If (String.IsNullOrEmpty(ccguid)) Then
-                                ccguid = Guid.NewGuid().ToString()
+                                ccguid = "{" & Guid.NewGuid().ToString() & "}"
                             End If
                             Dim value As String
                             value = resultProperty.GetValue(Me, Nothing).ToString()
