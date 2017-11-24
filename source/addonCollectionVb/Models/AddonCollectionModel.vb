@@ -8,7 +8,7 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
-    Public Class xxxxxmodelNameGoesHerexxxxx        '<------ set set model Name and everywhere that matches this string
+    Public Class addonCollectionModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
         '
@@ -34,23 +34,23 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<-
         Public Property wwwFileList As String
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Return add(Of xxxxxmodelNameGoesHerexxxxx)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As addonCollectionModel
+            Return add(Of addonCollectionModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As addonCollectionModel
+            Return create(Of addonCollectionModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As xxxxxmodelNameGoesHerexxxxx
-            Return create(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As addonCollectionModel
+            Return create(Of addonCollectionModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As xxxxxmodelNameGoesHerexxxxx
-            Return createByName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As addonCollectionModel
+            Return createByName(Of addonCollectionModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
@@ -60,48 +60,48 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<-
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            delete(Of addonCollectionModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            delete(Of addonCollectionModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of xxxxxmodelNameGoesHerexxxxx)
-            Return createList(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of addonCollectionModel)
+            Return createList(Of addonCollectionModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, recordId)
+            Return baseModel.getRecordName(Of addonCollectionModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordName(Of addonCollectionModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of xxxxxmodelNameGoesHerexxxxx)(cp, ccGuid)
+            Return baseModel.getRecordId(Of addonCollectionModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of xxxxxmodelNameGoesHerexxxxx)(cp, sqlCriteria)
+            Return baseModel.getCount(Of addonCollectionModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of xxxxxmodelNameGoesHerexxxxx)(fieldName)
+            Return MyBase.getUploadPath(Of addonCollectionModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As xxxxxmodelNameGoesHerexxxxx
-            Dim result As xxxxxmodelNameGoesHerexxxxx = DirectCast(Me.Clone(), xxxxxmodelNameGoesHerexxxxx)
+        Public Function Clone(cp As CPBaseClass) As addonCollectionModel
+            Dim result As addonCollectionModel = DirectCast(Me.Clone(), addonCollectionModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

@@ -220,8 +220,8 @@ namespace AddonCollectionCs.Models
                     {
                         switch (resultProperty.Name.ToLower())
                         {
-                            case "specialcasefield":
-                                break;
+                            //case "specialcasefield":
+                            //    break;
                             case "sortorder":
                                 //
                                 // -- customization for pc, could have been in default property, db default, etc.
@@ -307,7 +307,7 @@ namespace AddonCollectionCs.Models
                         case "ccguid":
                             if ((string.IsNullOrEmpty(ccguid)))
                             {
-                                ccguid = Guid.NewGuid().ToString();
+                                ccguid = "{" + Guid.NewGuid().ToString() + "}";
                             }
                             string value = null;
                             value = resultProperty.GetValue(this, null).ToString();

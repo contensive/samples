@@ -61,6 +61,18 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
                 Return source.Year.ToString() + "-" + source.Month.ToString().PadLeft(2, "0"c) + "-" + source.Day.ToString().PadLeft(2, "0"c)
             End If
         End Function
+        '
+        '====================================================================================================
+        Public Shared Function convertToDosPath(sourcePath As String) As String
+            Return sourcePath.Replace("/", "\")
+        End Function
+        '
+        '====================================================================================================
+        Public Shared Function convertToUnixPath(sourcePath As String) As String
+            Return sourcePath.Replace("\", "/")
+        End Function
+
+
     End Class
 End Namespace
 
