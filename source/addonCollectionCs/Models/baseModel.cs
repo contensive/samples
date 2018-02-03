@@ -10,10 +10,8 @@ using System.Text;
 using System.Reflection;
 using Contensive.BaseClasses;
 
-namespace AddonCollectionCs.Models
-{
-    public abstract class baseModel
-    {
+namespace AddonCollectionCs.Models {
+    public abstract class baseModel {
         //
         //====================================================================================================
         //-- const must be set in derived clases
@@ -37,43 +35,31 @@ namespace AddonCollectionCs.Models
         public string SortOrder { get; set; }
         //
         //====================================================================================================
-        private static string derivedContentName(Type derivedType)
-        {
+        private static string derivedContentName(Type derivedType) {
             FieldInfo fieldInfo = derivedType.GetField("contentName");
-            if ((fieldInfo == null))
-            {
+            if ((fieldInfo == null)) {
                 throw new ApplicationException("Class [" + derivedType.Name + "] must declare constant [contentName].");
-            }
-            else
-            {
+            } else {
                 return fieldInfo.GetRawConstantValue().ToString();
             }
         }
         //
         //====================================================================================================
-        private static string derivedContentTableName(Type derivedType)
-        {
+        private static string derivedContentTableName(Type derivedType) {
             FieldInfo fieldInfo = derivedType.GetField("contentTableName");
-            if ((fieldInfo == null))
-            {
+            if ((fieldInfo == null)) {
                 throw new ApplicationException("Class [" + derivedType.Name + "] must declare constant [contentTableName].");
-            }
-            else
-            {
+            } else {
                 return fieldInfo.GetRawConstantValue().ToString();
             }
         }
         //
         //====================================================================================================
-        private static string contentDataSource(Type derivedType)
-        {
+        private static string contentDataSource(Type derivedType) {
             FieldInfo fieldInfo = derivedType.GetField("contentTableName");
-            if ((fieldInfo == null))
-            {
+            if ((fieldInfo == null)) {
                 throw new ApplicationException("Class [" + derivedType.Name + "] must declare constant [contentTableName].");
-            }
-            else
-            {
+            } else {
                 return fieldInfo.GetRawConstantValue().ToString();
             }
         }
@@ -82,8 +68,7 @@ namespace AddonCollectionCs.Models
         /// <summary>
         /// Create an empty object. needed for deserialization
         /// </summary>
-        public baseModel()
-        {
+        public baseModel() {
             //
         }
         //
@@ -94,17 +79,13 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <returns></returns>
-        protected static T @add<T>(CPBaseClass cp) where T : baseModel
-        {
+        protected static T @add<T>(CPBaseClass cp) where T : baseModel {
             T result = null;
-            try
-            {
+            try {
                 Type instanceType = typeof(T);
                 string contentName = derivedContentName(instanceType);
                 result = create<T>(cp, cp.Content.AddRecord(contentName));
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -117,25 +98,19 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="recordId">The id of the record to be read into the new object</param>
-        protected static T create<T>(CPBaseClass cp, int recordId) where T : baseModel
-        {
+        protected static T create<T>(CPBaseClass cp, int recordId) where T : baseModel {
             T result = null;
-            try
-            {
-                if (recordId > 0)
-                {
+            try {
+                if (recordId > 0) {
                     Type instanceType = typeof(T);
                     string contentName = derivedContentName(instanceType);
                     CPCSBaseClass cs = cp.CSNew();
-                    if (cs.Open(contentName, "(id=" + recordId.ToString() + ")"))
-                    {
+                    if (cs.Open(contentName, "(id=" + recordId.ToString() + ")")) {
                         result = loadRecord<T>(cp, cs);
                     }
                     cs.Close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -148,22 +123,17 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="recordGuid"></param>
-        protected static T create<T>(CPBaseClass cp, string recordGuid) where T : baseModel
-        {
+        protected static T create<T>(CPBaseClass cp, string recordGuid) where T : baseModel {
             T result = null;
-            try
-            {
+            try {
                 Type instanceType = typeof(T);
                 string contentName = derivedContentName(instanceType);
                 CPCSBaseClass cs = cp.CSNew();
-                if (cs.Open(contentName, "(ccGuid=" + cp.Db.EncodeSQLText(recordGuid) + ")"))
-                {
+                if (cs.Open(contentName, "(ccGuid=" + cp.Db.EncodeSQLText(recordGuid) + ")")) {
                     result = loadRecord<T>(cp, cs);
                 }
                 cs.Close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -176,25 +146,19 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="recordName"></param>
-        protected static T createByName<T>(CPBaseClass cp, string recordName) where T : baseModel
-        {
+        protected static T createByName<T>(CPBaseClass cp, string recordName) where T : baseModel {
             T result = null;
-            try
-            {
-                if (!string.IsNullOrEmpty(recordName))
-                {
+            try {
+                if (!string.IsNullOrEmpty(recordName)) {
                     Type instanceType = typeof(T);
                     string contentName = derivedContentName(instanceType);
                     CPCSBaseClass cs = cp.CSNew();
-                    if (cs.Open(contentName, "(name=" + cp.Db.EncodeSQLText(recordName) + ")", "id"))
-                    {
+                    if (cs.Open(contentName, "(name=" + cp.Db.EncodeSQLText(recordName) + ")", "id")) {
                         result = loadRecord<T>(cp, cs);
                     }
                     cs.Close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return result;
@@ -206,35 +170,28 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="cs"></param>
-        private static T loadRecord<T>(CPBaseClass cp, CPCSBaseClass cs) where T : baseModel
-        {
+        private static T loadRecord<T>(CPBaseClass cp, CPCSBaseClass cs) where T : baseModel {
             T instance = null;
-            try
-            {
-                if (cs.OK())
-                {
+            try {
+                if (cs.OK()) {
                     Type instanceType = typeof(T);
                     string tableName = derivedContentTableName(instanceType);
                     instance = (T)Activator.CreateInstance(instanceType);
-                    foreach (PropertyInfo resultProperty in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-                    {
-                        switch (resultProperty.Name.ToLower())
-                        {
+                    foreach (PropertyInfo resultProperty in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
+                        switch (resultProperty.Name.ToLower()) {
                             //case "specialcasefield":
                             //    break;
                             case "sortorder":
                                 //
                                 // -- customization for pc, could have been in default property, db default, etc.
                                 string sortOrder = cs.GetText(resultProperty.Name);
-                                if ((string.IsNullOrEmpty(sortOrder)))
-                                {
+                                if ((string.IsNullOrEmpty(sortOrder))) {
                                     sortOrder = "9999";
                                 }
                                 resultProperty.SetValue(instance, sortOrder, null);
                                 break;
                             default:
-                                switch (resultProperty.PropertyType.Name)
-                                {
+                                switch (resultProperty.PropertyType.Name) {
                                     case "Int32":
                                         resultProperty.SetValue(instance, cs.GetInteger(resultProperty.Name), null);
                                         break;
@@ -255,9 +212,7 @@ namespace AddonCollectionCs.Models
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -270,43 +225,33 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <returns></returns>
-        protected int save(CPBaseClass cp)
-        {
-            try
-            {
+        protected int save(CPBaseClass cp) {
+            try {
                 CPCSBaseClass cs = cp.CSNew();
                 Type instanceType = this.GetType();
                 string contentName = derivedContentName(instanceType);
                 string tableName = derivedContentTableName(instanceType);
-                if ((id > 0))
-                {
-                    if (!cs.Open(contentName, "id=" + id))
-                    {
+                if ((id > 0)) {
+                    if (!cs.Open(contentName, "id=" + id)) {
                         string message = "Unable to open record in content [" + contentName + "], with id [" + id + "]";
                         cs.Close();
                         id = 0;
                         throw new ApplicationException(message);
                     }
-                }
-                else
-                {
-                    if (!cs.Insert(contentName))
-                    {
+                } else {
+                    if (!cs.Insert(contentName)) {
                         cs.Close();
                         id = 0;
                         throw new ApplicationException("Unable to insert record in content [" + contentName + "]");
                     }
                 }
-                foreach (PropertyInfo resultProperty in this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-                {
-                    switch (resultProperty.Name.ToLower())
-                    {
+                foreach (PropertyInfo resultProperty in this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
+                    switch (resultProperty.Name.ToLower()) {
                         case "id":
                             id = cs.GetInteger("id");
                             break;
                         case "ccguid":
-                            if ((string.IsNullOrEmpty(ccguid)))
-                            {
+                            if ((string.IsNullOrEmpty(ccguid))) {
                                 ccguid = "{" + Guid.NewGuid().ToString() + "}";
                             }
                             string value = null;
@@ -314,8 +259,7 @@ namespace AddonCollectionCs.Models
                             cs.SetField(resultProperty.Name, value);
                             break;
                         default:
-                            switch (resultProperty.PropertyType.Name)
-                            {
+                            switch (resultProperty.PropertyType.Name) {
                                 case "Int32":
                                     int integerValue = 0;
                                     int.TryParse(resultProperty.GetValue(this, null).ToString(), out integerValue);
@@ -345,9 +289,7 @@ namespace AddonCollectionCs.Models
                     }
                 }
                 cs.Close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -360,20 +302,15 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="recordId"></param>
-        protected static void delete<T>(CPBaseClass cp, int recordId) where T : baseModel
-        {
-            try
-            {
-                if ((recordId > 0))
-                {
+        protected static void delete<T>(CPBaseClass cp, int recordId) where T : baseModel {
+            try {
+                if ((recordId > 0)) {
                     Type instanceType = typeof(T);
                     string contentName = derivedContentName(instanceType);
                     string tableName = derivedContentTableName(instanceType);
                     cp.Content.Delete(contentName, "id=" + recordId.ToString());
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -385,23 +322,17 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="ccguid"></param>
-        protected static void delete<T>(CPBaseClass cp, string ccguid) where T : baseModel
-        {
-            try
-            {
-                if ((!string.IsNullOrEmpty(ccguid)))
-                {
+        protected static void delete<T>(CPBaseClass cp, string ccguid) where T : baseModel {
+            try {
+                if ((!string.IsNullOrEmpty(ccguid))) {
                     Type instanceType = typeof(T);
                     string contentName = derivedContentName(instanceType);
                     baseModel instance = create<baseModel>(cp, ccguid);
-                    if ((instance != null))
-                    {
+                    if ((instance != null)) {
                         cp.Content.Delete(contentName, "(ccguid=" + cp.Db.EncodeSQLText(ccguid) + ")");
                     }
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
                 throw;
             }
@@ -414,32 +345,25 @@ namespace AddonCollectionCs.Models
         /// <param name="cp"></param>
         /// <param name="sqlCriteria"></param>
         /// <returns></returns>
-        protected static List<T> createList<T>(CPBaseClass cp, string sqlCriteria, string sqlOrderBy) where T : baseModel
-        {
+        protected static List<T> createList<T>(CPBaseClass cp, string sqlCriteria, string sqlOrderBy) where T : baseModel {
             List<T> result = new List<T>();
-            try
-            {
+            try {
                 CPCSBaseClass cs = cp.CSNew();
                 List<string> ignoreCacheNames = new List<string>();
                 Type instanceType = typeof(T);
                 string contentName = derivedContentName(instanceType);
-                if ((cs.Open(contentName, sqlCriteria, sqlOrderBy)))
-                {
+                if ((cs.Open(contentName, sqlCriteria, sqlOrderBy))) {
                     T instance = default(T);
-                    do
-                    {
+                    do {
                         instance = loadRecord<T>(cp, cs);
-                        if ((instance != null))
-                        {
+                        if ((instance != null)) {
                             result.Add(instance);
                         }
                         cs.GoNext();
                     } while (cs.OK());
                 }
                 cs.Close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return result;
@@ -452,24 +376,18 @@ namespace AddonCollectionCs.Models
         /// <param name="cp"></param>
         /// <param name="recordId"></param>record
         /// <returns></returns>
-        protected static string getRecordName<T>(CPBaseClass cp, int recordId) where T : baseModel
-        {
-            try
-            {
-                if ((recordId > 0))
-                {
+        protected static string getRecordName<T>(CPBaseClass cp, int recordId) where T : baseModel {
+            try {
+                if ((recordId > 0)) {
                     Type instanceType = typeof(T);
                     string tableName = derivedContentTableName(instanceType);
                     CPCSBaseClass cs = cp.CSNew();
-                    if ((cs.OpenSQL("select name from " + tableName + " where id=" + recordId.ToString())))
-                    {
+                    if ((cs.OpenSQL("select name from " + tableName + " where id=" + recordId.ToString()))) {
                         return cs.GetText("name");
                     }
                     cs.Close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return "";
@@ -482,24 +400,18 @@ namespace AddonCollectionCs.Models
         /// <param name="cp"></param>
         /// <param name="ccGuid"></param>record
         /// <returns></returns>
-        protected static string getRecordName<T>(CPBaseClass cp, string ccGuid) where T : baseModel
-        {
-            try
-            {
-                if ((!string.IsNullOrEmpty(ccGuid)))
-                {
+        protected static string getRecordName<T>(CPBaseClass cp, string ccGuid) where T : baseModel {
+            try {
+                if ((!string.IsNullOrEmpty(ccGuid))) {
                     Type instanceType = typeof(T);
                     string tableName = derivedContentTableName(instanceType);
                     CPCSBaseClass cs = cp.CSNew();
-                    if ((cs.OpenSQL("select name from " + tableName + " where ccguid=" + cp.Db.EncodeSQLText(ccGuid))))
-                    {
+                    if ((cs.OpenSQL("select name from " + tableName + " where ccguid=" + cp.Db.EncodeSQLText(ccGuid)))) {
                         return cs.GetText("name");
                     }
                     cs.Close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return "";
@@ -512,51 +424,39 @@ namespace AddonCollectionCs.Models
         /// <param name="cp"></param>
         /// <param name="ccGuid"></param>record
         /// <returns></returns>
-        protected static int getRecordId<T>(CPBaseClass cp, string ccGuid) where T : baseModel
-        {
-            try
-            {
-                if ((!string.IsNullOrEmpty(ccGuid)))
-                {
+        protected static int getRecordId<T>(CPBaseClass cp, string ccGuid) where T : baseModel {
+            try {
+                if ((!string.IsNullOrEmpty(ccGuid))) {
                     Type instanceType = typeof(T);
                     string tableName = derivedContentTableName(instanceType);
                     CPCSBaseClass cs = cp.CSNew();
-                    if ((cs.OpenSQL("select id from " + tableName + " where ccguid=" + cp.Db.EncodeSQLText(ccGuid))))
-                    {
+                    if ((cs.OpenSQL("select id from " + tableName + " where ccguid=" + cp.Db.EncodeSQLText(ccGuid)))) {
                         return cs.GetInteger("id");
                     }
                     cs.Close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return 0;
         }
         //
         //====================================================================================================
-        protected static int getCount<T>(CPBaseClass cp, string sqlCriteria) where T : baseModel
-        {
+        protected static int getCount<T>(CPBaseClass cp, string sqlCriteria) where T : baseModel {
             int result = 0;
-            try
-            {
+            try {
                 Type instanceType = typeof(T);
                 string tableName = derivedContentTableName(instanceType);
                 CPCSBaseClass cs = cp.CSNew();
                 string sql = "select count(id) as cnt from " + tableName;
-                if ((!string.IsNullOrEmpty(sqlCriteria)))
-                {
+                if ((!string.IsNullOrEmpty(sqlCriteria))) {
                     sql += " where " + sqlCriteria;
                 }
-                if ((cs.OpenSQL(sql)))
-                {
+                if ((cs.OpenSQL(sql))) {
                     result = cs.GetInteger("cnt");
                 }
                 cs.Close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 cp.Site.ErrorReport(ex);
             }
             return result;
@@ -568,8 +468,7 @@ namespace AddonCollectionCs.Models
         /// </summary>
         /// <param name="fieldName"></param>
         /// <returns></returns>
-        protected string getUploadPath<T>(string fieldName) where T : baseModel
-        {
+        protected string getUploadPath<T>(string fieldName) where T : baseModel {
             Type instanceType = typeof(T);
             string tableName = derivedContentTableName(instanceType);
             return tableName.ToLower() + "/" + fieldName.ToLower() + "/" + id.ToString().PadLeft(12, Convert.ToChar("0")) + "/";

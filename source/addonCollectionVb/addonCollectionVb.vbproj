@@ -215,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\DbModels\modelData.txt" />
+    <Content Include="Resources\sampleSql.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

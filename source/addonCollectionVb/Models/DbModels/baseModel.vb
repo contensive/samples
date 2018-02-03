@@ -168,7 +168,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
         ''' </summary>
         ''' <param name="cp"></param>
         ''' <param name="cs"></param>
-        Private Shared Function loadRecord(Of T As baseModel)(cp As CPBaseClass, cs As CPCSBaseClass) As T
+        Private Shared Function loadRecord(Of T As baseModel)(cp As CPBaseClass, cs As CPCSBaseClass, Optional listOfLowerCaseFields As List(Of String) = Nothing) As T
             Dim modelInstance As T = Nothing
             Try
                 If cs.OK() Then
@@ -176,56 +176,76 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
                     Dim tableName As String = derivedContentTableName(instanceType)
                     modelInstance = DirectCast(Activator.CreateInstance(instanceType), T)
                     For Each modelProperty As PropertyInfo In modelInstance.GetType().GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-                        Select Case modelProperty.Name.ToLower()
-                            Case "specialcasefield"
-                            Case "sortorder"
-                                '
-                                ' -- customization for pc, could have been in default property, db default, etc.
-                                Dim sortOrder As String = cs.GetText(modelProperty.Name)
-                                If (String.IsNullOrEmpty(sortOrder)) Then
-                                    sortOrder = "9999"
-                                End If
-                                modelProperty.SetValue(modelInstance, sortOrder, Nothing)
-                            Case Else
-                                Select Case modelProperty.PropertyType.Name
-                                    Case "Int32"
-                                        modelProperty.SetValue(modelInstance, cs.GetInteger(modelProperty.Name), Nothing)
-                                    Case "Boolean"
-                                        modelProperty.SetValue(modelInstance, cs.GetBoolean(modelProperty.Name), Nothing)
-                                    Case "DateTime"
-                                        modelProperty.SetValue(modelInstance, cs.GetDate(modelProperty.Name), Nothing)
-                                    Case "Double"
-                                        modelProperty.SetValue(modelInstance, cs.GetNumber(modelProperty.Name), Nothing)
-                                    Case "String"
-                                        modelProperty.SetValue(modelInstance, cs.GetText(modelProperty.Name), Nothing)
-                                    Case "fieldTypeTextFile"
+
+                        Dim includeField As Boolean = True
+                        If listOfLowerCaseFields IsNot Nothing Then
+                            includeField = listOfLowerCaseFields.Contains(modelProperty.Name.ToLower())
+                        End If
+                        If includeField Then
+                            Select Case modelProperty.Name.ToLower()
+                                Case "specialcasefield"
+                                Case "sortorder"
+                                    '
+                                    ' -- customization for pc, could have been in default property, db default, etc.
+                                    Dim sortOrder As String = cs.GetText(modelProperty.Name)
+                                    If (String.IsNullOrEmpty(sortOrder)) Then
+                                        sortOrder = "9999"
+                                    End If
+                                    modelProperty.SetValue(modelInstance, sortOrder, Nothing)
+                                Case Else
+                                    '
+                                    ' -- get the underlying type if this is nullable
+                                    Dim targetNullable As Boolean = IsNullable(modelProperty.PropertyType)
+                                    Dim prpertyValueText As String = cs.GetText(modelProperty.Name)
+                                    If (targetNullable And (String.IsNullOrEmpty(prpertyValueText))) Then
                                         '
-                                        ' -- cdn files
-                                        Dim instanceFileType As New fieldTypeTextFile
-                                        instanceFileType.filename = cs.GetFilename(modelProperty.Name)
-                                        modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
-                                    Case "fieldTypeJavascriptFile"
+                                        ' -- load a blank value to a nullable property as null
+                                        modelProperty.SetValue(modelInstance, Nothing, Nothing)
+                                    Else
                                         '
-                                        ' -- cdn files
-                                        Dim instanceFileType As New fieldTypeJavascriptFile
-                                        instanceFileType.filename = cs.GetFilename(modelProperty.Name)
-                                        modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
-                                    Case "fieldTypeCSSFile"
-                                        '
-                                        ' -- cdn files
-                                        Dim instanceFileType As New fieldTypeCSSFile
-                                        instanceFileType.filename = cs.GetFilename(modelProperty.Name)
-                                        modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
-                                    Case "fieldTypeHTMLFile"
-                                        '
-                                        ' -- private files
-                                        Dim instanceFileType As New fieldTypeHTMLFile
-                                        instanceFileType.filename = cs.GetFilename(modelProperty.Name)
-                                        modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
-                                    Case Else
-                                        modelProperty.SetValue(modelInstance, cs.GetText(modelProperty.Name), Nothing)
-                                End Select
-                        End Select
+                                        ' -- not nullable or value is not null
+                                        Dim targetType As Type = If(targetNullable, Nullable.GetUnderlyingType(modelProperty.PropertyType), modelProperty.PropertyType)
+                                        Select Case targetType.Name
+                                            Case "Int32"
+                                                modelProperty.SetValue(modelInstance, cs.GetInteger(modelProperty.Name), Nothing)
+                                            Case "Boolean"
+                                                modelProperty.SetValue(modelInstance, cs.GetBoolean(modelProperty.Name), Nothing)
+                                            Case "DateTime"
+                                                modelProperty.SetValue(modelInstance, cs.GetDate(modelProperty.Name), Nothing)
+                                            Case "Double"
+                                                modelProperty.SetValue(modelInstance, cs.GetNumber(modelProperty.Name), Nothing)
+                                            Case "String"
+                                                modelProperty.SetValue(modelInstance, cs.GetText(modelProperty.Name), Nothing)
+                                            Case "fieldTypeTextFile"
+                                                '
+                                                ' -- cdn files
+                                                Dim instanceFileType As New fieldTypeTextFile
+                                                instanceFileType.filename = cs.GetFilename(modelProperty.Name)
+                                                modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
+                                            Case "fieldTypeJavascriptFile"
+                                                '
+                                                ' -- cdn files
+                                                Dim instanceFileType As New fieldTypeJavascriptFile
+                                                instanceFileType.filename = cs.GetFilename(modelProperty.Name)
+                                                modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
+                                            Case "fieldTypeCSSFile"
+                                                '
+                                                ' -- cdn files
+                                                Dim instanceFileType As New fieldTypeCSSFile
+                                                instanceFileType.filename = cs.GetFilename(modelProperty.Name)
+                                                modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
+                                            Case "fieldTypeHTMLFile"
+                                                '
+                                                ' -- private files
+                                                Dim instanceFileType As New fieldTypeHTMLFile
+                                                instanceFileType.filename = cs.GetFilename(modelProperty.Name)
+                                                modelProperty.SetValue(modelInstance, instanceFileType, Nothing)
+                                            Case Else
+                                                modelProperty.SetValue(modelInstance, cs.GetText(modelProperty.Name), Nothing)
+                                        End Select
+                                    End If
+                            End Select
+                        End If
                     Next
                 End If
             Catch ex As Exception
@@ -274,87 +294,103 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
                             value = instanceProperty.GetValue(Me, Nothing).ToString()
                             cs.SetField(instanceProperty.Name, value)
                         Case Else
-                            Select Case instanceProperty.PropertyType.Name
-                                Case "Int32"
-                                    Dim value As Integer
-                                    Integer.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
-                                    cs.SetField(instanceProperty.Name, value.ToString())
-                                Case "Boolean"
-                                    Dim value As Boolean
-                                    Boolean.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
-                                    cs.SetField(instanceProperty.Name, value.ToString())
-                                Case "DateTime"
-                                    Dim value As Date
-                                    Date.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
-                                    cs.SetField(instanceProperty.Name, value.ToString())
-                                Case "Double"
-                                    Dim value As Double
-                                    Double.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
-                                    cs.SetField(instanceProperty.Name, value.ToString())
-                                Case "fieldTypeTextFile", "fieldTypeJavascriptFile", "fieldTypeCSSFile", "fieldTypeHTMLFile"
-                                    Dim fieldTypeId As Integer = 0
-                                    Dim contentProperty As PropertyInfo = Nothing
-                                    Dim contentUpdatedProperty As PropertyInfo
-                                    Dim contentUpdated As Boolean
-                                    Dim content As String = ""
-                                    Select Case instanceProperty.PropertyType.Name
-                                        Case "fieldTypeJavascriptFile"
-                                            fieldTypeId = FieldTypeIdFileJavascript
-                                            Dim fileProperty As fieldTypeJavascriptFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeJavascriptFile)
-                                            fileProperty.internalCp = cp
-                                            contentProperty = instanceProperty.PropertyType.GetProperty("content")
-                                            contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
-                                            contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
-                                            content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
-                                        Case "fieldTypeCSSFile"
-                                            fieldTypeId = FieldTypeIdFileCSS
-                                            Dim fileProperty As fieldTypeCSSFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeCSSFile)
-                                            fileProperty.internalCp = cp
-                                            contentProperty = instanceProperty.PropertyType.GetProperty("content")
-                                            contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
-                                            contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
-                                            content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
-                                        Case "fieldTypeHTMLFile"
-                                            fieldTypeId = FieldTypeIdFileHTML
-                                            Dim fileProperty As fieldTypeHTMLFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeHTMLFile)
-                                            fileProperty.internalCp = cp
-                                            contentProperty = instanceProperty.PropertyType.GetProperty("content")
-                                            contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
-                                            contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
-                                            content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
-                                        Case Else
-                                            fieldTypeId = FieldTypeIdFileText
-                                            Dim fileProperty As fieldTypeTextFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeTextFile)
-                                            fileProperty.internalCp = cp
-                                            contentProperty = instanceProperty.PropertyType.GetProperty("content")
-                                            contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
-                                            contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
-                                            content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
-                                    End Select
-                                    If (contentUpdated) Then
-                                        Dim filename As String = cs.GetFilename(instanceProperty.Name)
-                                        If (String.IsNullOrEmpty(content)) Then
-                                            '
-                                            ' -- empty content
-                                            If (Not String.IsNullOrEmpty(filename)) Then
-                                                cs.SetField(instanceProperty.Name, "")
-                                                cp.File.Delete(filename)
-                                            End If
-                                        Else
-                                            '
-                                            ' -- save content
-                                            If (String.IsNullOrEmpty(filename)) Then
-                                                filename = getUploadPath(instanceType)(instanceProperty.Name.ToLower())
-                                            End If
-                                            cs.SetFile(instanceProperty.Name, content, contentName)
-                                        End If
-                                    End If
 
-                                Case Else
-                                    Dim value As String
-                                    value = instanceProperty.GetValue(Me, Nothing).ToString()
-                                    cs.SetField(instanceProperty.Name, value)
-                            End Select
+                            '
+                            ' -- get the underlying type if this is nullable
+                            Dim targetNullable As Boolean = IsNullable(instanceProperty.PropertyType)
+                            Dim propertyValueText As String = cs.GetText(instanceProperty.Name)
+                            If (targetNullable And (String.IsNullOrEmpty(propertyValueText))) Then
+                                '
+                                ' -- null value in a nullable property - save a blank value to a Db field
+                                cs.SetField(instanceProperty.Name, Nothing)
+                            Else
+                                '
+                                ' -- not nullable or value is not null
+                                Dim targetType As Type = If(targetNullable, Nullable.GetUnderlyingType(instanceProperty.PropertyType), instanceProperty.PropertyType)
+                                Select Case targetType.Name
+                                    Case "Int32"
+                                        Dim value As Integer
+                                        Integer.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
+                                        cs.SetField(instanceProperty.Name, value.ToString())
+                                    Case "Boolean"
+                                        Dim value As Boolean
+                                        Boolean.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
+                                        cs.SetField(instanceProperty.Name, value.ToString())
+                                    Case "DateTime"
+                                        Dim value As Date
+                                        Date.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
+                                        cs.SetField(instanceProperty.Name, value.ToString())
+                                    Case "Double"
+                                        Dim value As Double
+                                        Double.TryParse(instanceProperty.GetValue(Me, Nothing).ToString(), value)
+                                        cs.SetField(instanceProperty.Name, value.ToString())
+                                    Case "fieldTypeTextFile", "fieldTypeJavascriptFile", "fieldTypeCSSFile", "fieldTypeHTMLFile"
+                                        Dim fieldTypeId As Integer = 0
+                                        Dim contentProperty As PropertyInfo = Nothing
+                                        Dim contentUpdatedProperty As PropertyInfo
+                                        Dim contentUpdated As Boolean
+                                        Dim content As String = ""
+                                        Select Case instanceProperty.PropertyType.Name
+                                            Case "fieldTypeJavascriptFile"
+                                                fieldTypeId = FieldTypeIdFileJavascript
+                                                Dim fileProperty As fieldTypeJavascriptFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeJavascriptFile)
+                                                fileProperty.internalCp = cp
+                                                contentProperty = instanceProperty.PropertyType.GetProperty("content")
+                                                contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
+                                                contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
+                                                content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
+                                            Case "fieldTypeCSSFile"
+                                                fieldTypeId = FieldTypeIdFileCSS
+                                                Dim fileProperty As fieldTypeCSSFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeCSSFile)
+                                                fileProperty.internalCp = cp
+                                                contentProperty = instanceProperty.PropertyType.GetProperty("content")
+                                                contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
+                                                contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
+                                                content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
+                                            Case "fieldTypeHTMLFile"
+                                                fieldTypeId = FieldTypeIdFileHTML
+                                                Dim fileProperty As fieldTypeHTMLFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeHTMLFile)
+                                                fileProperty.internalCp = cp
+                                                contentProperty = instanceProperty.PropertyType.GetProperty("content")
+                                                contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
+                                                contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
+                                                content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
+                                            Case Else
+                                                fieldTypeId = FieldTypeIdFileText
+                                                Dim fileProperty As fieldTypeTextFile = DirectCast(instanceProperty.GetValue(Me, Nothing), fieldTypeTextFile)
+                                                fileProperty.internalCp = cp
+                                                contentProperty = instanceProperty.PropertyType.GetProperty("content")
+                                                contentUpdatedProperty = instanceProperty.PropertyType.GetProperty("contentUpdated")
+                                                contentUpdated = DirectCast(contentUpdatedProperty.GetValue(fileProperty, Nothing), Boolean)
+                                                content = DirectCast(contentProperty.GetValue(fileProperty, Nothing), String)
+                                        End Select
+                                        If (contentUpdated) Then
+                                            Dim filename As String = cs.GetFilename(instanceProperty.Name)
+                                            If (String.IsNullOrEmpty(content)) Then
+                                                '
+                                                ' -- empty content
+                                                If (Not String.IsNullOrEmpty(filename)) Then
+                                                    cs.SetField(instanceProperty.Name, "")
+                                                    cp.File.Delete(filename)
+                                                End If
+                                            Else
+                                                '
+                                                ' -- save content
+                                                If (String.IsNullOrEmpty(filename)) Then
+                                                    filename = getUploadPath(instanceType)(instanceProperty.Name.ToLower())
+                                                End If
+                                                cs.SetFile(instanceProperty.Name, content, contentName)
+                                            End If
+                                        End If
+
+                                    Case Else
+                                        Dim value As String
+                                        value = instanceProperty.GetValue(Me, Nothing).ToString()
+                                        cs.SetField(instanceProperty.Name, value)
+                                End Select
+
+
+                            End If
                     End Select
                 Next
                 cs.Close()
@@ -437,6 +473,38 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
             End Try
             Return result
         End Function
+        '
+        '====================================================================================================
+        ''' <summary>
+        ''' pattern get a list of objects from this model
+        ''' </summary>
+        ''' <param name="cp"></param>
+        ''' <param name="sqlCriteria"></param>
+        ''' <returns></returns>
+        Protected Shared Function createList(Of T As baseModel)(cp As CPBaseClass, sqlCriteria As String, sqlOrderBy As String, pageSize As Integer, pageNumber As Integer, Optional listOfLowerCaseFields As List(Of String) = Nothing) As List(Of T)
+            Dim result As New List(Of T)
+            Try
+                Dim cs As CPCSBaseClass = cp.CSNew()
+                Dim ignoreCacheNames As New List(Of String)
+                Dim instanceType As Type = GetType(T)
+                Dim contentName As String = derivedContentName(instanceType)
+                If (cs.Open(contentName, sqlCriteria, sqlOrderBy,,, pageSize, pageNumber)) Then
+                    Dim instance As T
+                    Do
+                        instance = loadRecord(Of T)(cp, cs, listOfLowerCaseFields)
+                        If (instance IsNot Nothing) Then
+                            result.Add(instance)
+                        End If
+                        cs.GoNext()
+                    Loop While cs.OK()
+                End If
+                cs.Close()
+            Catch ex As Exception
+                cp.Site.ErrorReport(ex)
+            End Try
+            Return result
+        End Function
+
         '
         '====================================================================================================
         ''' <summary>
@@ -543,6 +611,17 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
             Dim tableName As String = derivedContentTableName(instanceType)
             Return tableName.ToLower() & "/" & fieldName.ToLower() & "/" & id.ToString().PadLeft(12, CChar("0")) & "/"
         End Function
+        '
+        '====================================================================================================
+        ''' <summary>
+        ''' return true if the type is nullable
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Shared Function IsNullable(ByVal type As Type) As Boolean
+            Return Nullable.GetUnderlyingType(type) IsNot Nothing
+        End Function
+
         '
         '====================================================================================================
         ''' <summary>

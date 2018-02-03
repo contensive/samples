@@ -10,7 +10,6 @@ Imports Contensive.BaseClasses
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models.Complex     '<------ set namespace
     Public Class xxxxxmodelNameGoesHerexxxxx        '<------ set set model Name and everywhere that matches this string
         Inherits baseComplexModel
-        Implements ICloneable
         '
         '====================================================================================================
         '-- const
@@ -18,12 +17,21 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models.Complex
         '
         '====================================================================================================
         ' -- instance properties
-        Public Property samplePropertyFromQuery As String
+        Public Property personName As String
+        Public Property organizationName As String
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, organizationId As Integer, Optional pageSize As Integer = 999999, Optional pageNumber As Integer = 1) As List(Of accreditationExportRawModel)
-            Dim sql As String = My.Resources.ExportAccreditationSql.Replace("{0}", organizationId.ToString())
-            Return createListFromSql(Of accreditationExportRawModel)(cp, sql, pageSize, pageNumber)
+        ''' <summary>
+        ''' get a list of objects matching the organizationId
+        ''' </summary>
+        ''' <param name="cp"></param>
+        ''' <param name="organizationId"></param>
+        ''' <param name="pageSize"></param>
+        ''' <param name="pageNumber"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Function createList(cp As CPBaseClass, organizationId As Integer, Optional pageSize As Integer = 999999, Optional pageNumber As Integer = 1) As List(Of xxxxxmodelNameGoesHerexxxxx)
+            Dim sql As String = My.Resources.sampleSql.Replace("{0}", organizationId.ToString())
+            Return createListFromSql(Of xxxxxmodelNameGoesHerexxxxx)(cp, sql, pageSize, pageNumber)
         End Function
 
     End Class
