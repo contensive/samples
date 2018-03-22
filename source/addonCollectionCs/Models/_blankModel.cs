@@ -8,10 +8,8 @@ using System.Diagnostics;
 using System.Text;
 using Contensive.BaseClasses;
 
-namespace AddonCollectionCs.Models
-{
-    public class _blankModel : baseModel
-    {
+namespace AddonCollectionCs.Models {
+    public class _blankModel : baseModel {
         //
         //====================================================================================================
         //-- const
@@ -26,76 +24,64 @@ namespace AddonCollectionCs.Models
         //<------ replace this with a list all model fields not part of the base model
         //
         //====================================================================================================
-        public static _blankModel @add(CPBaseClass cp)
-        {
+        public static _blankModel @add(CPBaseClass cp) {
             return @add<_blankModel>(cp);
         }
         //
         //====================================================================================================
-        public static _blankModel create(CPBaseClass cp, int recordId)
-        {
+        public static _blankModel create(CPBaseClass cp, int recordId) {
             return create<_blankModel>(cp, recordId);
         }
         //
         //====================================================================================================
-        public static _blankModel create(CPBaseClass cp, string recordGuid)
-        {
+        public static _blankModel create(CPBaseClass cp, string recordGuid) {
             return create<_blankModel>(cp, recordGuid);
         }
         //
         //====================================================================================================
-        public static _blankModel createByName(CPBaseClass cp, string recordName)
-        {
+        public static List<_blankModel> createByName(CPBaseClass cp, string recordName) {
             return createByName<_blankModel>(cp, recordName);
         }
         //
         //====================================================================================================
-        public void save(CPBaseClass cp)
-        {
+        public new void save(CPBaseClass cp) {
             base.save(cp);
         }
         //
         //====================================================================================================
-        public static void delete(CPBaseClass cp, int recordId)
-        {
+        public static void delete(CPBaseClass cp, int recordId) {
             delete<_blankModel>(cp, recordId);
         }
         //
         //====================================================================================================
-        public static void delete(CPBaseClass cp, string ccGuid)
-        {
+        public static void delete(CPBaseClass cp, string ccGuid) {
             delete<_blankModel>(cp, ccGuid);
         }
         //
         //====================================================================================================
-        public static List<_blankModel> createList(CPBaseClass cp, string sqlCriteria, string sqlOrderBy = "id")
-        {
+        public static List<_blankModel> createList(CPBaseClass cp, string sqlCriteria, string sqlOrderBy = "id") {
             return createList<_blankModel>(cp, sqlCriteria, sqlOrderBy);
         }
         //
         //====================================================================================================
-        public static string getRecordName(CPBaseClass cp, int recordId)
-        {
+        public static string getRecordName(CPBaseClass cp, int recordId) {
             return baseModel.getRecordName<_blankModel>(cp, recordId);
         }
         //
         //====================================================================================================
-        public static string getRecordName(CPBaseClass cp, string ccGuid)
-        {
+        public static string getRecordName(CPBaseClass cp, string ccGuid) {
             return baseModel.getRecordName<_blankModel>(cp, ccGuid);
         }
         //
         //====================================================================================================
-        public static int getRecordId(CPBaseClass cp, string ccGuid)
-        {
+        public static int getRecordId(CPBaseClass cp, string ccGuid) {
             return baseModel.getRecordId<_blankModel>(cp, ccGuid);
         }
 
         //
         //====================================================================================================
         //
-        public _blankModel Clone(CPBaseClass cp)
-        {
+        public _blankModel Clone(CPBaseClass cp) {
             _blankModel result = (_blankModel)this.Clone();
             result.id = cp.Content.AddRecord(contentName);
             result.ccguid = cp.Utils.CreateGuid();
@@ -105,8 +91,7 @@ namespace AddonCollectionCs.Models
         //
         //====================================================================================================
         //
-        public object Clone()
-        {
+        public object Clone() {
             return this.MemberwiseClone();
         }
     }

@@ -108,70 +108,69 @@ Public Class cpApiClass
                 Next
             End If
             '
+            '
+            ' -- concatinate writestream data to the end of the body
+            result = result & cp.Context.responseBuffer
+            '
+            ' -- set content type
+            If cp.Context.responseContentType <> "" Then
+                page.Response.ContentType = cp.Context.responseContentType
+            End If
+            '
+            ' -- set cookies
+            c = cp.Context.responseCookies
+            If c <> "" Then
+                row = Split(c, vbCrLf)
+                Do While (rowPtr + 5) <= UBound(row)
+                    cName = row(rowPtr + 0)
+                    If cName <> "" Then
+                        page.Response.Cookies.Add(New HttpCookie(cName, row(rowPtr + 1)))
+                        c = row(rowPtr + 2)
+                        If c <> "" Then
+                            page.Response.Cookies(cName).Expires = cp.Utils.EncodeDate(c)
+                        End If
+                        c = row(rowPtr + 3)
+                        If c <> "" Then
+                            page.Response.Cookies(cName).Domain = c
+                        End If
+                        c = row(rowPtr + 4)
+                        If c <> "" Then
+                            page.Response.Cookies(cName).Path = c
+                        End If
+                        c = row(rowPtr + 5)
+                        If c <> "" Then
+                            page.Response.Cookies(cName).Secure = cp.Utils.EncodeBoolean(c)
+                        End If
+                    End If
+                    rowPtr = rowPtr + 6
+                Loop
+            End If
+            '
+            ' -- set headers
+            c = cp.Context.responseHeaders
+            If c <> "" Then
+                row = Split(c, vbCrLf)
+                rowPtr = 0
+                Do While (rowPtr + 1) <= UBound(row)
+                    cName = row(rowPtr + 0)
+                    If cName <> "" Then
+                        Call page.Response.AddHeader(cName, CStr(row(rowPtr + 1)))
+                    End If
+                    rowPtr = rowPtr + 2
+                Loop
+            End If
+            '
+            ' -- set http status
+            c = cp.Context.responseStatus
+            If c <> "" Then
+                page.Response.Status = c
+            End If
+            '
+            ' -- redirect
             If cp.Context.responseRedirect <> "" Then
-                '
-                ' -- redirect
                 If Not page.Response.IsRequestBeingRedirected Then
                     page.Response.Redirect(cp.Context.responseRedirect, False)
                     context.ApplicationInstance.CompleteRequest()
-                End If
-            Else
-                '
-                ' -- concatinate writestream data to the end of the body
-                result = result & cp.Context.responseBuffer
-                '
-                ' -- set content type
-                If cp.Context.responseContentType <> "" Then
-                    page.Response.ContentType = cp.Context.responseContentType
-                End If
-                '
-                ' -- set cookies
-                c = cp.Context.responseCookies
-                If c <> "" Then
-                    row = Split(c, vbCrLf)
-                    Do While (rowPtr + 5) <= UBound(row)
-                        cName = row(rowPtr + 0)
-                        If cName <> "" Then
-                            page.Response.Cookies.Add(New HttpCookie(cName, row(rowPtr + 1)))
-                            c = row(rowPtr + 2)
-                            If c <> "" Then
-                                page.Response.Cookies(cName).Expires = cp.Utils.EncodeDate(c)
-                            End If
-                            c = row(rowPtr + 3)
-                            If c <> "" Then
-                                page.Response.Cookies(cName).Domain = c
-                            End If
-                            c = row(rowPtr + 4)
-                            If c <> "" Then
-                                page.Response.Cookies(cName).Path = c
-                            End If
-                            c = row(rowPtr + 5)
-                            If c <> "" Then
-                                page.Response.Cookies(cName).Secure = cp.Utils.EncodeBoolean(c)
-                            End If
-                        End If
-                        rowPtr = rowPtr + 6
-                    Loop
-                End If
-                '
-                ' -- set headers
-                c = cp.Context.responseHeaders
-                If c <> "" Then
-                    row = Split(c, vbCrLf)
-                    rowPtr = 0
-                    Do While (rowPtr + 1) <= UBound(row)
-                        cName = row(rowPtr + 0)
-                        If cName <> "" Then
-                            Call page.Response.AddHeader(cName, CStr(row(rowPtr + 1)))
-                        End If
-                        rowPtr = rowPtr + 2
-                    Loop
-                End If
-                '
-                ' -- set http status
-                c = cp.Context.responseStatus
-                If c <> "" Then
-                    page.Response.Status = c
                 End If
             End If
         Catch ex As Exception

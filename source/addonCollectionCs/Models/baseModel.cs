@@ -142,26 +142,12 @@ namespace AddonCollectionCs.Models {
         //
         //====================================================================================================
         /// <summary>
-        /// open an existing object
+        /// create a list of objects that match name, ordered by id
         /// </summary>
         /// <param name="cp"></param>
         /// <param name="recordName"></param>
-        protected static T createByName<T>(CPBaseClass cp, string recordName) where T : baseModel {
-            T result = null;
-            try {
-                if (!string.IsNullOrEmpty(recordName)) {
-                    Type instanceType = typeof(T);
-                    string contentName = derivedContentName(instanceType);
-                    CPCSBaseClass cs = cp.CSNew();
-                    if (cs.Open(contentName, "(name=" + cp.Db.EncodeSQLText(recordName) + ")", "id")) {
-                        result = loadRecord<T>(cp, cs);
-                    }
-                    cs.Close();
-                }
-            } catch (Exception ex) {
-                cp.Site.ErrorReport(ex);
-            }
-            return result;
+        protected static List<T> createByName<T>(CPBaseClass cp, string recordName) where T : baseModel {
+            return createList<T>(cp, "(name=" + cp.Db.EncodeSQLText(recordName) + ")", "id");
         }
         //
         //====================================================================================================
