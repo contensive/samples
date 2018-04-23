@@ -211,7 +211,7 @@ namespace AddonCollectionCs.Models {
         /// </summary>
         /// <param name="cp"></param>
         /// <returns></returns>
-        protected int save(CPBaseClass cp) {
+        protected int save<T>  (CPBaseClass cp) where T : baseModel {
             try {
                 CPCSBaseClass cs = cp.CSNew();
                 Type instanceType = this.GetType();

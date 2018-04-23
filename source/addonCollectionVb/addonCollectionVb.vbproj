@@ -89,6 +89,11 @@
     <Compile Include="Controllers\cacheController.vb" />
     <Compile Include="Models\Complex\baseComplexModel.vb" />
     <Compile Include="Models\Complex\_blankModel.vb" />
+    <Compile Include="Models\DbModels\LibraryFolderModel.vb" />
+    <Compile Include="Models\DbModels\LibraryFolderRuleModel.vb" />
+    <Compile Include="Models\DbModels\LibraryFileModel.vb" />
+    <Compile Include="Models\DbModels\LibraryFileTypeModel.vb" />
+    <Compile Include="Models\DbModels\LibraryFileLogModel.vb" />
     <Compile Include="Views\_sampleAddon.vb" />
     <Compile Include="Models\DbModels\DataSourceModel.vb" />
     <Compile Include="Models\DbModels\TableModel.vb" />

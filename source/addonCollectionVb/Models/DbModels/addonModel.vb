@@ -7,7 +7,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models.DbModels     '<------ set namespace
+Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
     Public Class addonModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
@@ -94,7 +94,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models.DbModel
         '
         '====================================================================================================
         Public Overloads Sub save(cp As CPBaseClass)
-            MyBase.save(cp)
+            MyBase.save(Of addonModel)(cp)
         End Sub
         '
         '====================================================================================================

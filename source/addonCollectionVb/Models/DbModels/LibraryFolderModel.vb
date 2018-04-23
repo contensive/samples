@@ -8,90 +8,90 @@ Imports System.Text
 Imports Contensive.BaseClasses
 
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<------ set namespace
-    Public Class AdminSitePropertieModel        '<------ set set model Name and everywhere that matches this string
+    Public Class LibraryFolderModel        '<------ set set model Name and everywhere that matches this string
         Inherits baseModel
         Implements ICloneable
         '
         '====================================================================================================
         '-- const
-        Public Const contentName As String = "Admin Site Properties"      '<------ set content name
-        Public Const contentTableName As String = "ccSetup"   '<------ set to tablename for the primary content (used for cache names)
-        Private Shadows Const contentDataSource As String = "default"             '<------ set to datasource if not default
+        Public Const contentName As String = "Library Folders"
+        Public Const contentTableName As String = "ccLibraryFolders"
+        Private Shadows Const contentDataSource As String = "default"
         '
         '====================================================================================================
         ' -- instance properties
-        'instancePropertiesGoHere
-        ' sample instance property -- Public Property DataSourceID As Integer
+        Public Property Description As String
+        Public Property ParentID As Integer
         '
         '====================================================================================================
-        Public Overloads Shared Function add(cp As CPBaseClass) As AdminSitePropertieModel
-            Return add(Of AdminSitePropertieModel)(cp)
+        Public Overloads Shared Function add(cp As CPBaseClass) As LibraryFolderModel
+            Return add(Of LibraryFolderModel)(cp)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As AdminSitePropertieModel
-            Return create(Of AdminSitePropertieModel)(cp, recordId)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordId As Integer) As LibraryFolderModel
+            Return create(Of LibraryFolderModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As AdminSitePropertieModel
-            Return create(Of AdminSitePropertieModel)(cp, recordGuid)
+        Public Overloads Shared Function create(cp As CPBaseClass, recordGuid As String) As LibraryFolderModel
+            Return create(Of LibraryFolderModel)(cp, recordGuid)
         End Function
         '
         '====================================================================================================
-        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As AdminSitePropertieModel
-            Return createByName(Of AdminSitePropertieModel)(cp, recordName)
+        Public Overloads Shared Function createByName(cp As CPBaseClass, recordName As String) As LibraryFolderModel
+            Return createByName(Of LibraryFolderModel)(cp, recordName)
         End Function
         '
         '====================================================================================================
         Public Overloads Sub save(cp As CPBaseClass)
-            MyBase.save(Of AdminSitePropertieModel)(cp)
+            MyBase.save(Of LibraryFolderModel)(cp)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, recordId As Integer)
-            delete(Of AdminSitePropertieModel)(cp, recordId)
+            delete(Of LibraryFolderModel)(cp, recordId)
         End Sub
         '
         '====================================================================================================
         Public Overloads Shared Sub delete(cp As CPBaseClass, ccGuid As String)
-            delete(Of AdminSitePropertieModel)(cp, ccGuid)
+            delete(Of LibraryFolderModel)(cp, ccGuid)
         End Sub
         '
         '====================================================================================================
-        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of AdminSitePropertieModel)
-            Return createList(Of AdminSitePropertieModel)(cp, sqlCriteria, sqlOrderBy)
+        Public Overloads Shared Function createList(cp As CPBaseClass, sqlCriteria As String, Optional sqlOrderBy As String = "id") As List(Of LibraryFolderModel)
+            Return createList(Of LibraryFolderModel)(cp, sqlCriteria, sqlOrderBy)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, recordId As Integer) As String
-            Return baseModel.getRecordName(Of AdminSitePropertieModel)(cp, recordId)
+            Return baseModel.getRecordName(Of LibraryFolderModel)(cp, recordId)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordName(cp As CPBaseClass, ccGuid As String) As String
-            Return baseModel.getRecordName(Of AdminSitePropertieModel)(cp, ccGuid)
+            Return baseModel.getRecordName(Of LibraryFolderModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getRecordId(cp As CPBaseClass, ccGuid As String) As Integer
-            Return baseModel.getRecordId(Of AdminSitePropertieModel)(cp, ccGuid)
+            Return baseModel.getRecordId(Of LibraryFolderModel)(cp, ccGuid)
         End Function
         '
         '====================================================================================================
         Public Overloads Shared Function getCount(cp As CPBaseClass, sqlCriteria As String) As Integer
-            Return baseModel.getCount(Of AdminSitePropertieModel)(cp, sqlCriteria)
+            Return baseModel.getCount(Of LibraryFolderModel)(cp, sqlCriteria)
         End Function
         '
         '====================================================================================================
         Public Overloads Function getUploadPath(fieldName As String) As String
-            Return MyBase.getUploadPath(Of AdminSitePropertieModel)(fieldName)
+            Return MyBase.getUploadPath(Of LibraryFolderModel)(fieldName)
         End Function
         '
         '====================================================================================================
         '
-        Public Function Clone(cp As CPBaseClass) As AdminSitePropertieModel
-            Dim result As AdminSitePropertieModel = DirectCast(Me.Clone(), AdminSitePropertieModel)
+        Public Function Clone(cp As CPBaseClass) As LibraryFolderModel
+            Dim result As LibraryFolderModel = DirectCast(Me.Clone(), LibraryFolderModel)
             result.id = cp.Content.AddRecord(contentName)
             result.ccguid = cp.Utils.CreateGuid()
             result.save(cp)

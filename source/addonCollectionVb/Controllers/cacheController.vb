@@ -7,6 +7,7 @@ Imports Contensive.BaseClasses
 Imports System.Linq
 Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
 
+
 Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
     ''' <summary>
     ''' Ignore this class for now.

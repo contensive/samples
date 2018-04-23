@@ -261,7 +261,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
         ''' </summary>
         ''' <param name="cp"></param>
         ''' <returns></returns>
-        Protected Function save(cp As CPBaseClass) As Integer
+        Protected Function save(Of T As baseModel)(cp As CPBaseClass) As Integer
             Try
                 Dim cs As CPCSBaseClass = cp.CSNew()
                 Dim instanceType As Type = Me.GetType()
@@ -377,7 +377,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
                                                 '
                                                 ' -- save content
                                                 If (String.IsNullOrEmpty(filename)) Then
-                                                    filename = getUploadPath(instanceType)(instanceProperty.Name.ToLower())
+                                                    filename = getUploadPath(Of T)(instanceProperty.Name.ToLower())
                                                 End If
                                                 cs.SetFile(instanceProperty.Name, content, contentName)
                                             End If

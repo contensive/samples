@@ -44,8 +44,8 @@ namespace AddonCollectionCs.Models {
         }
         //
         //====================================================================================================
-        public new void save(CPBaseClass cp) {
-            base.save(cp);
+        public new void save <T> (CPBaseClass cp) where T : baseModel {
+            base.save<T>(cp);
         }
         //
         //====================================================================================================
@@ -85,7 +85,7 @@ namespace AddonCollectionCs.Models {
             _blankModel result = (_blankModel)this.Clone();
             result.id = cp.Content.AddRecord(contentName);
             result.ccguid = cp.Utils.CreateGuid();
-            result.save(cp);
+            result.save<_blankModel>(cp);
             return result;
         }
         //
