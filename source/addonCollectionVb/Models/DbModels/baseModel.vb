@@ -262,8 +262,8 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
         ''' <param name="cp"></param>
         ''' <returns></returns>
         Protected Function save(Of T As baseModel)(cp As CPBaseClass) As Integer
+            Dim cs As CPCSBaseClass = cp.CSNew()
             Try
-                Dim cs As CPCSBaseClass = cp.CSNew()
                 Dim instanceType As Type = Me.GetType()
                 Dim contentName As String = derivedContentName(instanceType)
                 Dim tableName As String = derivedContentTableName(instanceType)
@@ -393,10 +393,11 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
                             End If
                     End Select
                 Next
-                cs.Close()
             Catch ex As Exception
                 cp.Site.ErrorReport(ex)
                 Throw
+            Finally
+                cs.Close()
             End Try
             Return id
         End Function
