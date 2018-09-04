@@ -103,33 +103,5 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Models     '<-
         Public Function Clone() As Object Implements ICloneable.Clone
             Return Me.MemberwiseClone()
         End Function
-        '
-        '====================================================================================================
-        ''' <summary>
-        ''' Save a list of this model to the database, guid required, using the guid as a key for update/import, and ignoring the id.
-        ''' </summary>
-        ''' <param name="cp"></param>
-        ''' <param name="modelList">A dictionary with guid as key, and this model as object</param>
-        Public Shared Sub migrationImport(cp As CPBaseClass, modelList As Dictionary(Of String, xxxxxmodelNameGoesHerexxxxx))
-            Dim ContentControlID As Integer = cp.Content.GetID(contentName)
-            For Each kvp In modelList
-                If (Not String.IsNullOrEmpty(kvp.Value.ccguid)) Then
-                    kvp.Value.id = 0
-                    Dim dbData As xxxxxmodelNameGoesHerexxxxx = create(cp, kvp.Value.ccguid)
-                    If (dbData IsNot Nothing) Then
-                        kvp.Value.id = dbData.id
-                    Else
-                        kvp.Value.DateAdded = Now
-                        kvp.Value.CreatedBy = 0
-                    End If
-                    kvp.Value.ContentControlID = ContentControlID
-                    kvp.Value.ModifiedDate = Now
-                    kvp.Value.ModifiedBy = 0
-                    kvp.Value.save(cp)
-                End If
-            Next
-        End Sub
-
-
     End Class
 End Namespace

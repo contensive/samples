@@ -73,4 +73,34 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
             internalServerError = 500
         End Enum
     End Module
+
+    '
+    ' -- VB6 Replace List
+    '                   Find                                            Replace                                             Manual
+    '                   -----------------------------------------       --------------------------------------------------  ------------------------------
+    '                   a-s long                                        as integer
+    '                   a-s variant                                     as object
+    '                   k-maIndent(                                     nop(                                                -
+    '                   k-maEncodeInteger(Main.GetSiteProperty(         cp.site.getInteger(                                 - leaves double ending "))"
+    '                   M-ain.GetFormInputText(                         cp.html.inputText(
+    '                   M-ain.GetStreamText(                            cp.doc.getText(
+    '                   M-ain.GetStreamNumber(                          cp.doc.getNumber(
+    '                   M-ain.GetStreamBoolean(                         cp.doc.getBoolean(
+    '                   M-ain.GetStreamDate(                            cp.doc.getDate(
+    '                   D-OMDocument60                                  xml.xmlDocument
+    '                   M-ain.GetFormButton(                            cp.html.button("button",
+    '                   kmaEncodeBoolean                                cp.utils.encodeBoolean
+    '                   kmaEncodeInteger                                cp.utils.encodeInteger
+    '                   kmaEncodeNumber                                 cp.utils.encodeNumber
+    '                   kmaEncodeDate                                   cp.utils.encodeDate
+    '                   Main.IsAdmin                                    cp.user.isAdmin
+    '                   Main.GetAdminHintWrapper                        cp.html.adminHint(
+    '                                                                   
+    '
+    '                   Manual issues
+    '                   ------------------------------------------------------------------------
+    '                   optionString = optionString & "&name=value"     cp.doc.setProperty( name, value )
+    '                   Main.GetFormStart() ... Main.GetFormEnd()       cp.html.form( ... )
+    '                   Err. -> convert to try+catch
+
 End Namespace
