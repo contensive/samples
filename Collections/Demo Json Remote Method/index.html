@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<title>Demo JSON Remote Method</title>
+</head>
+
+<body>
+    <div class="mt-4 mx-auto" style="width: 800px">
+
+        <h1>Demo Json Remote Method</h1>
+
+        <p>When you click the button, jquery calls the remote method "GetJsonRemoteData" and populates the target container from the result.</p>
+
+        <button id="actionButton" type="button" class="btn btn-success">Call Remote</button>
+        <button id="reloadButton" type="button" class="btn btn-success">Reload Page</button>
+
+        <div class="mt-4 p-4 border border-primary" id="clickTarget">(default text to be replaced)</div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    // response = {"data":{},"errors":[]}
+    // data response = {"data":{"name":"Bob","role":{"id":10,"name":"admin"}},"errors":[]}
+    // error response = {"data":{},"errors":[{"number":1,"userMsg":"Message to user.","detail":"optional, message for developer"}]}
+        jQuery('#actionButton').on('click', function() {
+            jQuery.ajax({
+                url:"/GetJsonRemoteData",
+                success: function(jsonResponse) {
+                    var response = $.parseJSON(jsonResponse);
+                    if ( response.errors.length > 0) {
+                        // -- a data error was returned, display the user message
+                        $('#clickTarget').html( 'There has been an error. ' + response.errors[0].userMsg );
+                    } else {
+                        // -- success, display result
+                        $('#clickTarget').html( response.data.name + ' has the role of ' + response.data.role.name );
+                    }
+                },
+                error: function() {
+                    // -- an http error response
+                    $('#clickTarget').html('There was an error.')
+                }
+            })
+        })
+        $('#reloadButton').on('click',function(){
+            //alert('reload');
+            location.reload();
+        })
+
+</script>
+
+</body>
+
+</html>
