@@ -75,7 +75,8 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
     End Module
 
     '
-    ' -- VB6 Replace List
+    ' During VB6 code upgrade, these are typical find-replace strings
+    ' -- VB6 typical Replace List
     '                   Find                                            Replace                                             Manual
     '                   -----------------------------------------       --------------------------------------------------  ------------------------------
     '                   a-s long                                        as integer

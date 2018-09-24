@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Demo Json Remote Method" guid="{af8611a2-21cc-48da-b660-044f99255a8d}" system="No" updatable="Yes" blockNavigatorNode="No">
+<Collection name="Demo Dot Net Remote Method" guid="{b880dfbe-7e81-4a85-b969-b0e7cc7bbc63}" system="No" updatable="Yes" blockNavigatorNode="No">
 	<HelpLink></HelpLink>
 	<Help></Help>
-	<Addon name="GetJsonRemoteData" guid="{f0eab8cd-b1a2-472e-a063-520900425d3b}" type="Add-on">
+	<Addon name="GetDotNetRemoteData" guid="{39302948-f6c4-41f6-9979-3691554262e2}" type="Add-on">
 		<Copy></Copy>
-		<CopyText><![CDATA[{
-    "data":
-    {
-        "name":"Bob",
-        "id":10
-    }, 
-    "errors":[]
-}]]></CopyText>
+		<CopyText></CopyText>
 		<ActiveXProgramID></ActiveXProgramID>
-		<DotNetClass></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.DotNetDemos.GetPersonData]]></DotNetClass>
 		<ArgumentList></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
@@ -45,5 +38,5 @@
 		<Styles></Styles>
 		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
-	<Resource name="index.html" type="www" path="/DemoJSONRemoteMethod" />
+	<Resource name="index.html" type="www" path="DemoDotNetRemoteMethod" />
 </Collection>
