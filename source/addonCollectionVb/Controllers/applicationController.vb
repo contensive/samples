@@ -4,7 +4,7 @@ Option Strict On
 
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
+Namespace Controllers
     '
     '====================================================================================================
     ''' <summary>
@@ -16,7 +16,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         '
         ' privates passed in, do not dispose
         '
-        Private cp As Contensive.BaseClasses.CPBaseClass
+        Private cp As CPBaseClass
         '
         '====================================================================================================
         ''' <summary>
@@ -82,7 +82,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' Constructor
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub New(cp As Contensive.BaseClasses.CPBaseClass, Optional requiresAuthentication As Boolean = True)
+        Public Sub New(cp As CPBaseClass, Optional requiresAuthentication As Boolean = True)
             Me.cp = cp
             Dim sql As String = ""
             Dim cs As CPCSBaseClass = cp.CSNew()
@@ -93,7 +93,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
             End If
         End Sub
         '
-        Public Shared Function serializeObject(ByVal CP As Contensive.BaseClasses.CPBaseClass, ByVal dataObject As Object) As String
+        Public Shared Function serializeObject(ByVal CP As CPBaseClass, ByVal dataObject As Object) As String
             Dim result As String = ""
             Try
                 Dim json_serializer As New System.Web.Script.Serialization.JavaScriptSerializer

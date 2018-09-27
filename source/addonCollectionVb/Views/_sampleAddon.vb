@@ -2,10 +2,10 @@
 Option Strict On
 Option Explicit On
 
-Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
+
 Imports Contensive.BaseClasses
 
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Views
+Namespace Views
     '
     Public Class addonClass
         Inherits AddonBaseClass
@@ -28,7 +28,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Views
             Try
                 '
                 ' -- initialize application. If authentication needed and not login page, pass true
-                Using ae As New applicationController(CP, False)
+                Using ae As New Controllers.applicationController(CP, False)
                     '
                     ' -- your code
                     result = "Hello World"

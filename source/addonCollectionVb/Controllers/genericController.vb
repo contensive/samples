@@ -9,7 +9,7 @@ Option Strict On
 'Imports AddonCollectionVb.Views
 'Imports AddonCollectionVb.Controllers
 
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
+Namespace Controllers
     Public NotInheritable Class genericController
         Private Sub New()
         End Sub

@@ -17,13 +17,13 @@ Public Class GetPersonData
         Dim jsonSerializer As New Web.Script.Serialization.JavaScriptSerializer
         Try
             Dim personData As New PersonDataModel With {
-            .id = 1,
-            .name = "Bob"
-        }
+                .id = 1,
+                .name = "Bob"
+            }
             Dim response As New ResponseModel() With {
-            .data = personData,
-            .errors = New List(Of ResponseErrorModel) From {}
-        }
+                .data = personData,
+                .errors = New List(Of ResponseErrorModel) From {}
+            }
             result = jsonSerializer.Serialize(response)
         Catch ex As Exception
             cp.Site.ErrorReport(ex)
@@ -40,7 +40,6 @@ Public Class GetPersonData
         Public number As Integer
         Public userMsg As String
         Public detail As String
-        Public id As Integer
     End Class
     '
     Private Class ResponseModel

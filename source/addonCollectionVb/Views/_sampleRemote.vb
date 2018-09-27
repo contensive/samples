@@ -6,7 +6,7 @@ Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
 Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
 Imports Contensive.BaseClasses
 '
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Views
+Namespace Views
     '
     Public Class getProjectListNoDetailsClass
         Inherits AddonBaseClass
@@ -19,10 +19,10 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Views
             Try
                 '
                 ' -- initialize application. If authentication needed and not login page, pass true
-                Using ae As New applicationController(cp, True)
+                Using ae As New Controllers.applicationController(cp, True)
                     '
                     ' -- optionally add a timer to report how long this section took
-                    ae.packageProfileList.Add(New applicationController.packageProfileClass() With {.name = "applicationControllerConstructor", .time = sw.ElapsedMilliseconds})
+                    ae.packageProfileList.Add(New Controllers.applicationController.packageProfileClass() With {.name = "applicationControllerConstructor", .time = sw.ElapsedMilliseconds})
                     If ae.packageErrorList.Count = 0 Then
                         '
                         ' -- get a request variable from either a querystring or a post
@@ -36,17 +36,17 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Views
                         Dim test As String = objectValueFromUI.firstname
                         '
                         ' -- create sample data
-                        Dim personList As List(Of xxxxxCollectionNameSpaceGoesHerexxxxx.Models.PeopleModel) = Models.PeopleModel.createList(cp, "")
+                        Dim personList As List(Of Models.PeopleModel) = Models.PeopleModel.createList(cp, "")
                         '
                         ' -- add sample data to a node
-                        ae.packageNodeList.Add(New applicationController.packageNodeClass With {
+                        ae.packageNodeList.Add(New Controllers.applicationController.packageNodeClass With {
                             .dataFor = "nameOfThisDataForRemoteToRecognize",
                             .data = personList
                         })
                     End If
                     '
                     ' -- optionally add a timer to report how long this section took
-                    ae.packageProfileList.Add(New applicationController.packageProfileClass() With {.name = "getProjectListNoDetailsClass", .time = sw.ElapsedMilliseconds})
+                    ae.packageProfileList.Add(New Controllers.applicationController.packageProfileClass() With {.name = "getProjectListNoDetailsClass", .time = sw.ElapsedMilliseconds})
                     result = ae.getSerializedPackage()
                 End Using
             Catch ex As Exception

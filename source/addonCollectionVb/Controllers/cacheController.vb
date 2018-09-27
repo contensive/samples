@@ -8,7 +8,7 @@ Imports System.Linq
 Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
 
 
-Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
+Namespace Controllers
     ''' <summary>
     ''' Ignore this class for now.
     ''' Best Practices
@@ -21,7 +21,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         '
         ' store just for live of object. Cannot load in constructor without glocal code update
         Private Const invalidationDaysDefault As Double = 365
-        Private cp As Contensive.BaseClasses.CPBaseClass
+        Private cp As CPBaseClass
         Private mc As Enyim.Caching.MemcachedClient
         Private rightNow As Date = Now
         Private cacheLogFilename As String
@@ -40,7 +40,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' new constructor. Initializes properties and cache client. For now, called from each public routine. Eventually this is contructor.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub New(cp As Contensive.BaseClasses.CPBaseClass)
+        Public Sub New(cp As CPBaseClass)
             Dim logMsg As String = "new performanceCache instance(" & cp.Doc.StartTime & ")"
             Dim hint As String = "0"
             Try
@@ -223,7 +223,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="cacheName"></param>
         ''' <param name="cacheValue"></param>
         ''' <remarks></remarks>
-        Public Sub save(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String, cacheValue As String)
+        Public Sub save(ByVal CP As CPBaseClass, cacheName As String, cacheValue As String)
             Try
                 If allowCache Then
                     Dim invalidationDate As Date = rightNow.AddDays(invalidationDaysDefault + Rnd())
@@ -253,7 +253,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="invalidationDate"></param>
         ''' <param name="invalidationTagList">Each tag should represent the source of data, and should be invalidated when that source changes.</param>
         ''' <remarks></remarks>
-        Public Sub save(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String, cacheObject As Object, invalidationDate As Date, invalidationTagList As List(Of String))
+        Public Sub save(ByVal CP As CPBaseClass, cacheName As String, cacheObject As Object, invalidationDate As Date, invalidationTagList As List(Of String))
             Try
                 'If TypeOf cacheObject Is String Then
                 '    appendCacheLog(vbTab & "save(" & CP.Doc.StartTime & "), cacheName(" & cacheName & "), length(" & DirectCast(cacheObject, String).Length() & ")")
@@ -286,7 +286,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="cacheValue"></param>
         ''' <param name="invalidationTagCommaList">Comma delimited list of tags. Each tag should represent the source of data, and should be invalidated when that source changes.</param>
         ''' <remarks></remarks>
-        Public Sub save(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String, cacheValue As String, invalidationTagCommaList As String)
+        Public Sub save(ByVal CP As CPBaseClass, cacheName As String, cacheValue As String, invalidationTagCommaList As String)
             Try
                 If allowCache Then
                     Dim invalidationList As New List(Of String)
@@ -370,7 +370,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="cacheName"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function read(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String) As String
+        Public Function read(ByVal CP As CPBaseClass, cacheName As String) As String
             Dim s As String = ""
             Dim logMsg As String = vbTab & "read(" & CP.Doc.StartTime & "), cacheName(" & cacheName & ")"
             Try
@@ -430,7 +430,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="return_cacheHit">Returns true if a valid cache entry found, false if there was no valid cache stored.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function read2(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String, Optional ByRef return_cacheHit As Boolean = False) As Object
+        Public Function read2(ByVal CP As CPBaseClass, cacheName As String, Optional ByRef return_cacheHit As Boolean = False) As Object
             Dim returnData As Object = Nothing
             Dim logMsg As String = vbTab & "read2(" & CP.Doc.StartTime & "), cacheName(" & cacheName & ")"
             Try
@@ -517,7 +517,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="CP"></param>
         ''' <param name="cacheName"></param>
         ''' <remarks></remarks>
-        Public Sub clear(ByVal CP As Contensive.BaseClasses.CPBaseClass, cacheName As String)
+        Public Sub clear(ByVal CP As CPBaseClass, cacheName As String)
             Try
                 'NewNew(CP)
                 '
@@ -548,7 +548,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' <param name="clearDegrees"></param>
         ''' <param name="clearCourses"></param>
         ''' <remarks></remarks>
-        Public Sub clearObjectCache_Person(ByVal CP As Contensive.BaseClasses.CPBaseClass, userID As Integer, clearQualifications As Boolean, clearDegrees As Boolean, clearCourses As Boolean)
+        Public Sub clearObjectCache_Person(ByVal CP As CPBaseClass, userID As Integer, clearQualifications As Boolean, clearDegrees As Boolean, clearCourses As Boolean)
             Try
                 clear(CP, getObjectCacheName(CP, Models.PeopleModel.contentName, userID))
             Catch ex As Exception
@@ -562,7 +562,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' </summary>
         ''' <param name="CP"></param>
         ''' <remarks></remarks>
-        Public Sub flushCache(ByVal CP As Contensive.BaseClasses.CPBaseClass)
+        Public Sub flushCache(ByVal CP As CPBaseClass)
             Try
                 invalidateAll(CP)
                 CP.Cache.ClearAll()
@@ -610,7 +610,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' invalidates the entire cache (except those entires written with saveRaw)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub invalidateAll(cp As Contensive.BaseClasses.CPBaseClass)
+        Public Sub invalidateAll(cp As CPBaseClass)
             Try
                 'NewNew(CP)
                 '
@@ -629,7 +629,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' </summary>
         ''' <param name="tag"></param>
         ''' <remarks></remarks>
-        Public Sub invalidateTag(cp As Contensive.BaseClasses.CPBaseClass, ByVal tag As String)
+        Public Sub invalidateTag(cp As CPBaseClass, ByVal tag As String)
             Try
                 Dim cacheName As String = "tagInvalidationDate-"
                 '
@@ -649,7 +649,7 @@ Namespace Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
         ''' </summary>
         ''' <param name="tagList"></param>
         ''' <remarks></remarks>
-        Public Sub invalidateTagList(cp As Contensive.BaseClasses.CPBaseClass, ByVal tagList As List(Of String))
+        Public Sub invalidateTagList(cp As CPBaseClass, ByVal tagList As List(Of String))
             Try
                 If allowCache Then
                     For Each tag In tagList
