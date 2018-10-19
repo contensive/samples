@@ -75,6 +75,10 @@ End Module
 
 '
 ' During VB6 code upgrade, these are typical find-replace strings
+'   - convert all routines to try-catch and not on error goto
+'
+'
+'
 ' -- VB6 typical Replace List
 '                   Find                                            Replace                                             Manual
 '                   -----------------------------------------       --------------------------------------------------  ------------------------------
