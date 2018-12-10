@@ -409,17 +409,7 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="recordId"></param>
         Protected Shared Sub delete(Of T As baseModel)(cp As CPBaseClass, recordId As Integer)
-            Try
-                If (recordId > 0) Then
-                    Dim instanceType As Type = GetType(T)
-                    Dim contentName As String = derivedContentName(instanceType)
-                    Dim tableName As String = derivedContentTableName(instanceType)
-                    cp.Content.Delete(contentName, "id=" & recordId.ToString)
-                End If
-            Catch ex As Exception
-                cp.Site.ErrorReport(ex)
-                Throw
-            End Try
+            Call deleteList(Of T)(cp, "(id=" & recordId.ToString & ")")
         End Sub
         '
         '====================================================================================================
@@ -429,17 +419,25 @@ Namespace Models
         ''' <param name="cp"></param>
         ''' <param name="ccguid"></param>
         Protected Shared Sub delete(Of T As baseModel)(cp As CPBaseClass, ccguid As String)
+            Call deleteList(Of T)(cp, "(ccguid=" & cp.Db.EncodeSQLText(ccguid) & ")")
+        End Sub
+        '
+        '====================================================================================================
+        ''' <summary>
+        ''' delete all records matching the criteria
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="cp"></param>
+        ''' <param name="sqlCriteria"></param>
+        Shared Sub deleteList(Of T As baseModel)(cp As CPBaseClass, sqlCriteria As String)
             Try
-                If (Not String.IsNullOrEmpty(ccguid)) Then
+                If (Not String.IsNullOrWhiteSpace(sqlCriteria)) Then
                     Dim instanceType As Type = GetType(T)
                     Dim contentName As String = derivedContentName(instanceType)
-                    Dim instance As baseModel = create(Of baseModel)(cp, ccguid)
-                    If (instance IsNot Nothing) Then
-                        cp.Content.Delete(contentName, "(ccguid=" & cp.Db.EncodeSQLText(ccguid) & ")")
-                    End If
+                    cp.Content.Delete(contentName, sqlCriteria)
                 End If
             Catch ex As Exception
-                cp.Site.ErrorReport(ex)
+                cp.Site.ErrorReport(ex) : Throw
                 Throw
             End Try
         End Sub

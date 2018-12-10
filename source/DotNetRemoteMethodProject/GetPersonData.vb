@@ -14,8 +14,8 @@ Public Class GetPersonData
     ''' <returns></returns>
     Public Overrides Function Execute(ByVal cp As CPBaseClass) As Object
         Dim result As String = ""
-        //
-        // -- MS serializer used here for simplicity, but NewtonSoft Nuget package Is prefered
+        '
+        ' -- MS serializer used here for simplicity, but NewtonSoft Nuget package Is prefered
         Dim jsonSerializer As New Web.Script.Serialization.JavaScriptSerializer
         Try
             '

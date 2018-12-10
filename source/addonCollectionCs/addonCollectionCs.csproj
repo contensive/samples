@@ -8,7 +8,7 @@
     <ProjectGuid>{BD7F68DB-C1C8-4B4B-A1CE-ECE3F4C3689A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AddonCollectionCs</RootNamespace>
+    <RootNamespace>Contensive.Addons.AddonCollectionCs</RootNamespace>
     <AssemblyName>AddonCollectionCs</AssemblyName>
     <SccProjectName>
     </SccProjectName>

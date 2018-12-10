@@ -5,35 +5,38 @@ using System.Collections.Generic;
 using System.Text;
 using Contensive.BaseClasses;
 
-namespace AddonCollectionCs.Views
-{
-    //
-    // this sample creates an addon collection (a group off addons that install together)
-    // -- Change the namespace to the collection name
-    // 2) Change this class name to the addon name
-    // 3) Create a Contensive Addon record with the namespace apCollectionName.ad
-    // 3) add reference to CPBase.DLL, typically installed in c:\program files\kma\contensive\
-    //
-    public class addonClass : Contensive.BaseClasses.AddonBaseClass
-    {
+namespace Contensive.Addons.AddonCollectionCs {
+    namespace Views {
         //
-        // -- Contensive calls the execute method of your addon class
-        public override object Execute(Contensive.BaseClasses.CPBaseClass cp)
-        {
-            string result = "";
-            try
-            {
-                //
-                // your code here
-                //
-                result = "success response";
+        // ====================================================================================================
+        /// <summary>
+        /// This class can be called from a Contnesive add-on by adding the namespace.classname to the Dotnot field in the Code tab.
+        /// In this sample, the Dotnet field would be "Contensive.Addons.AddonCollectionCs.Views.AddonClass"
+        /// </summary>
+        public class AddonClass : AddonBaseClass {
+            //
+            // ====================================================================================================
+            /// <summary>
+            /// The execute method is called from Contensive and it passes the cp argument to this method. The method returns an object which is typically a string.
+            /// 
+            /// </summary>
+            /// <param name="cp"></param>
+            /// <returns></returns>
+            public override object Execute(CPBaseClass cp) {
+                string result = "";
+                try {
+                    //
+                    // your code here
+                    //
+                    result = "Hello World";
+                } catch (Exception ex) {
+                    cp.Site.ErrorReport(ex);
+                    //
+                    // -- the execute method would typically not throw an error into the consuming method. Log and return.
+                    result = "Error Response";
+                }
+                return result;
             }
-            catch (Exception ex)
-            {
-                cp.Site.ErrorReport(ex);
-                result = "error response";
-            }
-            return result;
         }
     }
 }
