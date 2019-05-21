@@ -5,7 +5,7 @@ Option Strict On
 'Imports System.Collections.Generic
 'Imports System.Text
 'Imports Contensive.BaseClasses
-'Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
+'Imports SamplesxxxxxCollectionNameSpaceGoesHerexxxxx
 'Imports AddonCollectionVb.Views
 'Imports AddonCollectionVb.Controllers
 

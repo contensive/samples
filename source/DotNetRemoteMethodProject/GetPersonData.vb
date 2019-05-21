@@ -5,18 +5,12 @@ Imports Contensive.BaseClasses
 
 Public Class GetPersonData
     Inherits AddonBaseClass
-    '
-    '=====================================================================================
     ''' <summary>
-    ''' Demo Dot net Addon
+    ''' 
     ''' </summary>
-    ''' <param name="cp"></param>
+    ''' <param name="cp">Object passed </param>
     ''' <returns></returns>
     Public Overrides Function Execute(ByVal cp As CPBaseClass) As Object
-        Dim result As String = ""
-        '
-        ' -- MS serializer used here for simplicity, but NewtonSoft Nuget package Is prefered
-        Dim jsonSerializer As New Web.Script.Serialization.JavaScriptSerializer
         Try
             '
             ' -- create the data object to be returned

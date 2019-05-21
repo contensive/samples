@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Text;
 using Contensive.BaseClasses;
 
-namespace Contensive.Addons.AddonCollectionCs {
+namespace SamplesAddonCollectionCs {
     namespace Models {
         public class _blankModel : baseModel {
             //

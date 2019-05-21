@@ -2,8 +2,8 @@
 Option Explicit On
 Option Strict On
 
-Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
-Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
+Imports SamplesxxxxxCollectionNameSpaceGoesHerexxxxx
+Imports SamplesxxxxxCollectionNameSpaceGoesHerexxxxx.Controllers
 Imports Contensive.BaseClasses
 '
 Namespace Views

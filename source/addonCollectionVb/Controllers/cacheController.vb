@@ -5,7 +5,7 @@ Option Strict On
 Imports System.Text.RegularExpressions
 Imports Contensive.BaseClasses
 Imports System.Linq
-Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
+Imports SamplesxxxxxCollectionNameSpaceGoesHerexxxxx
 
 
 Namespace Controllers
@@ -236,7 +236,7 @@ Namespace Controllers
                 End If
             Catch ex As Exception
                 Try
-                    CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.write")
+                    CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.write")
                 Catch errObj As Exception
                 End Try
             End Try
@@ -271,7 +271,7 @@ Namespace Controllers
                 End If
             Catch ex As Exception
                 Try
-                    CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.write2")
+                    CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.write2")
                 Catch errObj As Exception
                 End Try
             End Try
@@ -301,7 +301,7 @@ Namespace Controllers
                 End If
             Catch ex As Exception
                 Try
-                    CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.write2")
+                    CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.write2")
                 Catch errObj As Exception
                 End Try
             End Try
@@ -415,7 +415,7 @@ Namespace Controllers
                 '
                 '
             Catch ex As Exception
-                CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.read")
+                CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.read")
                 appendCacheLog(logMsg & ", length(" & s.Length & ")")
             End Try
             Return s
@@ -505,7 +505,7 @@ Namespace Controllers
                 '    End If
                 'End If
             Catch ex As Exception
-                CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.read2")
+                CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.read2")
             End Try
             Return returnData
         End Function
@@ -532,7 +532,7 @@ Namespace Controllers
                 End If
             Catch ex As Exception
                 Try
-                    CP.Site.ErrorReport(ex, "error in Contensive.Addons.performanceCloud.performanceCache.clear")
+                    CP.Site.ErrorReport(ex, "error in SamplesperformanceCloud.performanceCache.clear")
                 Catch errObj As Exception
                 End Try
             End Try
