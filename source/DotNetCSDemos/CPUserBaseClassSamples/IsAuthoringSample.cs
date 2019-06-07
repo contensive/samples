@@ -11,11 +11,13 @@ namespace Samples
 
             if (cp.User.IsAuthoring(contentName))
             {
-                return cp.User.Name + " is authoring the " + contentName;
+                return cp.User.Name + " is authoring the " 
+                    + contentName;
             }
             else
             {
-                return cp.User.Name + " is not authoring the " + contentName;
+                return cp.User.Name + " is not authoring the " 
+                    + contentName;
             }
 
         }
