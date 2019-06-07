@@ -7,6 +7,8 @@ namespace Samples
     {
         public override object Execute(CPBaseClass cp)
         {
+            // Use cp.User.Id to get the ID property 
+            // associated with a user's account
             int recordId = 123;
 
             if ( cp.User.LoginByID(recordId))

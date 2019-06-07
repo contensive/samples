@@ -9,7 +9,7 @@ namespace Samples
         {
             cp.User.Logout();
 
-            return "Goodbye.";
+            return "You have been logged out";
         }
     }
 }

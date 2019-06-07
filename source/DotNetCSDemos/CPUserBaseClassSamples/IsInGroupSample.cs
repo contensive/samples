@@ -7,15 +7,16 @@ namespace Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            string groupName = "DevGroup";
-            int userId = 123;
+            string groupName = "Site Managers";
+            int userId = cp.User.Id;
 
             if( cp.User.IsInGroup(groupName, userId))
             {
-                return cp.User.Name + " is in the " + groupName;
+                return cp.User.Name + " belongs to the " + groupName;
             } else
             {
-                return cp.User.Name + " is not in the " + groupName;
+                return cp.User.Name + " does not belong to the " 
+                    + groupName;
             }
         }
     }

@@ -44,11 +44,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="CPUserBaseClassSamples\GetIdByLoginSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsAdvancedEditingSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsAuthoringSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsContentManagerSample.cs" />
     <Compile Include="CPUserBaseClassSamples\IsEditingSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsInGroupListSample.cs" />
     <Compile Include="CPUserBaseClassSamples\IsInGroupSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsNewLoginOkSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\IsQuickEditingSample.cs" />
     <Compile Include="CPUserBaseClassSamples\LoginByIdSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\LoginIsOkSample.cs" />
     <Compile Include="CPUserBaseClassSamples\LoginSample.cs" />
     <Compile Include="CPUserBaseClassSamples\LogoutSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\RecognizeSample.cs" />
     <Compile Include="CPVersionClass.cs" />
     <Compile Include="HelloWorldClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

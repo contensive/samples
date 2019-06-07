@@ -11,10 +11,10 @@ namespace Samples
 
             if(cp.User.IsEditing(contentName))
             {
-                return cp.User.Name + " is editing " + contentName;
+                return cp.User.Name + " is editing the " + contentName;
             } else
             {
-                return cp.User.Name + " is not editing " + contentName;
+                return cp.User.Name + " is not editing the " + contentName;
             }
             
         }
