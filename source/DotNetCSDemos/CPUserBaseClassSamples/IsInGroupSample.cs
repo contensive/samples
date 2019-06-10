@@ -1,7 +1,7 @@
 ﻿
 using Contensive.BaseClasses;
 
-namespace Samples
+namespace Contensive.Samples
 {
     public class IsInGroupSample : AddonBaseClass
     {

@@ -1,6 +1,6 @@
 ﻿using Contensive.BaseClasses;
 
-namespace Samples
+namespace Contensive.Samples
 {
     public class IsQuickEditingSample : AddonBaseClass
     {
