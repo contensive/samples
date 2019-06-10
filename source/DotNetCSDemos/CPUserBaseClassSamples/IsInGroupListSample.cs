@@ -7,8 +7,8 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            string groupIdCommaList = "Site Managers,"
-                + " Content Devs";
+            // List of group ID numbers
+            string groupIdCommaList = "1,2,3";
             int userId = cp.User.Id;
 
             if(cp.User.IsInGroupList(groupIdCommaList, userId))
