@@ -44,6 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="CPDocBaseClassSamples\IsPropertySample.cs" />
+    <Compile Include="CPDocBaseClassSamples\SetPropertySample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddMetaDescriptionSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddHeadStyleSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddRefreshQueryStringSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddTitleSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddOnloadJavascriptSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddMetaKeywordListSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddHeadStyleLinkSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddHeadTagSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddHeadJavascriptSample.cs" />
+    <Compile Include="CPDocBaseClassSamples\AddBodyEndSample.cs" />
     <Compile Include="CPUserBaseClassSamples\GetIdByLoginSample.cs" />
     <Compile Include="CPUserBaseClassSamples\IsAdvancedEditingSample.cs" />
     <Compile Include="CPUserBaseClassSamples\IsContentManagerSample.cs" />
@@ -57,12 +69,25 @@
     <Compile Include="CPUserBaseClassSamples\LoginSample.cs" />
     <Compile Include="CPUserBaseClassSamples\LogoutSample.cs" />
     <Compile Include="CPUserBaseClassSamples\RecognizeSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\AddSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\GetListSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\OKSample.cs" />
     <Compile Include="CPVersionClass.cs" />
     <Compile Include="HelloWorldClass.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
