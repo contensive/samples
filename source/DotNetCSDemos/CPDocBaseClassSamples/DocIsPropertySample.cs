@@ -3,11 +3,11 @@ using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class IsPropertySample : AddonBaseClass
+    public class DocIsPropertySample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            string key = "admin site";
+            string key = "totalPageVisits";
 
             if (cp.Doc.IsProperty(key))
             {

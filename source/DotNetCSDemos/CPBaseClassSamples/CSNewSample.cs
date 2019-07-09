@@ -3,14 +3,15 @@ using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class GetGroupIdSample : AddonBaseClass
+    public class CSNewSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            int groupId = cp.Group.GetId("Site Managers");
+            // Insert a new content row. See
+            // CPCSBaseClass for more info.
+            CPCSBaseClass newCS = cp.CSNew();
 
-            // Add current user to Site Managers
-            cp.Group.AddUser(groupId);
+            newCS.Insert("amountRemaining");
 
             // Return value is arbitrary for this
             // example because nothing needs to be 

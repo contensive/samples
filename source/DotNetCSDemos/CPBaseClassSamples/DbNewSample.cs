@@ -3,13 +3,16 @@ using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class SetPropertyExample : AddonBaseClass
+    public class DbNewSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            string key = cp.Doc.PageName;
-            string value = "My Page";
-            cp.Doc.SetProperty(key, value);
+            // Create a new Db and dispose of it.
+            // See CPDbBaseClass for more info.
+            string dataSourceName = "exampleDb";
+            CPDbBaseClass newDb = cp.DbNew(dataSourceName);
+
+            newDb.Dispose();
 
             // Return value is arbitrary for this
             // example because nothing needs to be 

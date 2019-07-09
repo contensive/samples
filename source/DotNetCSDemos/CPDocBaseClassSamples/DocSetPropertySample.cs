@@ -3,14 +3,14 @@ using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class GetGroupIdSample : AddonBaseClass
+    public class DocSetPropertyExample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            int groupId = cp.Group.GetId("Site Managers");
+            string key = "pageName";
+            string value = "Page #" + cp.Doc.PageId;
 
-            // Add current user to Site Managers
-            cp.Group.AddUser(groupId);
+            cp.Doc.SetProperty(key, value);
 
             // Return value is arbitrary for this
             // example because nothing needs to be 

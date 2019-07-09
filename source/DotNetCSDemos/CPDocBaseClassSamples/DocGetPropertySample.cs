@@ -1,16 +1,16 @@
-﻿
-using Contensive.BaseClasses;
+﻿using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class GetGroupIdSample : AddonBaseClass
+    public class DocGetPropertySample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            int groupId = cp.Group.GetId("Site Managers");
+            // Prompt user to search for the 
+            // name of a blog post
+            string key = "blogPostSearch";
 
-            // Add current user to Site Managers
-            cp.Group.AddUser(groupId);
+            string temp = cp.Doc.GetProperty(key);
 
             // Return value is arbitrary for this
             // example because nothing needs to be 
