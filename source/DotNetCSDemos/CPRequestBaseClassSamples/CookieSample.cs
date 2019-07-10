@@ -7,11 +7,11 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Get the Visit cookie belonging
-            // to contensive.io
-            string cookie = cp.Request.Cookie("ciovisit");
+            // Get the a cookie that
+            // has your birthday.
+            string birthday = cp.Request.Cookie("birthday");
 
-            return "something";
+            return birthday;
         }
     }
 }

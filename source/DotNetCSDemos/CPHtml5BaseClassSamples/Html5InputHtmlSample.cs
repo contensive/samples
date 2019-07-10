@@ -22,7 +22,7 @@ namespace Contensive.Samples
                 string input = cp.Doc.GetText("htmlInput");
                 // Display the form along with the user input.
                 return form + cp.Html5.P("Your HTML:<br><div " +
-                    "style=\"border-style:solid;\"" + 
+                    "style=\"border-style:solid;\">" + 
                     input + "</div>");
             }
             // Return the initial form.

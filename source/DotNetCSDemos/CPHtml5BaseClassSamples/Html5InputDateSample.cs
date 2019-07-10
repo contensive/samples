@@ -13,7 +13,8 @@ namespace Contensive.Samples
             string button = cp.Html5.Button("button", "Submit");
 
             // Add the date field and submit button to the form.
-            string innerHtml = date + "<br><br>" + button + "<br>";
+            string innerHtml = date + "<br><br>" + 
+                button + "<br>";
             string form = cp.Html5.Form(innerHtml);
 
             // Check if the user clicked the submit button.

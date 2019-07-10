@@ -17,7 +17,6 @@ namespace Contensive.Samples
             
             // Do any manipulation to the binary array here
             // before it is saved to the file system.
-
             cp.TempFiles.SaveBinary("Sample.bin", file);
 
             return "";
