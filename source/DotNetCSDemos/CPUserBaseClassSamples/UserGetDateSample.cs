@@ -4,7 +4,7 @@ using System;
 
 namespace Contensive.Samples
 {
-    public class DocGetDateSample : AddonBaseClass
+    public class UserGetDateSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
@@ -20,11 +20,15 @@ namespace Contensive.Samples
             // Check if the user clicked the submit button.
             if (cp.Doc.GetText("button").Equals("Submit"))
             {
-                // Get the date they entered.
-                DateTime input = cp.Doc.GetDate("dateOfBirth");
+                // Set the user property.
+                cp.User.SetProperty("DOB", cp.Doc.GetDate("dateOfBirth"));
+
+                // Get the property using User.GetDate()
+                DateTime birthday = cp.User.GetDate("DOB");
+
                 // Display the form along with the user input.
-                return form + cp.Html5.P("Your birthday is:<br>" 
-                    + input.ToShortDateString());
+                return form + cp.Html5.P("Your birthday is:<br>"
+                    + birthday.ToShortDateString());
             }
             // Return the initial form.
             return form;

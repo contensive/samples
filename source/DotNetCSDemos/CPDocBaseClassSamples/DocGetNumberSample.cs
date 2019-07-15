@@ -7,15 +7,32 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Prompt a user for the dollar
-            // amount they want to donate.
-            // Will need additional JS and
-            // html to show the prompt.
-            string key = "donationAmount";
+            // Input text field and submit button.
+            string text = cp.Html5.InputText("answer", 50);
+            string button = cp.Html5.Button("button", "Submit");
 
-            double amount = cp.Doc.GetNumber(key);
+            // Add the text field and submit button to the form.
+            string innerHtml = "What is 5.75 - .13?<br>" + text 
+                + "<br><br>" + button + "<br>";
+            string form = cp.Html5.Form(innerHtml);
 
-            return "Donate $" + amount + "?";
+            // Check if the user clicked the submit button.
+            if (cp.Doc.GetText("button").Equals("Submit"))
+            {
+                // Get the double value they entered with the
+                // GetNumber method.
+                double input = cp.Doc.GetNumber("answer");
+                // Display the form along with the user input.
+                if(input == 5.62)
+                {
+                    return form + cp.Html5.P("Correct!");
+                } else
+                {
+                    return form + cp.Html5.P("Wrong answer!");
+                }
+            }
+            // Return the initial form.
+            return form;
         }
     }
 }

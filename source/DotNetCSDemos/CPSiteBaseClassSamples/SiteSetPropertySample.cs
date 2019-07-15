@@ -9,7 +9,7 @@ namespace Contensive.Samples
         {
             // Set the site property 'ALLOWAUTOLOGIN' 
             // to true to enable auto-login.
-            // cp.Site.SetProperty("ALLOWAUTOLOGIN", true);
+            cp.Site.SetProperty("ALLOWAUTOLOGIN", "True");
 
             return "Auto-login is now enabled";
         }

@@ -7,16 +7,24 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Prompt a for the quanitity
-            // of a product they want to
-            // purchase.
-            // Will need additional JS and
-            // html to show the prompt.
-            string key = "purchaseQuantity";
+            // The button.
+            string button = cp.Html5.Button("button", "Click me!");
 
-            int quantity = cp.Doc.GetInteger(key);
+            // Add both buttons to the form.
+            string form = cp.Html5.Form(button);
 
-            return "Purchase " + quantity + " items?";
+            // Check if the user clicked the Surpise1 button.
+            if (cp.Doc.GetText("button").Equals("Click me!"))
+            {
+                cp.Doc.SetProperty("randomInt", 
+                    cp.Utils.GetRandomInteger().ToString());
+                // Return the form and get the 'randomInt' 
+                // Doc property with GetInteger
+                return form + cp.Html5.P("Here's a random " +
+                    "number: " + cp.Doc.GetInteger("randomInt"));
+            }
+            // Return the initial form.
+            return form;
         }
     }
 }

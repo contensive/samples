@@ -7,10 +7,11 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Create a log when a user is editing content.
-            if(cp.User.IsEditingAnything)
+            // Create a log when a user is editing 
+            // the content box.
+            if(cp.User.IsQuickEditing("contentBox"))
             {
-                string message = "User #" + cp.User.Id + " is editing.";
+                string message = "User is editing content box.";
                 int userID = cp.User.Id;
                 int organizationId = cp.User.OrganizationID;
 

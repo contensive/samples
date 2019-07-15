@@ -7,16 +7,24 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // The 'AdminNavOpen' visit property is an
-            // integer, but acts like a boolean. 0 is false,
-            // 1 is true.
-            if(cp.Visit.GetInteger("AdminNavOpen") == 1)
+            // The button.
+            string button = cp.Html5.Button("button", "Click me!");
+
+            // Add both buttons to the form.
+            string form = cp.Html5.Form(button);
+
+            // Check if the user clicked the button.
+            if (cp.Doc.GetText("button").Equals("Click me!"))
             {
-                return "Hello, adminstrator.";
-            } else
-            {
-                return "";
+                cp.Visit.SetProperty("timesClicked", 
+                    cp.Visit.GetInteger( "timesClicked") + 1);
+
+                return form + cp.Html5.P("You've clicked" +
+                    " the button " + cp.Visit.GetInteger(
+                        "timesClicked") + " times.");
             }
+            // Return the initial form.
+            return form;
         }
     }
 }

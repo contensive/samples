@@ -1,30 +1,33 @@
 ﻿
 using Contensive.BaseClasses;
-using System;
 
 namespace Contensive.Samples
 {
-    public class DocGetDateSample : AddonBaseClass
+    public class UserGetIntegerSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Input date field and submit button.
-            string date = cp.Html5.InputDate("dateOfBirth");
+            // Input text field and submit button.
+            string ageInput = cp.Html5.InputText("age", 3);
             string button = cp.Html5.Button("button", "Submit");
 
             // Add the date field and submit button to the form.
-            string innerHtml = "Enter your birthday:<br>" +
-                date + "<br><br>" + button + "<br>";
+            string innerHtml = "Enter your age:<br>" +
+                ageInput + "<br><br>" + button + "<br>";
             string form = cp.Html5.Form(innerHtml);
 
             // Check if the user clicked the submit button.
             if (cp.Doc.GetText("button").Equals("Submit"))
             {
-                // Get the date they entered.
-                DateTime input = cp.Doc.GetDate("dateOfBirth");
+                // Set the user property.
+                cp.User.SetProperty("age", cp.Doc.GetInteger("age"));
+
+                // Get the property using User.GetInteger().
+                int age = cp.User.GetInteger("age");
+
                 // Display the form along with the user input.
-                return form + cp.Html5.P("Your birthday is:<br>" 
-                    + input.ToShortDateString());
+                return form + cp.Html5.P("Your age is:<br>"
+                    + age);
             }
             // Return the initial form.
             return form;

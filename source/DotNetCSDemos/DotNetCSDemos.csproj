@@ -50,6 +50,24 @@
     <Compile Include="CPBaseClassSamples\CSNewSample.cs" />
     <Compile Include="CPBaseClassSamples\DbNewSample.cs" />
     <Compile Include="CPBaseClassSamples\IsFieldSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheClearAllSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheClearSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheCreateKeySample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetBooleanSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetDateSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetGenericObjectSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetIntegerSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetNumberSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetObjectSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheGetTextSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheInvalidateAllSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheInvalidateContentRecordSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheInvalidateSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheInvalidateTagListSample.cs" />
+    <Compile Include="CPCacheBaseClass\CacheStoreSample.cs" />
+    <Compile Include="CPCacheBaseClass\CreateKeyForDbRecordSample.cs" />
+    <Compile Include="CPCacheBaseClass\CreatePtrKeyforDbRecordGuidSample.cs" />
+    <Compile Include="CPCacheBaseClass\CreatePtrKeyforDbRecordUniqueNameSample.cs" />
     <Compile Include="CPContentBaseClassSamples\AddContentSample.cs" />
     <Compile Include="CPContentBaseClassSamples\AddContentFieldSample.cs" />
     <Compile Include="CPContentBaseClassSamples\AddRecordSample.cs" />
@@ -67,6 +85,42 @@
     <Compile Include="CPContentBaseClassSamples\IsChildContentSample.cs" />
     <Compile Include="CPContentBaseClassSamples\IsLockedSample.cs" />
     <Compile Include="CPContentBaseClassSamples\SetCopySample.cs" />
+    <Compile Include="CPCSBaseClass\CSDeleteSample.cs" />
+    <Compile Include="CPCSBaseClass\CSFieldOKSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetAddLinkSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetBooleanSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetDateSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetHtmlSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetIntegerSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetNumberSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetRowCountSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetSQLSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetTextSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGetValueSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGoFirstSample.cs" />
+    <Compile Include="CPCSBaseClass\CSGoNextSample.cs" />
+    <Compile Include="CPCSBaseClass\CSInsertSample.cs" />
+    <Compile Include="CPCSBaseClass\CSOKSample.cs" />
+    <Compile Include="CPCSBaseClass\CSOpenSample.cs" />
+    <Compile Include="CPCSBaseClass\CSSaveSample.cs" />
+    <Compile Include="CPCSBaseClass\CSSetFieldSample.cs" />
+    <Compile Include="CPCSBaseClass\GetFormInputSample.cs" />
+    <Compile Include="CPCSBaseClass\OpenGroupUsersSample.cs" />
+    <Compile Include="CPCSBaseClass\OpenRecordSample.cs" />
+    <Compile Include="CPCSBaseClass\OpenSQLSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\DbDeleteSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\EncodeSQLBooleanSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\EncodeSQLDateSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\EncodeSQLNumberSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\EncodeSQLTextSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\ExecuteNonQueryAsyncSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\ExecuteNonQuerySample.cs" />
+    <Compile Include="CPDbBaseClassSamples\ExecuteQuerySample.cs" />
+    <Compile Include="CPDbBaseClassSamples\ExecuteRemoteQuerySample.cs" />
+    <Compile Include="CPDbBaseClassSamples\GetConnectionStringSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\GetRemoteQuerySample.cs" />
+    <Compile Include="CPDbBaseClassSamples\IsTableFieldSample.cs" />
+    <Compile Include="CPDbBaseClassSamples\IsTableSample.cs" />
     <Compile Include="CPDocBaseClassSamples\DocGetBooleanSample.cs" />
     <Compile Include="CPDocBaseClassSamples\DocGetDateSample.cs" />
     <Compile Include="CPDocBaseClassSamples\DocGetNumberSample.cs" />
@@ -154,6 +208,7 @@
     <Compile Include="CPHtml5BaseClassSamples\Html5SelectListSample.cs" />
     <Compile Include="CPHtml5BaseClassSamples\Html5SelectUserSample.cs" />
     <Compile Include="CPHtml5BaseClassSamples\Html5UlSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserGetBooleanSample.cs" />
     <Compile Include="CPResponseBaseClassSamples\AddHeaderSample.cs" />
     <Compile Include="CPResponseBaseClassSamples\FlushSample.cs" />
     <Compile Include="CPResponseBaseClassSamples\RedirectSample.cs" />
@@ -193,6 +248,11 @@
     <Compile Include="CPUserBaseClassSamples\LoginSample.cs" />
     <Compile Include="CPUserBaseClassSamples\LogoutSample.cs" />
     <Compile Include="CPUserBaseClassSamples\RecognizeSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserGetDateSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserGetIntegerSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserGetNumberSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserGetTextSample.cs" />
+    <Compile Include="CPUserBaseClassSamples\UserSetPropertySample.cs" />
     <Compile Include="CPUserErrorBaseClassSamples\AddSample.cs" />
     <Compile Include="CPUserErrorBaseClassSamples\GetListSample.cs" />
     <Compile Include="CPUserErrorBaseClassSamples\OKSample.cs" />
@@ -206,6 +266,7 @@
     <Compile Include="CPUtilsBaseClassSamples\EncodeIntegerSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\EncodeNumberSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\EncodeTextSample.cs" />
+    <Compile Include="CPUtilsBaseClassSamples\UtilsGetFilenameSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\GetRandomIntegerSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\UtilsAppendLogSample.cs" />
     <Compile Include="CPVersionClass.cs" />
@@ -242,8 +303,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CPHtmlBaseClassSamples\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

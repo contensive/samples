@@ -7,17 +7,29 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Prompt the user for text that displays
-            // in the body of the web page. Display
-            // 'Hello world!' if there is no input.
-            // Will need additional JS and
-            // html to show the prompt.
-            string key = "displayText";
-            string defaultValue = "Hello world!";
+            // Input text field and submit button.
+            string text = cp.Html5.InputText("textInput", 50);
+            string button = cp.Html5.Button("button", "Submit");
 
-            cp.Doc.Body = cp.Doc.GetText(key, defaultValue);
+            // Add the text field and submit button to the form.
+            string innerHtml = "Do you like cars? yes/no<br>" +
+                text + "<br><br>" + button + "<br>";
+            string form = cp.Html5.Form(innerHtml);
 
-            return "";
+            // Check if the user clicked the submit button.
+            if (cp.Doc.GetText("button").Equals("Submit"))
+            {
+                // Get the text they entered using GetText()
+                if(cp.Doc.GetText("textInput").Equals("yes"))
+                {
+                    return form + cp.Html5.P("Nice!");
+                } else
+                {
+                    return form + cp.Html5.P("Walking is fun too.");
+                }           
+            }
+            // Return the initial form.
+            return form;
         }
     }
 }

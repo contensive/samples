@@ -1,6 +1,7 @@
 ﻿
 using Contensive.BaseClasses;
 using System;
+using System.Collections.Generic;
 
 namespace Contensive.Samples
 {
@@ -8,15 +9,21 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Try to get a null property as an 
-            // example. 
+            // Add to a null list to force a
+            // NullReferenceException as an example.
+            List<int> temp = null;
             try
             {
-                cp.Site.GetText(null);
+                temp.Add(1);
             } catch (NullReferenceException Ex)
             {
                 cp.Site.ErrorReport(Ex, "Property" +
                     " is null.");
+              // Catching Exception at the end is useful
+              // for handling unanticipated errors.
+            } catch(Exception Ex)
+            {
+                cp.Site.ErrorReport(Ex, "Error occurred.");
             }
             return "";
         }

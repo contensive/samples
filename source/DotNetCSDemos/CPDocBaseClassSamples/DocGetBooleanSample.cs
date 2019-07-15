@@ -7,21 +7,35 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            // Prompt the user to answer yes or
-            // no to a survey question.
-            // Will need additional JS and
-            // html to show the prompt.
-            string key = "exampleSurveyQuestion";
+            // Make a form with a button
+            string makeLarge = cp.Html5.CheckBox("largerText", false);
+            string makeSmall = cp.Html5.CheckBox("smallerText", false);
+            string button = cp.Html5.Button("button", "Submit");
+            string form = cp.Html5.Form(makeLarge + "Check " +
+                "the box to make the example's text " +
+                "larger<br><br>" + makeSmall + "Check " +
+                "the box to make the example's text " +
+                "smaller<br><br>" + button + "<br>");
 
-            bool answer = cp.Doc.GetBoolean(key);
+            string retVal = cp.Html5.Div(form, "example");
 
-            if(answer)
+            // Check if the user clicked the Submit button.
+            if (cp.Doc.GetText("button").Equals("Submit"))
             {
-                return "You answered yes.";
-            } else
-            {
-                return "You answered no.";
+                // Get the Doc boolean property that is set
+                // when the user clicks the Submit button.
+                if (cp.Doc.GetBoolean("largerText"))
+                {
+                    cp.Doc.AddHeadStyle(".example {font-size: 32px;}");
+
+                } else if (cp.Doc.GetBoolean("smallerText"))
+                {
+                    cp.Doc.AddHeadStyle(".example {font-size: 12px;}");
+
+                }
             }
+            // Return the initial form.
+            return retVal;
         }
     }
 }
