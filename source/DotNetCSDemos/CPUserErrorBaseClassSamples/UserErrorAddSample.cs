@@ -3,7 +3,7 @@ using Contensive.BaseClasses;
 
 namespace Contensive.Samples
 {
-    public class AddSample : AddonBaseClass
+    public class UserErrorAddSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {

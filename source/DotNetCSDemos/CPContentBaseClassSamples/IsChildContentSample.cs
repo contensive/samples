@@ -30,7 +30,7 @@ namespace Contensive.Samples
         }
         private class ParentModel
         {
-            public const string contentName = "Paren tModel";
+            public const string contentName = "Parent Model";
             public const string contentTableName = "parentModel";
             private const string contentDataSource = "default";
         }

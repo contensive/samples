@@ -15,7 +15,7 @@ namespace Contensive.Samples
                 // Get the number of visits for
                 // the first people record.
                 int visits =
-                    cs.GetInteger("visists");
+                    cs.GetInteger("visits");
 
                 cs.Close();
 

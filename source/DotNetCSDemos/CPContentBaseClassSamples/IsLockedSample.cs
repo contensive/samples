@@ -6,8 +6,10 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            string fieldName = "exampleCode";
-            string content = ContensiveExamplesModel.contentName;
+            string fieldName = "Sample ID";
+            string content = "Sample Content";
+
+            // Check if the field is locked
             if (cp.Content.IsLocked(content, fieldName))
             {
                 return fieldName + " is locked";
@@ -16,13 +18,6 @@ namespace Contensive.Samples
             {
                 return fieldName + " is not locked";
             }
-        }
-        // Private inner model class that references the content attributes.
-        private class ContensiveExamplesModel
-        {
-            public const string contentName = "Contensive Examples";
-            public const string contentTableName = "contensiveExamples";
-            private const string contentDataSource = "default";
         }
     }
 }

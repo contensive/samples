@@ -8,7 +8,7 @@ namespace Contensive.Samples
         {
             string layout = cp.Content.getLayout("defaultLayout");
 
-            return "";
+            return "The layout retrieved: " + layout;
         }
     }
 }

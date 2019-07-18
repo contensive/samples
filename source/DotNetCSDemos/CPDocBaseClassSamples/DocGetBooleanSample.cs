@@ -11,6 +11,7 @@ namespace Contensive.Samples
             string makeLarge = cp.Html5.CheckBox("largerText", false);
             string makeSmall = cp.Html5.CheckBox("smallerText", false);
             string button = cp.Html5.Button("button", "Submit");
+
             string form = cp.Html5.Form(makeLarge + "Check " +
                 "the box to make the example's text " +
                 "larger<br><br>" + makeSmall + "Check " +

@@ -6,17 +6,12 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
+            // Get the table ID of the table
+            // linked to 'Sample Content'
             int tableID = cp.Content.GetTableID(
-                ContensiveExamplesModel.contentTableName);
-            return "The table ID is #" + tableID;
-        }
-        // Private inner model class that references the content attributes.
-        private class ContensiveExamplesModel
-        {
-            public const string contentName = "Contensive Examples";
-            public const string contentTableName = "contensiveExamples";
-            private const string contentDataSource = "default";
+                "sampleContent");
 
+            return "The table ID is #" + tableID;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Contensive.Samples
 {
-    public class VisitorGetInteger : AddonBaseClass
+    public class VisitorGetIntegerSample : AddonBaseClass
     {
         public override object Execute(CPBaseClass cp)
         {

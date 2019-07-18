@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjustRemoteSamples.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CPAddonBaseClassSamples\AddonExecuteSample.cs" />
     <Compile Include="CPAddonBaseClassSamples\ExecuteAsyncByUniqueNameSample.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="CPCacheBaseClass\CacheInvalidateTagListSample.cs" />
     <Compile Include="CPCacheBaseClass\CacheStoreSample.cs" />
     <Compile Include="CPCacheBaseClass\CreateKeyForDbRecordSample.cs" />
+    <Compile Include="CPCacheBaseClass\CreateKeySample.cs" />
     <Compile Include="CPCacheBaseClass\CreatePtrKeyforDbRecordGuidSample.cs" />
     <Compile Include="CPCacheBaseClass\CreatePtrKeyforDbRecordUniqueNameSample.cs" />
     <Compile Include="CPContentBaseClassSamples\AddContentSample.cs" />
@@ -80,9 +82,11 @@
     <Compile Include="CPContentBaseClassSamples\GetEditLinkSample.cs" />
     <Compile Include="CPContentBaseClassSamples\GetLayoutSample.cs" />
     <Compile Include="CPContentBaseClassSamples\GetRecordIDSample.cs" />
+    <Compile Include="CPContentBaseClassSamples\GetRecordNameSample.cs" />
     <Compile Include="CPContentBaseClassSamples\GetTableIDSample.cs" />
     <Compile Include="CPContentBaseClassSamples\GetTableSample.cs" />
     <Compile Include="CPContentBaseClassSamples\IsChildContentSample.cs" />
+    <Compile Include="CPContentBaseClassSamples\ContentIsFieldSample.cs" />
     <Compile Include="CPContentBaseClassSamples\IsLockedSample.cs" />
     <Compile Include="CPContentBaseClassSamples\SetCopySample.cs" />
     <Compile Include="CPCSBaseClass\CSDeleteSample.cs" />
@@ -163,8 +167,8 @@
     <Compile Include="CPFileSystemBaseClassSamples\CopyLocalToRemoteSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\CopyRemoteToLocalSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\DeleteFileSample.cs" />
+    <Compile Include="CPFileSystemBaseClassSamples\DifferentFileSystemCopySample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemAppendSample.cs" />
-    <Compile Include="CPFileSystemBaseClassSamples\FileSystemCopySample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemCreateFolderSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemDeleteFolderSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemFileExistsSample.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemReadSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\FileSystemSaveSample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\ReadBinarySample.cs" />
+    <Compile Include="CPFileSystemBaseClassSamples\SameFileSystemCopySample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\SaveBinarySample.cs" />
     <Compile Include="CPFileSystemBaseClassSamples\SaveUploadSample.cs" />
     <Compile Include="CPGroupBaseClassSamples\AddGroupSample.cs" />
@@ -253,9 +258,9 @@
     <Compile Include="CPUserBaseClassSamples\UserGetNumberSample.cs" />
     <Compile Include="CPUserBaseClassSamples\UserGetTextSample.cs" />
     <Compile Include="CPUserBaseClassSamples\UserSetPropertySample.cs" />
-    <Compile Include="CPUserErrorBaseClassSamples\AddSample.cs" />
-    <Compile Include="CPUserErrorBaseClassSamples\GetListSample.cs" />
-    <Compile Include="CPUserErrorBaseClassSamples\OKSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\UserErrorAddSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\UserErrorGetListSample.cs" />
+    <Compile Include="CPUserErrorBaseClassSamples\UserErrorOKSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\ConvertHTML2TextSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\ConvertText2HTMLSample.cs" />
     <Compile Include="CPUtilsBaseClassSamples\CreateGuidSample.cs" />

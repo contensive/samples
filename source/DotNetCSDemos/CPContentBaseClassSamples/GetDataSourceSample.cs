@@ -6,17 +6,11 @@ namespace Contensive.Samples
     {
         public override object Execute(CPBaseClass cp)
         {
-            string DS = cp.Content.GetDataSource(ContensiveExamplesModel.contentName);
+            // Get the data source.
+            string DS = cp.Content.GetDataSource("Sample Content");
 
-            return ContensiveExamplesModel.contentName + " belongs to the " +
+            return "Sample Content belongs to the " +
                 DS + " data source.";
-        }
-        // Private inner model class that references the content attributes.
-        private class ContensiveExamplesModel
-        {
-            public const string contentName = "Contensive Examples";
-            public const string contentTableName = "contensiveExamples";
-            private const string contentDataSource = "default";
         }
     }
 }

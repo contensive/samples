@@ -14,7 +14,7 @@ namespace Contensive.Samples
 
             cp.Db.Delete(tableName, recordId);
 
-            return "something";
+            return "";
         }
     }
 }
