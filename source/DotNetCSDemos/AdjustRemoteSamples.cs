@@ -25,10 +25,12 @@ namespace Contensive.Samples
                     cs.GoNext();
                 }
                 cs.Close();
-            } 
+            }
+
+            int samplesId = cp.Content.GetRecordID("Add-on Collections", "CPBaseClassSamples");
 
             // Open the Content containing the add-on samples.
-            if(cs.Open("Add-ons"))
+            if(cs.Open("Add-ons", "(collectionid=" + samplesId + ")"))
             {
                 // Loop through the list.
                 while (cs.OK())
