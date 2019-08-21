@@ -1,0 +1,79 @@
+﻿<div class="designBlockContainer blockContactForm {{#formSubmitted}}formSubmitted{{/formSubmitted}} {{outerContainerClass}}" style="{{styleHeight}}{{styleBackgroundImage}}">
+	<div class="{{contentContainerClass}}">
+		<div class="blockContactFormInner">
+			{{#formSubmitted}}
+			<div class="blockContactFormThankYou db-row">
+				<div class="title-section width-80">
+					<h1>{{thankYouTitle}}</h1>
+					<div>{{{thankYouDescription}}}</div>
+					<div class="mt-2">
+						<button type="submit" class="btn btn-primary" name="blockContactFormButton{{id}}" value="Resubmit">Resubmit</button>
+					</div>
+				</div>
+			</div>
+			{{/formSubmitted}}
+			{{^formSubmitted}}
+			<div class="blockContactFormRequest db-row">
+				<div class="width-80 center">
+				  {{#formDescription}}<div>{{{formDescription}}}</div>{{/formDescription}}
+				</div>
+				<div class="db-col-1">
+						<input type="hidden" name="formInstanceId" value="{{formInstanceId}}">
+					  <div class="db-row">
+						<!-- <div class="db-row flex-row"> -->
+							<div class="db-col db-col-2">
+								{{#allowFirstName}}
+								<div class="db-form-group form-group">
+									<input type="text" class="db-form-control form-control" placeholder="First Name *" id="firstName" name="contactFirstName" data-validation-required-message="Please enter your first name." value="{{inputvaluefirstname}}" required="true">
+									<!-- <p class="help-block text-danger"></p> -->
+								</div>
+								{{/allowFirstName}}
+								{{#allowLastName}}
+								<div class="db-form-group form-group">
+									<input type="text" class="db-form-control form-control" placeholder="Last Name *" id="lastName" name="contactLastName" data-validation-required-message="Please enter your last name." value="{{inputvaluelastname}}" required="true">
+									<!--<p class="help-block text-danger"></p> -->
+								</div>
+								{{/allowLastName}}
+								<div class="db-form-group form-group">
+									<input type="email" class="db-form-control form-control" placeholder="Email *" id="email" name="contactEmail" data-validation-required-message="Please enter your email address." value="{{inputvalueemail}}" required="true">
+									<!--<p class="help-block text-danger"></p> -->
+								</div>
+								{{#allowCompany}}
+								<div class="db-form-group form-group">
+									<input type="text" class="db-form-control form-control" placeholder="Company" id="company" name="contactCompany" value="{{inputvaluecompany}}">
+									<!--<p class="help-block text-danger"></p> -->
+								</div>
+								{{/allowCompany}}
+								{{#contactUsgroupListShow}}
+								<div class="db-form-checkbox-group form-group">
+								<h5>{{groupListTitle}}</h5>
+								{{#contactUsgroupList}}
+									<div>
+										<label>
+											<input class="industryTypeCheckBox" type="checkbox" name="group{{ptr}}" value="on">&nbsp;
+											<input  type="hidden" name="groupId{{ptr}}" value="{{groupID}}">
+											{{groupCaption}}
+										</label>
+									</div>
+								{{/contactUsgroupList}}
+								<input  type="hidden" name="groupCnt" value="{{groupCnt}}">
+								</div>
+								{{/contactUsgroupListShow}}
+							</div>
+							<div class="db-col db-col-2">
+							{{#allowMessage}}
+								<div class="db-form-group form-group">
+									<textarea class="db-form-control form-control" placeholder="Your Message *" id="message" name="contactmessage" data-validation-required-message="Please enter your message." required=""></textarea>
+									<p class="help-block text-danger"></p>
+								</div>
+								{{/allowMessage}}
+							</div>
+							<div class="db-col-1 center">
+								<button type="submit" class="btn btn-primary" name="blockContactFormButton{{id}}" value="submit">{{formButtonText}}</button>
+							</div>
+						</div>
+				</div>
+			</div>
+			{{/formSubmitted}}
+		</div>	</div>
+</div>

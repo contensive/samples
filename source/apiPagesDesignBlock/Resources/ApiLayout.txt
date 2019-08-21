@@ -1,0 +1,256 @@
+﻿<div class="designBlockContainer api {{outerContainerClass}}" style="{{styleHeight}}{{styleBackgroundImage}}">
+   <div class="{{contentContainerClass}}">
+      <div class="row">
+		 {{#showPublish}}
+			<div class="col-sm-12"><a class="btn btn-lg btn-block btn-success btn-primary" href="?{{refreshQueryString}}" role="button">Publish</a></div>
+		 {{/showPublish}}
+         {{#objectTypeList}}
+         <div class="col-sm-6">
+            {{{editTag}}}
+            <br>
+            <h2 class="font-weight-bold">{{name}}</h2>
+            <hr class="nextObject">
+            <p>{{description}}</p>
+         </div>
+         <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+         <!-- ---------------------PUBLIC PROPERTIES-------------------------- -->
+         {{#ApiPageObjectPropertiesList}}
+         {{#isFirstProperty}}
+         <div class="col-sm-6">
+            <h3 class="font-weight-bold">
+               Properties
+            </h3>
+            <hr class="nextMethod">
+         </div>
+         <div class="col-sm-6 code-col"></div>
+         {{/isFirstProperty}}
+         <div class="w-100"></div>
+         <div class="col-sm-6">
+            {{#areProperties}}
+            {{{editTag}}}
+            <dl class="row">
+               <dt class="col-sm">
+                  <span class="font-weight-bold">{{#deprecated}}[deprecated]{{/deprecated}}{{name}}</span>
+                  <br>
+                  <small>{{propertyTypeId}}</small>
+               </dt>
+               <dd class="col-sm">
+                  {{description}}
+               </dd>
+            </dl>
+            <hr>
+            {{/areProperties}}
+            {{{addPropertyTag}}}
+         </div>
+         <div class="col-sm-6 code-col">
+            {{#areProperties}}
+            <pre class="prettyprint">public{{^notAbstract}} abstract{{/notAbstract}} {{propertyTypeId}} {{name}}{{#declarationOnly}};{{/declarationOnly}} {{^declarationOnly}}&#123; get;{{/declarationOnly}} {{#getAndSet}}set; {{/getAndSet}}{{^declarationOnly}}&#125;{{/declarationOnly}}{{#hasEqualsValue}} = {{theEqualsValue}};{{/hasEqualsValue}}</pre>
+            {{/areProperties}}
+         </div>
+         <div class="w-100"></div>
+         {{/ApiPageObjectPropertiesList}}
+         <!-- ---------------------END PUBLIC PROPERTIES-------------------------- -->
+         {{#ApiPageObjectMethodsList}}
+         {{#isFirstMethod}}
+         <div class="col-sm-6">
+            <br>
+            <!-- ---------------------PUBLIC METHODS-------------------------- -->
+            <h3 class="font-weight-bold">
+               Methods
+            </h3>
+         </div>
+         <div class="col-sm-6 code-col"></div>
+         {{/isFirstMethod}}
+         <div class="w-100"></div>
+		 {{#areMethods}}
+         <div class="col-6">
+            <hr class="nextMethod">
+            {{{editTag}}}
+            <h4 class="font-weight-bold">{{#deprecated}}[deprecated] {{/deprecated}}{{name}}</h4>
+         </div>
+         <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+		 {{/areMethods}}
+         <div class="col-sm-6">
+            <div class="container">
+               <div class="row">
+                  <div class="col-12">
+                     {{description}}
+                  </div>
+                  <!-- ---------------------SIGNATURES-------------------------- -->
+                  {{#signatureList}}
+                  {{#isFirstSignature}}
+                  <div class="col-12">
+                     <br>
+                     <h5 class="pl-2">Signatures</h5>
+                     <hr class="nextMethodPart">
+                  </div>
+                  {{/isFirstSignature}}
+                  <div class="col-12">
+                     <div class="row pl-2  signature">
+                        <div class="col-12">
+                           {{{editTag}}}
+                           <pre class="prettyprint">{{#deprecated}}[deprecated]
+{{/deprecated}}{{name}}</pre>
+                        </div>
+                     </div>
+                     <hr>
+                     {{{addSignatureTag}}}
+                  </div>
+                  {{/signatureList}}
+                  <!-- ---------------------END SIGNATURES-------------------------- -->
+                  <!-- ---------------------ARGUMENTS-------------------------- -->
+                  {{#argumentList}}
+                  {{#isFirstArgument}}
+                  <div class="col-12">
+                     <h5 class="pl-2">Arguments</h5>
+                     <hr class="nextMethodPart">
+                  </div>
+                  {{/isFirstArgument}}
+                  <div class="col-12">
+                     <dl class="row pl-2">
+                        {{{editTag}}}
+                        <dt class="col-sm">
+                           <span class="font-weight-bold">{{#deprecated}}[deprecated] {{/deprecated}}{{name}}</span>
+                           <br>
+                           <small>{{argumentTypeId}}</small>
+                           <br>
+                           <small>{{callByTypeId}}</small>
+                        </dt>
+                        <dd class="col-sm">
+                           {{description}}
+                        </dd>
+                     </dl>
+                     <hr>
+                     {{{addArgumentTag}}}
+                  </div>
+                  {{/argumentList}}
+                  <!-- --------------------- END ARGUMENTS-------------------------- -->
+                  <!-- ---------------------RETURN VALUE-------------------------- -->
+                  {{#returnValue}}
+                  {{#isFirstReturn}}
+                  <div class="col-12">
+                     <h5 class="pl-2">Return</h5>
+                     <hr class="nextMethodPart">
+                  </div>
+                  {{/isFirstReturn}}
+                  <div class="col-12">
+                     <dl class="row pl-2">
+                        {{{editTag}}}
+                        <dt class="col-sm">
+                           <span class="font-weight-bold">{{returnValueTypeId}}</span>
+                        </dt>
+                        <dd class="col-sm">
+                           {{description}}
+                        </dd>
+                     </dl>
+					 {{#areMethods}}
+					 {{/areMethods}}
+                     {{{addReturnTag}}}
+                     {{{addMethodTag}}}
+                  </div>
+                  {{/returnValue}}
+                  <!-- ---------------------END RETURN VALUE-------------------------- -->
+                  <!-- ---------------------EXAMPLES-------------------------- -->
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-6 code-col">
+            {{#exampleList}}
+            {{#isFirstExample}}<p class="examples-tab lead">Examples:</p>{{/isFirstExample}}
+            {{{editTag}}}
+            {{{codeExample}}}
+            {{{addExampleTag}}}
+			{{^hideRunButton}}
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary btn-success btn-sm" my-data="/{{name}}" data-toggle="modal" data-target="#{{name}}{{id}}" onclick="modalOpen({{name}}{{id}})">
+			  Run
+			</button>
+			 <!-- Modal -->
+			<div class="modal fade" id="{{name}}{{id}}"  my-data="/{{name}}" tabindex="-1" role="dialog" aria-labelledby="{{name}}{{id}}Title" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="{{name}}{{id}}LongTitle">{{name}}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+				  <div class="modal-body">
+				  <!--ADDON HERE-->
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			{{/hideRunButton}}
+			{{/exampleList}}
+         </div>
+         <div class="w-100"></div>
+         <!-- ---------------------END EXAMPLES-------------------------- -->			
+         {{/ApiPageObjectMethodsList}}
+         <!-- ---------------------END METHODS-------------------------- -->
+         <!-- ---------------------ENUMS-------------------------- -->	
+         {{#ApiPageObjectEnumsList}}
+		 {{#areEnums}}
+         {{#isFirstEnum}}
+         <div class="col-sm-6">
+            <br>
+            <h3 class="font-weight-bold">
+               Enums
+            </h3>
+         </div>
+         <div class="col-sm-6 code-col"></div>
+         {{/isFirstEnum}}
+         <div class="w-100"></div>
+         <div class="col-sm-6">
+            <hr class="nextMethod">
+            {{{editTag}}}
+            <h4 class="font-weight-bold">{{#deprecated}}[deprecated] {{/deprecated}}{{name}}</h4>
+         </div>		 
+         <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+         <div class="col-sm-6">{{description}}</div>
+		 <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+		 <div class="col-sm-6">
+			<br>
+			<h5 class="pl-2">Types</h5>
+			<hr class="nextMethodPart">
+		 </div>
+		 <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+		 {{/areEnums}}
+		 {{#enumTypesList}}
+		 <div class="col-sm-6">
+		 	{{{editTag}}}
+			<div class="container">
+		    <div class="row pl-2 signature">
+                <div class="col-12">
+				{{#deprecated}}<span style="color:white">[deprecated]</span>{{/deprecated}}
+			{{{typeBlock}}}
+				</div>
+			</div>
+			</div>
+			<hr>
+			{{{addEnumTypeTag}}}
+		 </div>
+		 <div class="col-sm-6 code-col">
+			<br><pre class="prettyprint align-middle">cp.{{objectDotType}}.{{parentEnumType}}.{{name}}</pre>
+		 </div>
+		 <div class="w-100"></div>
+		 {{/enumTypesList}}
+		 <div class="col-sm-6">{{{addEnumTag}}}</div>
+		 <div class="col-sm-6 code-col"></div>
+         <div class="w-100"></div>
+         {{/ApiPageObjectEnumsList}}
+         <!-- ---------------------END ENUMS-------------------------- -->
+         <div class="col-sm-6">{{{addObjectTag}}}</div>
+         <div class="col-sm-6 code-col"></div>
+         {{/objectTypeList}}
+      </div>
+   </div>
+</div>
