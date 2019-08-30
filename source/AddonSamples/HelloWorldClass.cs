@@ -1,10 +1,9 @@
 ﻿
 using Contensive.BaseClasses;
 
-namespace DotNetCSDemos {
+namespace Contensive.Samples {
     class HelloWorldClass : AddonBaseClass {
         public override object Execute(CPBaseClass CP) {
-
             return "Hello World";
         }
     }
