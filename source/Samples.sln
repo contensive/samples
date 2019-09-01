@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "addonCollectionVb", "addonCollectionVb\addonCollectionVb.vbproj", "{5A2EAEEE-CDFE-4E0B-BF3C-EE50C0BA76F0}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AddonCollectionVb", "addonCollectionVb\AddonCollectionVb.vbproj", "{5A2EAEEE-CDFE-4E0B-BF3C-EE50C0BA76F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addonCollectionCs", "addonCollectionCs\addonCollectionCs.csproj", "{BD7F68DB-C1C8-4B4B-A1CE-ECE3F4C3689A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddonCollection", "addonCollectionCs\AddonCollection.csproj", "{BD7F68DB-C1C8-4B4B-A1CE-ECE3F4C3689A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{58054021-EE8E-4806-B5D2-206C4831BA53}"
 	ProjectSection(SolutionItems) = preProject

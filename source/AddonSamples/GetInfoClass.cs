@@ -11,12 +11,17 @@ namespace Contensive.Samples {
     /// <summary>
     /// An addon that returns information about the addon itself. Useful when debugging addon installation and multiserver configurations
     /// </summary>
-    class GetInfoClass : AddonBaseClass {
+    public class GetInfoClass : AddonBaseClass {
+        //
+        // -- manually update this number to force a new assembly
+        internal const int addonVersion = 5;
+        //
         public override object Execute(CPBaseClass CP) {
             var result = new StringBuilder();
             result.Append(CP.Html.h2("Contensive"));
-            result.Append(CP.Html.p("This addon returns information about the current environment."));
+            result.Append(CP.Html.p("Server environment and status"));
             result.Append(CP.Html.div("Contensive v" + CP.Version + "."));
+            result.Append(CP.Html.div("Addon internal version " + addonVersion + "."));
             result.Append(CP.Html.div("Visitor: " + CP.Visitor.Id + ", isNew " + CP.Visitor.IsNew));
             result.Append(CP.Html.div("Visit: " + CP.Visit.Id + ", name [" + CP.Visit.Name + "], hits [" + CP.Visit.Pages + "]"));
             result.Append(CP.Html.div("User: " + CP.User.Id + ", name [" + CP.User.Name + "], email [" + CP.User.Email + "]"));
@@ -45,7 +50,7 @@ namespace Contensive.Samples {
             result.Append(CP.Html.div("ProcessorId [" + getProcessorId() + "]", "", ""));
             result.Append(CP.Html.div("GetLocalIPAddress [" + GetLocalIPAddress() + "]", "", ""));
             //
-            return result.ToString();
+            return CP.Html.div(result.ToString(), "", "p-4 bg-white");
         }
         //
         public string getProcessorId() {
