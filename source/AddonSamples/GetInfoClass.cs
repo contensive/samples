@@ -14,7 +14,7 @@ namespace Contensive.Samples {
     public class GetInfoClass : AddonBaseClass {
         //
         // -- manually update this number to force a new assembly
-        internal const int addonVersion = 5;
+        internal const int addonVersion = 6;
         //
         public override object Execute(CPBaseClass CP) {
             var result = new StringBuilder();
