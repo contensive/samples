@@ -4460,6 +4460,7 @@
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Addon name="GetInfo" guid="{29FD07F6-AC2E-4BC7-B169-DDD285D33599}" type="Add-on">
+		<RemoteMethod>Yes</RemoteMethod>
 		<DotNetClass><![CDATA[Contensive.Samples.GetInfoClass]]></DotNetClass>
 	</Addon>
 	<Addon name="GetLayoutSample" guid="{4f26681e-940e-4721-af37-9cebc5948575}" type="Add-on">

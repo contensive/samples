@@ -37,13 +37,6 @@ md "%deploymentFolderRoot%%deploymentNumber%"
 
 rem ==============================================================
 rem
-rem clean build folders
-rem
-rd /S /Q "..\source\ToolPanel\bin"
-rd /S /Q "..\source\ToolPanel\obj"
-
-rem ==============================================================
-rem
 echo build 
 rem
 cd ..\source
@@ -61,6 +54,10 @@ rem ==============================================================
 rem
 echo Build addon collection
 rem
+
+rem remove old DLL files from the collection folder
+del "%collectionPath%"\*.DLL
+del "%collectionPath%"\*.config
 
 rem copy bin folder assemblies to collection folder
 copy "%binPath%*.dll" "%collectionPath%"
