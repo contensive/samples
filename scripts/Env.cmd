@@ -9,4 +9,4 @@ set collectionPath=..\collections\samples\
 set solutionName=samples.sln
 set binPath=..\source\addonsamples\bin\debug\
 set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\
-set deploymentFolderRoot=C:\Users\jay\Desktop\deployments\aoSamples\Dev\
+set deploymentFolderRoot=C:\Deployments\aoSamples\Dev\
