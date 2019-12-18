@@ -1,15 +1,7 @@
 ﻿Option Explicit On
 Option Strict On
 
-Imports Contensive.Addons.aoDesignBlocks.Models.Db
 Imports Contensive.BaseClasses
-
-'Imports System.Collections.Generic
-'Imports System.Text
-'Imports Contensive.BaseClasses
-'Imports Contensive.Addons.xxxxxCollectionNameSpaceGoesHerexxxxx
-'Imports AddonCollectionVb.Views
-'Imports AddonCollectionVb.Controllers
 
 Namespace Controllers
     Public NotInheritable Class genericController

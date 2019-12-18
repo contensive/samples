@@ -1,10 +1,7 @@
 ﻿
-Imports apiPagesDesignBlock.Controllers
-Imports apiPagesDesignBlock.Models.Db
-Imports apiPagesDesignBlock.Models.View
-Imports Contensive.Addons.aoDesignBlocks.Controllers
-Imports Contensive.Addons.aoDesignBlocks.Models.Db
-Imports Contensive.Addons.aoDesignBlocks.Models.View
+Imports Contensive.Addons.apiPagesDesignBlock.Controllers
+Imports Contensive.Addons.apiPagesDesignBlock.Models.Db
+Imports Contensive.Addons.apiPagesDesignBlock.Models.View
 Imports Contensive.BaseClasses
 
 Namespace Views

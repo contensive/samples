@@ -1,4 +1,4 @@
-﻿Imports Contensive.Addons.aoDesignBlocks.Controllers
+﻿
 Imports Contensive.BaseClasses
 
 Namespace Models.View

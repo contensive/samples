@@ -1,7 +1,6 @@
-﻿Imports apiPagesDesignBlock.Models.Db
-Imports apiPagesDesignBlock.Models.View
+﻿
+Imports Contensive.Addons.apiPagesDesignBlock.Models.Db
 Imports Contensive.BaseClasses
-
 
 Namespace Models.View
     Public Class ApiPagesViewModel
@@ -55,22 +54,23 @@ Namespace Models.View
                     '
                     Dim methodsList As New List(Of ApiPageObjectMethodsViewModel)
                     '
-                    For Each methodType In baseModel.createList(Of ApiPageObjectMethodsModel)(cp,
-                        "(ApiParentObjectTypeId=" & ApiObjectType.id & ")", "id")
+                    For Each methodType In baseModel.createList(Of ApiPageObjectMethodsModel)(cp, "(ApiParentObjectTypeId=" & ApiObjectType.id & ")", "name")
                         '
                         ' -- Compose list of signatures
                         Dim signatureList As New List(Of ApiPageObjectMethodSignatureViewModel)
                         '
-                        For Each signature In baseModel.createList(Of ApiPageObjectMethodSignaturesModel)(cp,
-                        "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
+                        For Each signature In baseModel.createList(Of ApiPageObjectMethodSignaturesModel)(cp, "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
                             signatureList.Add(New ApiPageObjectMethodSignatureViewModel With {
-                                               .name = signature.name,
-                                               .deprecated = signature.deprecated,
-                                               .editTag = cp.Content.GetEditLink(ApiPageObjectMethodSignaturesModel.contentName,
-                                                                                          signature.id.ToString,
-                                                                                          False, signature.name,
-                                                                                          cp.User.IsEditing(ApiPageObjectMethodSignaturesModel.contentName))
-                                              })
+                                .name = signature.name,
+                                .deprecated = signature.deprecated,
+                                .editTag = cp.Content.GetEditLink(
+                                    ApiPageObjectMethodSignaturesModel.contentName,
+                                    signature.id.ToString,
+                                    False,
+                                    signature.name,
+                                    cp.User.IsEditing(ApiPageObjectMethodSignaturesModel.contentName)
+                                )
+                            })
                         Next
                         '
                         ' -- compose list of arguments
