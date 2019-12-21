@@ -10,6 +10,7 @@ Namespace Models.View
         Public Property objectTypeList As New List(Of ApiObjectTypeViewModel)
         Public Property showPublish As New Boolean
         Public Property refreshQueryString As String
+        Public Property version As String = "1912201816"
         '====================================================================================================
         ''' <summary>
         ''' Populate the view model from the entity model
@@ -23,32 +24,31 @@ Namespace Models.View
                 ' -- base fields
                 Dim result = ViewBaseModel.create(Of ApiPagesViewModel)(cp, settings)
                 '
+                ' -- small caches to decrease in-loop queries
+                Dim userEditing As Boolean = cp.User.IsEditingAnything()
+                '
                 ' -- custom
                 For Each ApiObjectType In baseModel.createList(Of ApiObjectTypesModel)(cp, "(ApiPageId=" & settings.id & ")", "name")
 
                     ' -- Compose list of properties before the list of object types
                     Dim propertiesList As New List(Of ApiPageObjectPropertiesViewModel)
                     '
-                    For Each propertyType In baseModel.createList(Of ApiPageObjectPropertiesModel)(cp,
-                        "(ApiParentObjectTypeId=" & ApiObjectType.id & ")", "id")
+                    For Each propertyType In baseModel.createList(Of ApiPageObjectPropertiesModel)(cp, "(ApiParentObjectTypeId=" & ApiObjectType.id & ")and((deprecated is null)or(deprecated=0))", "name")
                         '
                         propertiesList.Add(New ApiPageObjectPropertiesViewModel With {
-                                                        .name = propertyType.name,
-                                                        .description = propertyType.description,
-                                                        .propertyTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, propertyType.propertyTypeId).name,
-                                                        .deprecated = propertyType.deprecated,
-                                                        .isFirstProperty = False,
-                                                        .areProperties = True,
-                                                        .notAbstract = propertyType.notAbstract,
-                                                        .declarationOnly = propertyType.declarationOnly,
-                                                        .hasEqualsValue = propertyType.propertyEqualsValue,
-                                                        .theEqualsValue = propertyType.equalsValue,
-                                                        .getAndSet = propertyType.getAndSet,
-                                                        .editTag = cp.Content.GetEditLink(ApiPageObjectPropertiesModel.contentName,
-                                                                                          propertyType.id.ToString,
-                                                                                          False, propertyType.name,
-                                                                                          cp.User.IsEditing(ApiPageObjectPropertiesModel.contentName))
-                                                        })
+                            .name = propertyType.name,
+                            .description = propertyType.description,
+                            .propertyTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, propertyType.propertyTypeId).name,
+                            .deprecated = propertyType.deprecated,
+                            .isFirstProperty = False,
+                            .areProperties = True,
+                            .notAbstract = propertyType.notAbstract,
+                            .declarationOnly = propertyType.declarationOnly,
+                            .hasEqualsValue = propertyType.propertyEqualsValue,
+                            .theEqualsValue = propertyType.equalsValue,
+                            .getAndSet = propertyType.getAndSet,
+                            .editTag = If(userEditing, cp.Content.GetEditLink(ApiPageObjectPropertiesModel.contentName, propertyType.id.ToString, False, propertyType.name, userEditing), "")
+                        })
                     Next
                     ' -- Compose list of methods before the list of object types
                     '
@@ -68,7 +68,7 @@ Namespace Models.View
                                     signature.id.ToString,
                                     False,
                                     signature.name,
-                                    cp.User.IsEditing(ApiPageObjectMethodSignaturesModel.contentName)
+                                    userEditing
                                 )
                             })
                         Next
@@ -76,43 +76,48 @@ Namespace Models.View
                         ' -- compose list of arguments
                         Dim argumentList As New List(Of ApiPageObjectMethodArgumentViewModel)
                         '
-                        For Each argument In baseModel.createList(Of ApiPageObjectMethodArgumentsModel)(cp,
-                        "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
-                            '
+                        For Each argument In baseModel.createList(Of ApiPageObjectMethodArgumentsModel)(cp, "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
                             argumentList.Add(New ApiPageObjectMethodArgumentViewModel With {
-                                            .name = argument.name,
-                                            .description = argument.description,
-                                            .argumentTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, argument.argumentTypeId).name,
-                                            .callByTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, argument.callByTypeId).name,
-                                            .editTag = cp.Content.GetEditLink(ApiPageObjectMethodArgumentsModel.contentName,
-                                                                                          argument.id.ToString,
-                                                                                          False, argument.name,
-                                                                                          cp.User.IsEditing(ApiPageObjectMethodArgumentsModel.contentName))
-                                            })
+                                .name = argument.name,
+                                .description = argument.description,
+                                .argumentTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, argument.argumentTypeId).name,
+                                .callByTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, argument.callByTypeId).name,
+                                .editTag = cp.Content.GetEditLink(
+                                    ApiPageObjectMethodArgumentsModel.contentName,
+                                    argument.id.ToString,
+                                    False,
+                                    argument.name,
+                                    userEditing
+                                )
+                            })
 
                         Next
                         '
                         ' -- Get return value
                         '
                         Dim returnVal As New ApiPageObjectMethodReturnValueViewModel
-                        For Each retVal In baseModel.createList(Of ApiPageObjectMethodReturnValueModel)(cp,
-                        "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
+                        For Each retVal In baseModel.createList(Of ApiPageObjectMethodReturnValueModel)(cp, "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
                             returnVal = New ApiPageObjectMethodReturnValueViewModel With {
-                                         .description = retVal.description,
-                                         .isFirstReturn = True,
-                                         .returnValueTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, retVal.returnValueTypeId).name,
-                                         .editTag = cp.Content.GetEditLink(ApiPageObjectMethodReturnValueModel.contentName,
-                                                                                          retVal.id.ToString,
-                                                                                          False, retVal.name,
-                                                                                          cp.User.IsEditing(ApiPageObjectMethodReturnValueModel.contentName))
-                                         }
+                                .description = retVal.description,
+                                .isFirstReturn = True,
+                                .returnValueTypeId = baseModel.create(Of ApiObjectTypesModel)(cp, retVal.returnValueTypeId).name,
+                                .editTag = cp.Content.GetEditLink(
+                                    ApiPageObjectMethodReturnValueModel.contentName,
+                                    retVal.id.ToString,
+                                    False, retVal.name,
+                                    userEditing
+                                )
+                            }
                         Next
                         '
                         '
                         If returnVal Is Nothing Or returnVal.description Is Nothing Then
-                            returnVal.addReturnTag = cp.Content.GetAddLink(ApiPageObjectMethodReturnValueModel.contentName,
-                                                                           "", False,
-                                                                           cp.User.IsEditing(ApiPageObjectMethodReturnValueModel.contentName))
+                            returnVal.addReturnTag = cp.Content.GetAddLink(
+                                ApiPageObjectMethodReturnValueModel.contentName,
+                                "",
+                                False,
+                                userEditing
+                            )
                             returnVal.description = ""
                             returnVal.returnValueTypeId = ""
                             returnVal.editTag = ""
@@ -122,98 +127,90 @@ Namespace Models.View
                         ' -- Compose list of examples
                         Dim examplesList As New List(Of ApiPageObjectMethodExamplesViewModel)
                         '
-                        For Each example In baseModel.createList(Of ApiPageObjectMethodExamplesModel)(cp,
-                        "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
+                        For Each example In baseModel.createList(Of ApiPageObjectMethodExamplesModel)(cp, "(ApiParentMethodTypeId=" & methodType.id & ")", "name")
                             examplesList.Add(New ApiPageObjectMethodExamplesViewModel With {
-                                             .codeExample = example.codeExample,
-                                             .name = example.name,
-                                             .id = example.id,
-                                             .isFirstExample = False,
-                                             .hideRunButton = example.hideRunButton,
-                                             .editTag = cp.Content.GetEditLink(ApiPageObjectMethodExamplesModel.contentName,
-                                                                                          example.id.ToString,
-                                                                                          False, example.name,
-                                                                                          cp.User.IsEditing(ApiPageObjectMethodExamplesModel.contentName))
-                                            })
+                                .codeExample = example.codeExample,
+                                .name = example.name,
+                                .id = example.id,
+                                .isFirstExample = False,
+                                .hideRunButton = example.hideRunButton,
+                                .editTag = cp.Content.GetEditLink(
+                                    ApiPageObjectMethodExamplesModel.contentName,
+                                    example.id.ToString,
+                                    False,
+                                    example.name,
+                                    userEditing
+                                )
+                            })
                             '
                         Next
                         ' -- Add all elements to the method list
                         methodsList.Add(New ApiPageObjectMethodsViewModel With {
-                                            .name = methodType.name,
-                                            .description = methodType.description,
-                                            .deprecated = methodType.deprecated,
-                                            .signatureList = signatureList,
-                                            .argumentList = argumentList,
-                                            .isFirstMethod = False,
-                                            .areMethods = True,
-                                            .returnValue = returnVal,
-                                            .exampleList = examplesList,
-                                            .editTag = cp.Content.GetEditLink(ApiPageObjectMethodsModel.contentName,
-                                                                            methodType.id.ToString,
-                                                                            False, methodType.name,
-                                                                            cp.User.IsEditing(ApiPageObjectMethodsModel.contentName))
-                                            })
+                            .name = methodType.name,
+                            .description = methodType.description,
+                            .deprecated = methodType.deprecated,
+                            .signatureList = signatureList,
+                            .argumentList = argumentList,
+                            .isFirstMethod = False,
+                            .areMethods = True,
+                            .returnValue = returnVal,
+                            .exampleList = examplesList,
+                            .editTag = cp.Content.GetEditLink(
+                                ApiPageObjectMethodsModel.contentName,
+                                methodType.id.ToString,
+                                False, methodType.name,
+                                userEditing
+                            )
+                        })
                         '
                         ' -- Insert add tags to the end of each method's signature list
                         If signatureList.Count > 0 Then
-                            signatureList.ElementAt(signatureList.Count - 1).addSignatureTag = cp.Content.GetAddLink(ApiPageObjectMethodSignaturesModel.contentName,
-                                                                                                                    "", False,
-                                                                                                                    cp.User.IsEditing(ApiPageObjectMethodSignaturesModel.contentName))
+                            signatureList.ElementAt(signatureList.Count - 1).addSignatureTag = cp.Content.GetAddLink(ApiPageObjectMethodSignaturesModel.contentName, "", False, userEditing)
                             signatureList.ElementAt(0).isFirstSignature = True
                             ' -- Inserts a blank place-holder signature if none have been added yet
                         Else
                             signatureList.Add(New ApiPageObjectMethodSignatureViewModel With {
-                                                            .name = "",
-                                                            .deprecated = False,
-                                                            .editTag = "",
-                                                            .isFirstSignature = False,
-                                                            .addSignatureTag = cp.Content.GetAddLink(ApiPageObjectMethodSignaturesModel.contentName,
-                                                                                                    "", False,
-                                                                                                    cp.User.IsEditing(ApiPageObjectMethodSignaturesModel.contentName))
-                                                            })
+                                .name = "",
+                                .deprecated = False,
+                                .editTag = "",
+                                .isFirstSignature = False,
+                                .addSignatureTag = cp.Content.GetAddLink(ApiPageObjectMethodSignaturesModel.contentName, "", False, userEditing)
+                            })
                         End If
                         '
                         ' -- Insert add tags to the end of each method's argument list
                         If argumentList.Count > 0 Then
-                            argumentList.ElementAt(argumentList.Count - 1).addArgumentTag = cp.Content.GetAddLink(ApiPageObjectMethodArgumentsModel.contentName,
-                                                                                                                    "", False,
-                                                                                                                    cp.User.IsEditing(ApiPageObjectMethodArgumentsModel.contentName))
+                            argumentList.ElementAt(argumentList.Count - 1).addArgumentTag = cp.Content.GetAddLink(ApiPageObjectMethodArgumentsModel.contentName, "", False, userEditing)
                             argumentList.ElementAt(0).isFirstArgument = True
                             ' -- Inserts a blank place-holder argument if none have been added yet
                         Else
                             argumentList.Add(New ApiPageObjectMethodArgumentViewModel With {
-                                                            .name = "",
-                                                            .deprecated = False,
-                                                            .editTag = "",
-                                                            .argumentTypeId = "",
-                                                            .callByTypeId = "",
-                                                            .isFirstArgument = False,
-                                                            .description = "",
-                                                            .addArgumentTag = cp.Content.GetAddLink(ApiPageObjectMethodArgumentsModel.contentName,
-                                                                                                    "", False,
-                                                                                                    cp.User.IsEditing(ApiPageObjectMethodArgumentsModel.contentName))
-                                                            })
+                                .name = "",
+                                .deprecated = False,
+                                .editTag = "",
+                                .argumentTypeId = "",
+                                .callByTypeId = "",
+                                .isFirstArgument = False,
+                                .description = "",
+                                .addArgumentTag = cp.Content.GetAddLink(ApiPageObjectMethodArgumentsModel.contentName, "", False, userEditing)
+                            })
                         End If
                         '
                         ' -- Insert add tags to the end of each object's examples list
                         If examplesList.Count > 0 Then
-                            examplesList.ElementAt(examplesList.Count - 1).addExampleTag = cp.Content.GetAddLink(ApiPageObjectMethodExamplesModel.contentName,
-                                                                                                                "", False,
-                                                                                                                cp.User.IsEditing(ApiPageObjectMethodExamplesModel.contentName))
+                            examplesList.ElementAt(examplesList.Count - 1).addExampleTag = cp.Content.GetAddLink(ApiPageObjectMethodExamplesModel.contentName, "", False, userEditing)
                             examplesList.ElementAt(0).isFirstExample = True
                             ' -- Inserts a blank place-holder example with add tag if none have been added yet
                         Else
                             examplesList.Add(New ApiPageObjectMethodExamplesViewModel With {
-                                        .editTag = "",
-                                        .name = "",
-                                        .id = 0,
-                                        .codeExample = "",
-                                        .isFirstExample = False,
-                                        .hideRunButton = True,
-                                        .addExampleTag = cp.Content.GetAddLink(ApiPageObjectMethodExamplesModel.contentName,
-                                                                                                "", False,
-                                                                                                cp.User.IsEditing(ApiPageObjectMethodExamplesModel.contentName))
-                                        })
+                                .editTag = "",
+                                .name = "",
+                                .id = 0,
+                                .codeExample = "",
+                                .isFirstExample = False,
+                                .hideRunButton = True,
+                                .addExampleTag = cp.Content.GetAddLink(ApiPageObjectMethodExamplesModel.contentName, "", False, userEditing)
+                            })
                         End If
                         '
                     Next
@@ -232,50 +229,41 @@ Namespace Models.View
                             Dim temp = Text.RegularExpressions.Regex.Split(ApiObjectType.name, "(?<!^)(?=[A-Z])")
 
                             enumTypesList.Add(New ApiPageObjectEnumTypesViewModel With {
-                                              .deprecated = enumType.deprecated,
-                                              .name = enumType.name,
-                                              .typeBlock = enumType.typeBlock,
-                                              .parentEnumType = enumObject.name,
-                                              .objectDotType = temp.ElementAt(2),
-                                              .editTag = cp.Content.GetEditLink(ApiPageObjectEnumTypesModel.contentName,
-                                                                            enumType.id.ToString,
-                                                                            False, enumType.name,
-                                                                            cp.User.IsEditing(ApiPageObjectEnumTypesModel.contentName))
-                                              })
+                                .deprecated = enumType.deprecated,
+                                .name = enumType.name,
+                                .typeBlock = enumType.typeBlock,
+                                .parentEnumType = enumObject.name,
+                                .objectDotType = temp.ElementAt(2),
+                                .editTag = cp.Content.GetEditLink(ApiPageObjectEnumTypesModel.contentName, enumType.id.ToString, False, enumType.name, userEditing)
+                            })
 
                         Next
                         '
                         enumsList.Add(New ApiPageObjectEnumsViewModel With {
-                                          .name = enumObject.name,
-                                          .description = enumObject.description,
-                                          .deprecated = enumObject.deprecated,
-                                          .isFirstEnum = False,
-                                          .areEnums = True,
-                                          .enumTypesList = enumTypesList,
-                                          .editTag = cp.Content.GetEditLink(ApiPageObjectEnumsModel.contentName,
-                                                                                enumObject.id.ToString,
-                                                                                False, enumObject.name,
-                                                                                cp.User.IsEditing(ApiPageObjectEnumsModel.contentName))})
+                            .name = enumObject.name,
+                            .description = enumObject.description,
+                            .deprecated = enumObject.deprecated,
+                            .isFirstEnum = False,
+                            .areEnums = True,
+                            .enumTypesList = enumTypesList,
+                            .editTag = cp.Content.GetEditLink(ApiPageObjectEnumsModel.contentName, enumObject.id.ToString, False, enumObject.name, userEditing)
+                        })
                         '
                         ' -- Insert add tags to the end of each enum's type list
                         If enumTypesList.Count > 0 Then
-                            enumTypesList.ElementAt(enumTypesList.Count - 1).addEnumTypeTag = cp.Content.GetAddLink(ApiPageObjectEnumTypesModel.contentName,
-                                                                                                                    "", False,
-                                                                                                                    cp.User.IsEditing(ApiPageObjectEnumTypesModel.contentName))
+                            enumTypesList.ElementAt(enumTypesList.Count - 1).addEnumTypeTag = cp.Content.GetAddLink(ApiPageObjectEnumTypesModel.contentName, "", False, userEditing)
                             enumTypesList.ElementAt(0).isFirstEnumType = True
                             ' -- Inserts a blank place-holder enum type if none have been added yet
                         Else
                             enumTypesList.Add(New ApiPageObjectEnumTypesViewModel With {
-                                                            .name = "",
-                                                            .deprecated = False,
-                                                            .editTag = "",
-                                                            .isFirstEnumType = False,
-                                                            .typeBlock = "",
-                                                            .parentEnumType = "",
-                                                            .addEnumTypeTag = cp.Content.GetAddLink(ApiPageObjectEnumTypesModel.contentName,
-                                                                                                    "", False,
-                                                                                                    cp.User.IsEditing(ApiPageObjectEnumTypesModel.contentName))
-                                                            })
+                                .name = "",
+                                .deprecated = False,
+                                .editTag = "",
+                                .isFirstEnumType = False,
+                                .typeBlock = "",
+                                .parentEnumType = "",
+                                .addEnumTypeTag = cp.Content.GetAddLink(ApiPageObjectEnumTypesModel.contentName, "", False, userEditing)
+                            })
                         End If
                         '
                     Next
@@ -283,96 +271,80 @@ Namespace Models.View
                     ' -- Insert add tags to the end of each object's enums list
                     '
                     If enumsList.Count > 0 Then
-                        enumsList.ElementAt(enumsList.Count - 1).addEnumTag = cp.Content.GetAddLink(ApiPageObjectEnumsModel.contentName,
-                                                                                                                "", False,
-                                                                                                                cp.User.IsEditing(ApiPageObjectEnumsModel.contentName))
+                        enumsList.ElementAt(enumsList.Count - 1).addEnumTag = cp.Content.GetAddLink(ApiPageObjectEnumsModel.contentName, "", False, userEditing)
                         enumsList.ElementAt(0).isFirstEnum = True
                         ' -- Inserts a blank place-holder enum with add tag if none have been added yet
                     Else
                         enumsList.Add(New ApiPageObjectEnumsViewModel With {
-                                            .name = "",
-                                            .description = "",
-                                            .deprecated = False,
-                                            .editTag = "",
-                                            .isFirstEnum = False,
-                                            .areEnums = False,
-                                            .enumTypesList = New List(Of ApiPageObjectEnumTypesViewModel),
-                                            .addEnumTag = cp.Content.GetAddLink(ApiPageObjectEnumsModel.contentName,
-                                                                                                    "", False,
-                                                                                                    cp.User.IsEditing(ApiPageObjectEnumsModel.contentName))
-                                            })
+                            .name = "",
+                            .description = "",
+                            .deprecated = False,
+                            .editTag = "",
+                            .isFirstEnum = False,
+                            .areEnums = False,
+                            .enumTypesList = New List(Of ApiPageObjectEnumTypesViewModel),
+                            .addEnumTag = cp.Content.GetAddLink(ApiPageObjectEnumsModel.contentName, "", False, userEditing)
+                        })
                     End If
                     ' -- Insert add tags to the end of each object's properties list
                     If propertiesList.Count > 0 Then
-                        propertiesList.ElementAt(propertiesList.Count - 1).addPropertyTag = cp.Content.GetAddLink(ApiPageObjectPropertiesModel.contentName,
-                                                                                                                "", False,
-                                                                                                                cp.User.IsEditing(ApiPageObjectPropertiesModel.contentName))
+                        propertiesList.ElementAt(propertiesList.Count - 1).addPropertyTag = cp.Content.GetAddLink(ApiPageObjectPropertiesModel.contentName, "", False, userEditing)
                         propertiesList.ElementAt(0).isFirstProperty = True
                         ' -- Inserts a blank place-holder property with add tag if none have been added yet
                     Else
                         propertiesList.Add(New ApiPageObjectPropertiesViewModel With {
-                                            .name = "",
-                                            .description = "",
-                                            .propertyTypeId = "",
-                                            .deprecated = False,
-                                            .isFirstProperty = False,
-                                            .areProperties = False,
-                                            .getAndSet = False,
-                                            .declarationOnly = False,
-                                            .notAbstract = False,
-                                            .hasEqualsValue = False,
-                                            .theEqualsValue = "",
-                                            .editTag = "",
-                                            .addPropertyTag = cp.Content.GetAddLink(ApiPageObjectPropertiesModel.contentName,
-                                                                                                    "", False,
-                                                                                                    cp.User.IsEditing(ApiPageObjectPropertiesModel.contentName))
-                                            })
+                            .name = "",
+                            .description = "",
+                            .propertyTypeId = "",
+                            .deprecated = False,
+                            .isFirstProperty = False,
+                            .areProperties = False,
+                            .getAndSet = False,
+                            .declarationOnly = False,
+                            .notAbstract = False,
+                            .hasEqualsValue = False,
+                            .theEqualsValue = "",
+                            .editTag = "",
+                            .addPropertyTag = cp.Content.GetAddLink(ApiPageObjectPropertiesModel.contentName, "", False, userEditing)
+                        })
                     End If
                     '
                     ' -- Insert add tags to the end of each object's methods list
                     If methodsList.Count > 0 Then
-                        methodsList.ElementAt(methodsList.Count - 1).addMethodTag = cp.Content.GetAddLink(ApiPageObjectMethodsModel.contentName,
-                                                                                                                "", False,
-                                                                                                                cp.User.IsEditing(ApiPageObjectMethodsModel.contentName))
+                        methodsList.ElementAt(methodsList.Count - 1).addMethodTag = cp.Content.GetAddLink(ApiPageObjectMethodsModel.contentName, "", False, userEditing)
                         methodsList.ElementAt(0).isFirstMethod = True
                         ' -- Inserts a blank place-holder method with add tag if none have been added yet
                     Else
                         methodsList.Add(New ApiPageObjectMethodsViewModel With {
-                                        .name = "",
-                                        .description = "",
-                                        .deprecated = False,
-                                        .isFirstMethod = False,
-                                        .editTag = "",
-                                        .areMethods = False,
-                                        .argumentList = New List(Of ApiPageObjectMethodArgumentViewModel),
-                                        .signatureList = New List(Of ApiPageObjectMethodSignatureViewModel),
-                                        .exampleList = New List(Of ApiPageObjectMethodExamplesViewModel),
-                                        .returnValue = New ApiPageObjectMethodReturnValueViewModel,
-                                        .addMethodTag = cp.Content.GetAddLink(ApiPageObjectMethodsModel.contentName,
-                                                                                                "", False,
-                                                                                                cp.User.IsEditing(ApiPageObjectMethodsModel.contentName))
-                                        })
+                            .name = "",
+                            .description = "",
+                            .deprecated = False,
+                            .isFirstMethod = False,
+                            .editTag = "",
+                            .areMethods = False,
+                            .argumentList = New List(Of ApiPageObjectMethodArgumentViewModel),
+                            .signatureList = New List(Of ApiPageObjectMethodSignatureViewModel),
+                            .exampleList = New List(Of ApiPageObjectMethodExamplesViewModel),
+                            .returnValue = New ApiPageObjectMethodReturnValueViewModel,
+                            .addMethodTag = cp.Content.GetAddLink(ApiPageObjectMethodsModel.contentName, "", False, userEditing)
+                        })
                     End If
                     '
                     ' -- Add everything to the object type list
                     result.objectTypeList.Add(New ApiObjectTypeViewModel With {
-                                                .name = ApiObjectType.name,
-                                                .description = ApiObjectType.description,
-                                                .ApiPageObjectPropertiesList = propertiesList,
-                                                .ApiPageObjectMethodsList = methodsList,
-                                                .ApiPageObjectEnumsList = enumsList,
-                                                .editTag = cp.Content.GetEditLink(ApiObjectTypesModel.contentName,
-                                                                                ApiObjectType.id.ToString, False,
-                                                                                ApiObjectType.name, cp.User.IsEditing(ApiPagesModel.contentName)),
-                                                .addObjectTag = ""
-                                                })
+                        .name = ApiObjectType.name,
+                        .description = ApiObjectType.description,
+                        .ApiPageObjectPropertiesList = propertiesList,
+                        .ApiPageObjectMethodsList = methodsList,
+                        .ApiPageObjectEnumsList = enumsList,
+                        .editTag = cp.Content.GetEditLink(ApiObjectTypesModel.contentName, ApiObjectType.id.ToString, False, ApiObjectType.name, userEditing),
+                        .addObjectTag = ""
+                    })
                 Next
                 '
                 ' -- Insert add tag at the end of the whole object list
                 If result.objectTypeList.Count > 0 Then
-                    result.objectTypeList.ElementAt(result.objectTypeList.Count - 1).addObjectTag = cp.Content.GetAddLink(ApiObjectTypesModel.contentName,
-                                                                                                                "", False,
-                                                                                                                cp.User.IsEditing(ApiObjectTypesModel.contentName))
+                    result.objectTypeList.ElementAt(result.objectTypeList.Count - 1).addObjectTag = cp.Content.GetAddLink(ApiObjectTypesModel.contentName, "", False, userEditing)
                 End If
                 '
                 ' -- Check if publish button should be shown

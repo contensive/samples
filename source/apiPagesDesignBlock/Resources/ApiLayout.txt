@@ -253,4 +253,5 @@
          {{/objectTypeList}}
       </div>
    </div>
+   <p>v{{version}}</p>
 </div>
