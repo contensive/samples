@@ -9,7 +9,7 @@ Imports Contensive.BaseClasses
 
 Namespace Models.Domain     '<------ set namespace
     Public Class xxxxxmodelNameGoesHerexxxxx        '<------ set set model Name and everywhere that matches this string
-        Inherits baseDomainModel
+        Inherits BaseDomainModel
         '
         '====================================================================================================
         '-- const

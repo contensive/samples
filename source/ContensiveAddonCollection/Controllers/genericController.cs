@@ -1,14 +1,19 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Contensive.BaseClasses;
-using SamplesAddonCollectionCs.Models;
-using SamplesAddonCollectionCs.Controllers;
 
-namespace SamplesAddonCollectionCs {
+namespace Contensive.Addons.SampleCollection {
     namespace Controllers {
         public static class genericController {
+            //
+            //====================================================================================================
+            /// <summary>
+            /// return true if the date is empty or null.
+            /// </summary>
+            /// <param name="srcDate"></param>
+            /// <returns></returns>
+            public static bool isDateEmpty(DateTime srcDate) {
+                return (srcDate < new DateTime(1900, 1, 1));
+            }
             //
             //====================================================================================================
             /// <summary>
@@ -17,11 +22,8 @@ namespace SamplesAddonCollectionCs {
             /// <param name="srcDate"></param>
             /// <returns></returns>
             public static DateTime encodeMinDate(DateTime srcDate) {
-                DateTime returnDate = srcDate;
-                if (srcDate < new DateTime(1900, 1, 1)) {
-                    returnDate = DateTime.MinValue;
-                }
-                return returnDate;
+                if (isDateEmpty(srcDate)) { return DateTime.MinValue; }
+                return srcDate;
             }
             //
             //====================================================================================================
@@ -31,25 +33,26 @@ namespace SamplesAddonCollectionCs {
             /// <param name="srcDate"></param>
             /// <returns></returns>
             public static string getShortDateString(DateTime srcDate) {
-                string returnString = "";
-                DateTime workingDate = encodeMinDate(srcDate);
-                if (!isDateEmpty(srcDate)) {
-                    returnString = workingDate.ToShortDateString();
-                }
-                return returnString;
+                if (!isDateEmpty(srcDate)) { return encodeMinDate(srcDate).ToShortDateString(); }
+                return string.Empty; ;
             }
             //
             //====================================================================================================
-            public static bool isDateEmpty(DateTime srcDate) {
-                return (srcDate < new DateTime(1900, 1, 1));
-            }
-            //
-            //====================================================================================================
+            /// <summary>
+            /// create a string for sort order -- convert integer to normalized string (7 digit numeric string)
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
             public static string getSortOrderFromInteger(int id) {
                 return id.ToString().PadLeft(7, '0');
             }
             //
             //====================================================================================================
+            /// <summary>
+            /// create a string for html input requirement (yyyy-mm-dd format)
+            /// </summary>
+            /// <param name="source"></param>
+            /// <returns></returns>
             public static string getDateForHtmlInput(DateTime source) {
                 if (isDateEmpty(source)) {
                     return "";

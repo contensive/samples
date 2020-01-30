@@ -22,7 +22,6 @@ namespace Contensive.Samples
             public const string contentName = "Contensive Examples";
             public const string contentTableName = "contensiveExamples";
             private const string contentDataSource = "default";
-
             string exampleCode;
         }
     }

@@ -8,7 +8,7 @@
     <ProjectGuid>{BD7F68DB-C1C8-4B4B-A1CE-ECE3F4C3689A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Contensive.Addons.AddonCollectionCs</RootNamespace>
+    <RootNamespace>Contensive.Addons.SampleCollection</RootNamespace>
     <AssemblyName>AddonCollectionCs</AssemblyName>
     <SccProjectName>
     </SccProjectName>
@@ -61,16 +61,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adminFramework, Version=1.0.7240.21241, Culture=neutral, PublicKeyToken=df99052d01433f97, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.PortalApi.5.1.191028.3\lib\net461\adminFramework.dll</HintPath>
+    <Reference Include="ContensiveDbModels, Version=5.2001.11.4, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
+      <HintPath>..\packages\Contensive.DbModels.5.2001.11.4\lib\net461\ContensiveDbModels.dll</HintPath>
     </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.5.19.1206.2\lib\net472\CPBase.dll</HintPath>
+      <HintPath>..\packages\Contensive.CPBaseClass.5.2001.11.4\lib\net472\CPBase.dll</HintPath>
     </Reference>
-    <Reference Include="Enyim.Caching, Version=2.16.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
-      <HintPath>..\packages\EnyimMemcached.2.16.0\lib\net35\Enyim.Caching.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -80,11 +76,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\genericController.cs" />
-    <Compile Include="Models\baseModel.cs" />
-    <Compile Include="Models\_blankModel.cs" />
+    <Compile Include="Models\Domain\BaseDomainModel.cs" />
+    <Compile Include="Models\Domain\_BlankDomainModel.cs" />
+    <Compile Include="Models\Db\_BlankDbModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\HelloWorldClass.cs" />
-    <Compile Include="Views\addonClass.cs" />
+    <Compile Include="Views\SampleRemoteClass.cs" />
+    <Compile Include="Views\SampleAddonClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +113,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\modelData.txt" />
+    <Content Include="Resources\sampleSql.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

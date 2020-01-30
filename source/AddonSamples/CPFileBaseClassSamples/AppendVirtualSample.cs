@@ -9,8 +9,6 @@ namespace Contensive.Samples
         {
             string Filename = "ExampleFolder\\ExampleFile.txt";
             string fileContent = "Hello world!";
-            //cp.File.AppendVirtual(Filename, fileContent);
-
             return "";
         }
     }
