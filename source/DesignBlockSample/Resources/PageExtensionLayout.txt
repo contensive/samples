@@ -1,0 +1,11 @@
+﻿<div class="designBlockContainer blockText" style="{{styleHeight}}{{styleBackgroundImage}}">
+	<div class="{{contentContainerClass}}">
+		<div>
+			{{#text}}<div class="content">{{{text}}}</div>{{/text}}
+		</div>
+		{{#backgroundUrl}}<a class="designBlockCover" href="{{{backgroundUrl}}}" ></a>{{/backgroundUrl}}
+		{{#allowButton}}
+		<div class="buttonBar"><a class="btn btn-primary btn-lg" href="{{buttonUrl}}">{{buttonText}}</a></div>
+		{{/allowButton}}
+	</div>
+</div>
