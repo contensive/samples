@@ -89,20 +89,17 @@
     <Compile Include="Controllers\InstanceIdController.vb" />
     <Compile Include="Controllers\genericController.vb" />
     <Compile Include="Models\Db\DbBaseModel.vb" />
-    <Compile Include="Models\Db\DbTileModel.vb" />
-    <Compile Include="Models\Db\DbOneColumnModel.vb" />
+    <Compile Include="Models\Db\SampleBlockSettingsModel.vb" />
     <Compile Include="Models\Db\DesignBlockFontModel.vb" />
     <Compile Include="Models\Db\DesignBlockThemeModel.vb" />
-    <Compile Include="Models\View\OneColumnViewModel.vb" />
-    <Compile Include="Models\View\TileViewModel.vb" />
+    <Compile Include="Models\View\SampleBlockViewModel.vb" />
     <Compile Include="Models\View\ViewBaseModel.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\SampleClass.vb" />
-    <Compile Include="Views\OneColumnClass.vb" />
+    <Compile Include="Views\SampleBlockClass.vb" />
     <Compile Include="Models\Db\baseModel.vb" />
     <Compile Include="Models\Db\_blankModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -139,7 +136,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\OneColumnLayout.txt" />
     <Content Include="Resources\SampleLayout.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

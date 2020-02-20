@@ -10,7 +10,7 @@ Namespace Views
     ''' <summary>
     ''' Design block with a centered headline, image, paragraph text and a button.
     ''' </summary>
-    Public Class SampleClass
+    Public Class SampleBlockClass
         Inherits AddonBaseClass
         '
         '====================================================================================================
@@ -25,16 +25,16 @@ Namespace Views
                 If (String.IsNullOrEmpty(settingsGuid)) Then Return result
                 '
                 ' -- locate or create a data record for this guid
-                Dim settings = DbSampleModel.createOrAddSettings(CP, settingsGuid)
+                Dim settings = SampleBlockSettingsModel.createOrAddSettings(CP, settingsGuid)
                 If (settings Is Nothing) Then Throw New ApplicationException("Could not create the design block settings record.")
                 '
                 ' -- translate the Db model to a view model and mustache it into the layout
-                Dim viewModel = TileViewModel.create(CP, settings)
+                Dim viewModel = SampleBlockViewModel.create(CP, settings)
                 If (viewModel Is Nothing) Then Throw New ApplicationException("Could not create design block view model.")
                 result = Nustache.Core.Render.StringToString(My.Resources.SampleLayout, viewModel)
                 '
                 ' -- if editing enabled, add the link and wrapperwrapper
-                Return genericController.addEditWrapper(CP, result, settings.id, settings.name, DbSampleModel.contentName)
+                Return genericController.addEditWrapper(CP, result, settings.id, settings.name, SampleBlockSettingsModel.contentName)
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)
                 Return "<!-- " & designBlockName & ", Unexpected Exception -->"

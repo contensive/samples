@@ -1,0 +1,54 @@
+.blockTile  {height: 100%;}
+.blockTile > div {height: 100%;}
+
+.blockTile .blockTileInner {
+	text-align:center;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+.blockTile .blockTileInner .blockTileImage {}
+.blockTile .blockTileInner .blockTileImage img {max-width: 100%}
+
+.blockTile .blockTileInner .blockTleHeadline {}
+
+.blockTile .blockTileInner .blockTileDescription {flex-grow: 1;}
+
+.blockTile .blockTileInner .buttonBar {}
+.blockTile .blockTileInner .buttonBar a {}
+
+.blockTileImage 
+{
+	position: relative;
+	width: 100%;
+ }
+ 
+.blockTileImageAspect-1-1 
+{
+	padding-top: 100%;
+}
+.blockTileImageAspect-4-3 
+{
+	padding-top: 75%; 
+}
+.blockTileImageAspect-3-2 
+{
+	padding-top: 67%;
+}
+.blockTileImageAspect-16-9 
+{
+	padding-top: 62.5%;
+}
+ 
+ .blockTileImageInner {
+	/* position:  absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	font-size: 20px;
+	color: white; */
+	object-fit:cover;
+	background-size:cover;
+ }

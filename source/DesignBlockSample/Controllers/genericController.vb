@@ -80,7 +80,7 @@ Namespace Controllers
             If (addonId <= 0) Then Return "<!-- column-" & columnPtr.ToString() & " -->"
             'If (addonId <= 0) Then Return If(Not cp.User.IsEditingAnything, String.Empty, "<p style=""text-align:center;padding:10px;"">No Addon Selected</p>")
             cp.Doc.SetProperty("instanceId", instanceId & "-column:" & columnPtr)
-            Return cp.Utils.ExecuteAddon(addonId.ToString)
+            Return cp.Addon.Execute(addonId.ToString)
         End Function
         '
         '====================================================================================================
