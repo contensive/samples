@@ -39,7 +39,7 @@ rem ==============================================================
 rem
 echo build 
 rem
-cd ..\source
+cd ..\server
 "%msbuildLocation%msbuild.exe" %solutionName%
 if errorlevel 1 (
    echo failure building
