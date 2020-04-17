@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1803349-9C5A-43DB-A6CB-69E73680127F}</ProjectGuid>
+    <ProjectGuid>{DF2E0E7B-7F2D-46C5-99BE-F7F82021B74D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Contensive.Addons.apiPagesDesignBlock</RootNamespace>
-    <AssemblyName>apiPagesDesignBlock</AssemblyName>
+    <RootNamespace>Contensive.Addons.DesignBlockSample</RootNamespace>
+    <AssemblyName>DesignBlockSample</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <Deterministic>false</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,8 +19,11 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>apiPagesDesignBlock.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>DesignBlockSample.xml</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +31,11 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>apiPagesDesignBlock.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>DesignBlockSample.xml</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -39,7 +44,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -48,11 +53,14 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>api.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>DesignBlockKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ContensiveDbModels, Version=5.2004.14.6, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
+      <HintPath>..\packages\Contensive.DbModels.5.2004.14.6\lib\net461\ContensiveDbModels.dll</HintPath>
+    </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.5.2001.11.4\lib\net472\CPBase.dll</HintPath>
+      <HintPath>..\packages\Contensive.CPBaseClass.5.2004.14.6\lib\net472\CPBase.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -62,11 +70,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -77,66 +85,46 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.vb" />
-    <Compile Include="Controllers\ContactUsCcontroller.vb" />
-    <Compile Include="Controllers\genericController.vb" />
     <Compile Include="Controllers\InstanceIdController.vb" />
-    <Compile Include="Models\Db\AddonModel.vb" />
-    <Compile Include="Models\Db\ApiObjectTypesModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectEnumsModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectEnumTypesModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectMethodArgumentsModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectMethodExamplesModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectMethodReturnValueModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectMethodSignaturesModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectMethodsModel.vb" />
-    <Compile Include="Models\Db\ApiPageObjectPropertiesModel.vb" />
-    <Compile Include="Models\Db\ApiPagesModel.vb" />
-    <Compile Include="Models\Db\baseModel.vb" />
+    <Compile Include="Controllers\genericController.vb" />
     <Compile Include="Models\Db\DbBaseModel.vb" />
-    <Compile Include="Models\Db\DbContactUsDataModel.vb" />
-    <Compile Include="Models\Db\DbContactUsModel.vb" />
-    <Compile Include="Models\Db\DBContactUsRulesModel.vb" />
+    <Compile Include="Models\Db\SampleBlockSettingsModel.vb" />
     <Compile Include="Models\Db\DesignBlockFontModel.vb" />
     <Compile Include="Models\Db\DesignBlockThemeModel.vb" />
-    <Compile Include="Models\Db\GroupModel.vb" />
-    <Compile Include="Models\Db\MemberRuleModel.vb" />
-    <Compile Include="Models\Db\PeopleModel.vb" />
-    <Compile Include="Models\Db\SystemEmailModel.vb" />
-    <Compile Include="Models\View\ApiPagesViewModel.vb" />
-    <Compile Include="Models\View\ContactUsViewModel.vb" />
+    <Compile Include="Models\View\SampleBlockViewModel.vb" />
     <Compile Include="Models\View\ViewBaseModel.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SampleBlockClass.vb" />
+    <Compile Include="Models\Db\baseModel.vb" />
+    <Compile Include="Models\Db\_blankModel.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Views\ApiPagesClass.vb" />
-    <Compile Include="Views\ContactUsClass.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="api.snk" />
+    <None Include="DesignBlockKey.snk" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -146,12 +134,22 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\ApiLayout.txt" />
-    <None Include="packages.config" />
-    <None Include="Resources\ContactUsLayout.txt" />
+    <Content Include="Resources\SampleLayout.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
