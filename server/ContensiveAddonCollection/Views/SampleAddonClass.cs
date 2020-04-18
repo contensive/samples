@@ -11,8 +11,7 @@ namespace Contensive.Addons.SampleCollection {
             public override object Execute(CPBaseClass cp) {
                 try {
                     //
-                    // code here
-                    //
+                    // -- code here
                     return "Hello World";
                 } catch (Exception ex) {
                     //

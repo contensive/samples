@@ -61,6 +61,23 @@ namespace Contensive.Addons.SampleCollection.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;div class=&quot;designBlockContainer blockSample {{outerContainerClass}}&quot; style=&quot;{{styleHeight}}{{styleBackgroundImage}}&quot;&gt;
+        ///    &lt;div class=&quot;{{contentContainerClass}}&quot;&gt;
+        ///        &lt;div class=&quot;blockTileInner&quot;&gt;
+        ///            {{#ImageUrl}}
+        ///            &lt;div class=&quot;blockTileImage&quot;&gt;
+        ///                {{#manageAspectRatio}}
+        ///                &lt;div class=&quot;blockTileImageInner {{styleAspectRatio}}&quot; style=&quot;background-image: url(&apos;{{ImageUrl}}&apos;);background-position:center;&quot;&gt;&lt;/div&gt;
+        ///                {{/manageAspectRatio}}
+        ///         [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SampleLayout {
+            get {
+                return ResourceManager.GetString("SampleLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select top 1 m.name as personName, o.organizationName 
         ///from ccmembers m left join organizations o on o.id=m.organizationId
         ///where o.id={organizationId}.

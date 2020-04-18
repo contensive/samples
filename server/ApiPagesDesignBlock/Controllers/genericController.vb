@@ -121,61 +121,6 @@ Namespace Controllers
         Public Shared Function encodeStyleBackgroundImage(cp As CPBaseClass, backgroundImage As String) As String
             Return If(String.IsNullOrWhiteSpace(backgroundImage), String.Empty, "background-image: url(" & cp.Site.FilePath & backgroundImage & ");")
         End Function
-        ''
-        ''====================================================================================================
-        '''' <summary>
-        '''' if in editing mode, return an edit wrapper. If not, just return the innerHtml
-        '''' </summary>
-        '''' <param name="cp"></param>
-        '''' <param name="innerHtml"></param>
-        '''' <param name="instance"></param>
-        '''' <param name="contentName"></param>
-        '''' <returns></returns>
-        'Public Shared Function addEditWrapper(cp As CPBaseClass, innerHtml As String, instance As DbBaseModel, contentName As String, designBlockCaption As String) As String
-        '    If (Not cp.User.IsEditingAnything()) Then Return innerHtml
-        '    Dim editHeader As String = cp.Html.div(cp.Content.GetEditLink(contentName, instance.id.ToString(), False, instance.name, True) & "&nbsp;" & designBlockCaption, "", "dbEditHeader")
-        '    Return cp.Html.div(editHeader & innerHtml, "", "ccEditWrapper")
-        'End Function
-        '
-        'Public Shared Function addEditWrapper(ByVal cp As CPBaseClass, ByVal innerHtml As String, ByVal instanceId As Integer, ByVal instanceName As String, ByVal contentName As String, ByVal designBlockCaption As String) As String
-        '    If (Not cp.User.IsEditingAnything) Then Return innerHtml
-        '    Dim editLink As String = getEditLink(cp, contentName, instanceId, designBlockCaption)
-        '    Dim settingContent As String = cp.Html.div(innerHtml, "", "dbSettingWrapper")
-        '    Dim settingHeader As String = cp.Html.div(editLink, "", "dbSettingHeader")
-        '    Return cp.Html.div(settingHeader + settingContent)
-        'End Function
-        '
-        '<div class="ccEditWrapper">
-        '   <div Class="ccRecordLinkCon">
-        '       <a href= "#" Class="ccRecordEditLink">asdf</a>
-        '       <div Class="ccEditLinkEndCap">&nbsp;</div>
-        '   </div>
-        '   <div>content</div>
-        '</div>
-
-        ''
-        ''
-        ''
-        'Public Shared Function getEditLink(ByVal cp As CPBaseClass, ByVal contentName As String, ByVal recordId As Integer, Caption As String) As String
-        '    Return cp.Content.GetEditLink(contentName, recordId.ToString(), False, Caption, True)
-        '    'Dim contentId As Integer = cp.Content.GetID(contentName)
-        '    'If contentId = 0 Then Return String.Empty
-        '    'Return "<a href=""/admin?af=4&aa=2&ad=1&cid=" & contentId & "&id=" & recordId & """ class=""ccRecordEditLink""><span style=""color:#0c0""><i title=""edit"" class=""fas fa-cog""></i></span>&nbsp;" & Caption & "</a>"
-        'End Function
-        '
-        'Public Shared Function addEditWrapper(ByVal cp As CPBaseClass, ByVal innerHtml As String, ByVal recordId As Integer, ByVal contentName As String, ByVal caption As String) As String
-        '    If (Not cp.User.IsEditingAnything) Then Return innerHtml
-        '    Dim header As String = cp.Content.GetEditLink(contentName, recordId.ToString(), False, caption, True)
-        '    Dim content As String = cp.Html.div(innerHtml, "", "")
-        '    Return cp.Html.div(header + content, "", "ccEditWrapper")
-        'End Function
-
-        Public Shared Function addEditWrapper(ByVal cp As CPBaseClass, ByVal innerHtml As String, ByVal recordId As Integer, ByVal recordName As String, ByVal contentName As String) As String
-            If (Not cp.User.IsEditingAnything) Then Return innerHtml
-            Dim header As String = cp.Content.GetEditLink(contentName, recordId.ToString(), False, recordName, True)
-            Dim content As String = cp.Html.div(innerHtml, "", "")
-            Return cp.Html.div(header + content, "", "ccEditWrapper")
-        End Function
     End Class
 End Namespace
 

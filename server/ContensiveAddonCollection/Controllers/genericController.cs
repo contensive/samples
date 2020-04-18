@@ -1,9 +1,20 @@
 ﻿
 using System;
+using System.Linq;
 
 namespace Contensive.Addons.SampleCollection {
     namespace Controllers {
-        public static class genericController {
+        public static class GenericController {
+            //
+            //====================================================================================================
+            /// <summary>
+            /// true if argument is numeric
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
+            public static bool isNumeric(string value) {
+                return value.All(char.IsNumber);
+            }
             //
             //====================================================================================================
             /// <summary>
@@ -59,6 +70,30 @@ namespace Contensive.Addons.SampleCollection {
                 } else {
                     return source.Year + "-" + source.Month.ToString().PadLeft(2, '0') + "-" + source.Day.ToString().PadLeft(2, '0');
                 }
+            }
+            // 
+            // ====================================================================================================
+            /// <summary>
+            /// buffer an url to include protocol
+            /// </summary>
+            /// <param name="url"></param>
+            /// <returns></returns>
+            public static string verifyProtocol(string url) {
+                // 
+                // -- allow empty
+                if ((string.IsNullOrWhiteSpace(url)))
+                    return string.Empty;
+                // 
+                // -- allow /myPage
+                if ((url.Substring(0, 1) == "/"))
+                    return url;
+                // 
+                // -- allow if it includes ://
+                if ((!url.IndexOf("://").Equals(-1)))
+                    return url;
+                // 
+                // -- add http://
+                return "http://" + url;
             }
         }
     }

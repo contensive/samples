@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Contensive.Addons.SampleCollection</RootNamespace>
-    <AssemblyName>AddonCollectionCs</AssemblyName>
+    <AssemblyName>SampleCollection</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -70,6 +70,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Nustache.Core, Version=1.16.0.10, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nustache.1.16.0.10\lib\net20\Nustache.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -77,17 +80,22 @@
   <ItemGroup>
     <Compile Include="constants.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
-    <Compile Include="Controllers\genericController.cs" />
+    <Compile Include="Controllers\GenericController.cs" />
+    <Compile Include="Controllers\DesignBlockController.cs" />
     <Compile Include="Models\Db\DesignBlockBaseModel.cs" />
+    <Compile Include="Models\Db\DesignBlockThemeModel.cs" />
+    <Compile Include="Models\Db\DesignBlockFontModel.cs" />
     <Compile Include="Models\Domain\BaseDomainModel.cs" />
     <Compile Include="Models\Domain\_BlankDomainModel.cs" />
-    <Compile Include="Models\Db\_BlankDbModel.cs" />
+    <Compile Include="Models\Db\SampleModel.cs" />
+    <Compile Include="Models\View\SampleViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\DesignBlockViewBaseClass.cs" />
+    <Compile Include="Models\View\DesignBlockViewBaseModel.cs" />
+    <Compile Include="Views\DesignBlockSampleClass.cs" />
     <Compile Include="Views\HelloWorldClass.cs" />
     <Compile Include="Views\SampleRemoteClass.cs" />
     <Compile Include="Views\SampleAddonClass.cs" />
@@ -116,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\sampleSql.txt" />
+    <Content Include="Resources\SampleLayout.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

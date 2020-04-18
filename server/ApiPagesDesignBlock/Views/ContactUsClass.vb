@@ -50,7 +50,7 @@ Namespace Views
                 result = CP.Html.Form(Nustache.Core.Render.StringToString(My.Resources.ContactUsLayout, viewModel))
                 '
                 ' -- if editing enabled, add the link and wrapperwrapper
-                Return genericController.addEditWrapper(CP, result, settings.id, settings.name, DbContactUsModel.contentName)
+                Return CP.Content.GetEditWrapper(result, DbContactUsModel.contentName, settings.id)
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)
                 Return "<!-- " & designBlockName & ", Unexpected Exception -->"

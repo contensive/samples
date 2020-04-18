@@ -52,7 +52,7 @@ Namespace Views
                 End If
                 '
                 ' -- if editing enabled, add the link and wrapper                  
-                Return genericController.addEditWrapper(CP, result, settings.id, settings.name, ApiPagesModel.contentName)
+                Return CP.Content.GetEditWrapper(result, ApiPagesModel.contentName, settings.id)
                 '
             Catch ex As Exception
                 CP.Site.ErrorReport(ex)
