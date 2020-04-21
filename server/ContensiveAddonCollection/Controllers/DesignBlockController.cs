@@ -130,6 +130,33 @@ namespace Contensive.Addons.SampleCollection {
                 }
                 throw new ApplicationException("Design Block [" + designBlockName + "] called without instanceId must be on a page or the admin site.");
             }
+            // 
+            // ====================================================================================================
+            /// <summary>
+            /// return a layout record by it's guid. If not found populate the default values
+            /// </summary>
+            /// <param name="cp"></param>
+            /// <param name="LayoutGuid"></param>
+            /// <param name="LayoutDefaultName"></param>
+            /// <param name="LayoutDefaultHtml"></param>
+            /// <returns></returns>
+            public static string getLayoutByGuid(CPBaseClass cp, string LayoutGuid, string LayoutDefaultName, string LayoutDefaultHtml) {
+                using (CPCSBaseClass cs = cp.CSNew()) {
+                    if (cs.Open("layouts", "ccguid=" + cp.Db.EncodeSQLText(LayoutGuid)))
+                        return cs.GetText("layout");
+                    // 
+                    // -- record not found, create it and return the default layout
+                    cs.Close();
+                    cs.Insert("Layouts");
+                    cs.SetField("name", LayoutDefaultName);
+                    cs.SetField("ccguid", LayoutGuid);
+                    cs.SetField("layout", LayoutDefaultHtml);
+                    cs.Save();
+                }
+                return LayoutDefaultHtml;
+            }
+
         }
+
     }
 }
