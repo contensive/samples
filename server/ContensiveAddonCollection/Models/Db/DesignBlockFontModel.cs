@@ -13,7 +13,7 @@ namespace Contensive.Addons.SampleCollection {
             /// <summary>
             /// metadata
             /// </summary>
-            public static readonly DbBaseTableMetadataModel tableMetadata = new DbBaseTableMetadataModel("Design Block Fonts", "dbfonts", "default", false);
+            public static DbBaseTableMetadataModel tableMetadata { get; } = new DbBaseTableMetadataModel("Design Block Fonts", "dbfonts", "default", false);
             // 
             // ====================================================================================================
             // -- instance properties

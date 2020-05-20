@@ -9,7 +9,8 @@ namespace Contensive.Addons.SampleCollection {
             /// <summary>
             /// table definition
             /// </summary>
-            public static readonly DbBaseTableMetadataModel tableMetadata = new DbBaseTableMetadataModel("blank", "blank", "default", false);
+            public static  DbBaseTableMetadataModel tableMetadata { get; } = new DbBaseTableMetadataModel("blank", "blank", "default", false);
+            //
             //====================================================================================================
             //
             // -- sample model properties. Each property name matches a database field, and the type matches the Contensive use case.
