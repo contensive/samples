@@ -1,11 +1,11 @@
 ﻿
 using System;
-using Contensive.Addons.SampleCollection.Controllers;
-using Contensive.Addons.SampleCollection.Models.Db;
+using Contensive.Addons.AddonSamples.Controllers;
+using Contensive.Addons.AddonSamples.Models.Db;
 using Contensive.BaseClasses;
 using Models.View;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Views {
         // 
         // ====================================================================================================
@@ -27,7 +27,7 @@ namespace Contensive.Addons.SampleCollection {
                         return result;
                     // 
                     // -- locate or create a data record for this guid
-                    var settings = SampleModel.createOrAddSettings(CP, settingsGuid);
+                    var settings = SampleSettingsModel.createOrAddSettings(CP, settingsGuid);
                     if ((settings == null))
                         throw new ApplicationException("Could not create the design block settings record.");
                     // 
@@ -35,10 +35,10 @@ namespace Contensive.Addons.SampleCollection {
                     var viewModel = SampleViewModel.create(CP, settings);
                     if ((viewModel == null))
                         throw new ApplicationException("Could not create design block view model.");
-                    result = Nustache.Core.Render.StringToString(Properties.Resources.SampleLayout, viewModel);
+                    result = Nustache.Core.Render.StringToString(AddonSamples.Properties.Resources.SampleLayout, viewModel);
                     // 
                     // -- if editing enabled, add the link and wrapperwrapper
-                    return CP.Content.GetEditWrapper(result, SampleModel.tableMetadata.contentName, settings.id);
+                    return CP.Content.GetEditWrapper(result, SampleSettingsModel.tableMetadata.contentName, settings.id);
                 } catch (Exception ex) {
                     CP.Site.ErrorReport(ex);
                     return "<!-- " + designBlockName + ", Unexpected Exception -->";

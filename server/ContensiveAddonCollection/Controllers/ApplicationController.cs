@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using Contensive.BaseClasses;
-using static Contensive.Addons.SampleCollection.Constants;
+using static Contensive.Addons.AddonSamples.Constants;
 using static Newtonsoft.Json.JsonConvert;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Controllers {
         // 
         // ====================================================================================================

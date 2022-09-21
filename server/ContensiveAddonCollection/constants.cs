@@ -1,5 +1,5 @@
 ﻿
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     public static class Constants {
         // 
         // -- sample

@@ -1,0 +1,14 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/janl/mustache.js/master/mustache.min.js"></script>
+
+<script>
+
+    var template = '{{#data}}<div><h2>{{Title}}</h2><p>{{Course}}</p><p>{{Category}}</p></div>{{/data}}';
+
+    var data = JSON.parse('[{"Title":"Algorithms","Course":"CSI241","Category":"science"},{"Title":"Fluid dynamics","Course":"PHY345","Category":"science"}]')
+
+    var html = Mustache.to_html(template, { data: data });
+
+    document.body.innerHTML = html;
+
+</script>

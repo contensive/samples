@@ -2,7 +2,7 @@
 using System;
 using Contensive.BaseClasses;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Controllers {
         public static class DesignBlockController {
             // 

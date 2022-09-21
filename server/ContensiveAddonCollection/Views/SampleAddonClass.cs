@@ -1,9 +1,9 @@
 
 using System;
-using Contensive.Addons.SampleCollection.Controllers;
+using Contensive.Addons.AddonSamples.Controllers;
 using Contensive.BaseClasses;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Views {
         //
         public class SampleAddonClass : AddonBaseClass {

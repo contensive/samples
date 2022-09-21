@@ -1,11 +1,11 @@
 ﻿
 using System;
-using Contensive.Addons.SampleCollection.Controllers;
-using Contensive.Addons.SampleCollection.Models.Db;
+using Contensive.Addons.AddonSamples.Controllers;
+using Contensive.Addons.AddonSamples.Models.Db;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Models.View {
         public class DesignBlockViewBaseModel {
             public string styleBackgroundImage { get; set; }
@@ -32,7 +32,6 @@ namespace Contensive.Addons.SampleCollection {
                         + encodeStyleBackgroundImage(cp, settings.backgroundImageFilename)
                         + "";
                     result.outerContainerClass = ""
-                        + (settings.fontStyleId.Equals(0) ? string.Empty : " ") + DbBaseModel.getRecordName<DesignBlockFontModel>(cp, settings.fontStyleId)
                         + (settings.themeStyleId.Equals(0) ? string.Empty : " ") + DbBaseModel.getRecordName<DesignBlockThemeModel>(cp, settings.themeStyleId)
                         + "";
                     result.contentContainerClass = ""

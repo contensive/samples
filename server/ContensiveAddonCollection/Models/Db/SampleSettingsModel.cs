@@ -3,17 +3,44 @@ using System;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Models.Db {
-        public class SampleModel : DesignBlockBaseModel {
+        /// <summary>
+        /// This is a sample design block 'settings' table
+        /// </summary>
+        public class SampleSettingsModel : DesignBlockBaseModel {
             /// <summary>
             /// table definition
             /// </summary>
-            public static  DbBaseTableMetadataModel tableMetadata { get; } = new DbBaseTableMetadataModel("blank", "blank", "default", false);
+            public static  DbBaseTableMetadataModel tableMetadata { get; } = new DbBaseTableMetadataModel("Sample Setting Content", "dbSampleSettingTable", "default", false);
             //
             //====================================================================================================
+            // sample model properties for a design block settings record.
             //
-            // -- sample model properties. Each property name matches a database field, and the type matches the Contensive use case.
+            // these properties exactly match fields in the site's content (and the resulting database table it creates)
+            // these properties should be of the following types:
+            //
+            // -- The five basic Contensive types
+            //public string sampleDbFieldText { get; set; }
+            //public int sampleDbFieldInteger { get; set; }
+            //public bool sampleDbFieldBoolean { get; set; }
+            //public DateTime sampleDbFieldDate { get; set; }
+            //public double sampleDbFieldNumber { get; set; }
+            //
+            // -- Sample nullable property Types. Use these nullable types if the Contensive field should read and save null instead of the default value for these types 
+            // -- for example, if a field containing null represents a 'not set' condition, use a nullable model property to prevent the model from setting the value on save.
+            //public int? sampleDbFieldNullableInteger { get; set; }
+            //public bool? sampleDbFieldNullableBoolean { get; set; }
+            //public DateTime? sampleDbFieldNullableDate { get; set; }
+            //public double? sampleDbFieldNullableNumber { get; set; }
+            //
+            // -- Types matching Contensive fields that control files
+            //public FieldTypeCSSFile sampleDbFieldCssFile { get; set; }
+            //public FieldTypeHTMLFile sampleDbFielHtmlFile { get; set; }
+            //public FieldTypeJavascriptFile sampleDbFieldJavascriptFile { get; set; }
+            //public FieldTypeTextFile sampleDbFieldTextFile { get; set; }
+            // 
+            //
             public string imageFilename { get; set; }
             public string headline { get; set; }
             public string embed { get; set; }
@@ -22,36 +49,15 @@ namespace Contensive.Addons.SampleCollection {
             public string buttonUrl { get; set; }
             public int imageAspectRatioId { get; set; }
             public string btnStyleSelector { get; set; }
-            //
-            // -- Sample property Types
-            //public string sampleDbFieldText { get; set; }
-            //public int sampleDbFieldInteger { get; set; }
-            //public bool sampleDbFieldBoolean { get; set; }
-            //public DateTime sampleDbFieldDate { get; set; }
-            //public double sampleDbFieldNumber { get; set; }
-            //
-            // -- Sample file property Types
-            //public FieldTypeCSSFile sampleDbFieldCssFile { get; set; }
-            //public FieldTypeHTMLFile sampleDbFielHtmlFile { get; set; }
-            //public FieldTypeJavascriptFile sampleDbFieldJavascriptFile { get; set; }
-            //public FieldTypeTextFile sampleDbFieldTextFile { get; set; }
-            //
-            // -- Sample nullable property Types. These properties will save null if not initialized.
-            //public int? sampleDbFieldNullableInteger { get; set; }
-            //public bool? sampleDbFieldNullableBoolean { get; set; }
-            //public DateTime? sampleDbFieldNullableDate { get; set; }
-            //public double? sampleDbFieldNullableNumber { get; set; }
-            // 
             // ====================================================================================================
-            public static SampleModel createOrAddSettings(CPBaseClass cp, string settingsGuid) {
-                SampleModel result = create<SampleModel>(cp, settingsGuid);
+            public static SampleSettingsModel createOrAddSettings(CPBaseClass cp, string settingsGuid) {
+                SampleSettingsModel result = create<SampleSettingsModel>(cp, settingsGuid);
                 if ((result == null)) {
                     // 
                     // -- create default content
-                    result = DesignBlockBaseModel.addDefault<SampleModel>(cp);
+                    result = DesignBlockBaseModel.addDefault<SampleSettingsModel>(cp);
                     result.name = tableMetadata.contentName + " " + result.id;
                     result.ccguid = settingsGuid;
-                    result.fontStyleId = 0;
                     result.themeStyleId = 0;
                     result.padTop = false;
                     result.padBottom = false;

@@ -8,8 +8,8 @@
     <ProjectGuid>{BD7F68DB-C1C8-4B4B-A1CE-ECE3F4C3689A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Contensive.Addons.SampleCollection</RootNamespace>
-    <AssemblyName>SampleCollection</AssemblyName>
+    <RootNamespace>Contensive.Addons.AddonSamples</RootNamespace>
+    <AssemblyName>AddonSamples</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -61,14 +61,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContensiveDbModels, Version=5.2004.14.6, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.DbModels.5.2004.14.6\lib\net461\ContensiveDbModels.dll</HintPath>
+    <Reference Include="ContensiveDbModels, Version=4.1.2.0, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
+      <HintPath>..\packages\Contensive.DbModels.22.8.16.1\lib\net472\ContensiveDbModels.dll</HintPath>
     </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.5.2004.14.6\lib\net472\CPBase.dll</HintPath>
+      <HintPath>..\packages\Contensive.CPBaseClass.22.8.16.1\lib\net472\CPBase.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Nustache.Core, Version=1.16.0.10, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
       <HintPath>..\packages\Nustache.1.16.0.10\lib\net20\Nustache.Core.dll</HintPath>
@@ -84,10 +84,8 @@
     <Compile Include="Controllers\DesignBlockController.cs" />
     <Compile Include="Models\Db\DesignBlockBaseModel.cs" />
     <Compile Include="Models\Db\DesignBlockThemeModel.cs" />
-    <Compile Include="Models\Db\DesignBlockFontModel.cs" />
-    <Compile Include="Models\Domain\BaseDomainModel.cs" />
     <Compile Include="Models\Domain\_BlankDomainModel.cs" />
-    <Compile Include="Models\Db\SampleModel.cs" />
+    <Compile Include="Models\Db\SampleSettingsModel.cs" />
     <Compile Include="Models\View\SampleViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

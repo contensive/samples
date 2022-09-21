@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
-using static Contensive.Addons.SampleCollection.Constants;
+using static Contensive.Addons.AddonSamples.Constants;
 using static Newtonsoft.Json.JsonConvert;
 
-namespace Contensive.Addons.SampleCollection {
+namespace Contensive.Addons.AddonSamples {
     namespace Views {
         //
         /// <summary>

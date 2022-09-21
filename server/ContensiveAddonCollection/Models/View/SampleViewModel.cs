@@ -1,9 +1,9 @@
 ﻿
 using System;
-using Contensive.Addons.SampleCollection.Models.View;
-using Contensive.Addons.SampleCollection.Models.Db;
+using Contensive.Addons.AddonSamples.Models.View;
+using Contensive.Addons.AddonSamples.Models.Db;
 using Contensive.BaseClasses;
-using Contensive.Addons.SampleCollection.Controllers;
+using Contensive.Addons.AddonSamples.Controllers;
 
 namespace Models.View {
     public class SampleViewModel : DesignBlockViewBaseModel {
@@ -29,7 +29,7 @@ namespace Models.View {
         /// <param name="cp"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static SampleViewModel create(CPBaseClass cp, SampleModel settings) {
+        public static SampleViewModel create(CPBaseClass cp, SampleSettingsModel settings) {
             try {
                 // 
                 // -- base fields
